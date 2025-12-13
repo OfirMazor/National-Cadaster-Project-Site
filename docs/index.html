@@ -156,10 +156,10 @@
                 <span class="ml-3 whitespace-nowrap sidebar-text">ETL Pipeline & Integration</span>
             </a>
             
-            <!-- 5. National Cadaster Tasks for Editing -->
+            <!-- 5. National Cadaster Tasks for Editing (RENAMED) -->
             <a href="#" data-page="tasks" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                <span class="ml-3 whitespace-nowrap sidebar-text">Cadaster Tasks for Editing</span>
+                <span class="ml-3 whitespace-nowrap sidebar-text">Editing with Parcel Fabric</span>
             </a>
 
             <!-- 6. Database Technical Specifications -->
@@ -553,15 +553,44 @@
                     </div>
                 </section>
 
-                <!-- ETL Process Page -->
+                <!-- ETL Process Page (UPDATED) -->
                 <section id="page-etl" class="page-content hidden">
-                    <div class="p-6 sm:p-8 bg-bg-light rounded-xl border-l-4 border-secondary-accent shadow-lg">
-                        <h2 class="text-4xl font-bold text-primary-accent mb-4">ETL Pipeline & Data Integration</h2>
-                        <p class="text-text-dark">
-                            <span class="text-secondary-accent font-semibold">Placeholder:</span> This page will contain details on the Extract, Transform, and Load procedures for ingesting source data into the National Cadaster Database. Content coming soon...
-                        </p>
-                        <div class="h-64 mt-4 flex items-center justify-center bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg">
-                            <p class="text-gray-500">Visualization of Data Pipeline Flow</p>
+                    <div class="space-y-10">
+                        <!-- Main Page Title -->
+                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                            <h2 class="text-4xl font-extrabold text-primary-accent">ETL Pipeline & Data Integration</h2>
+                        </div>
+
+                        <!-- Content Block: Extract, Transform, and Load -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
+                            
+                            <div class="space-y-4 text-text-dark leading-relaxed">
+                                <p>
+                                    We designed a data pipeline to automate the migration. It starts by extracting all relevant tables from the old databases, which run on a “sealed” operating system, and transferring them to an open operating system under security supervision.
+                                </p>
+                                <p>
+                                    Once transferred, many data manipulation scripts handled the data transformation by cleaning values, fixing values, filling missing data and aligning the structure to match the new schema.
+                                </p>
+                                <p>
+                                    The resulting transformed data is stored in a File GDB.
+                                </p>
+                                <p>
+                                    And finally, we load the transformed data from that File GDB into an empty enterprise GDB, there, we can enable branch versioning, adding indexes and publish feature services.
+                                </p>
+                                <p>
+                                    Since the entire modernization project took nearly three years, we ran this whole pipeline every month or two.
+                                    When the full modernization project completed, we ran the pipeline one final time.
+                                </p>
+                            </div>
+
+                            <!-- ETL Image -->
+                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
+                                     alt="Extract, Transform, and Load Pipeline Diagram" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -579,11 +608,11 @@
                             <div class="space-y-4 text-text-dark">
                                 <!-- MODIFIED: Changed list-inside to list-outside and added ml-5 for proper alignment -->
                                 <ul class="list-disc list-outside ml-5 space-y-3">
-                                    <!-- MODIFIED: Applied font-bold to the entire list item for consistent bolding -->
-                                    <li class="pl-2 font-bold">
-                                        Split the database into two “realms”: 
+                                    <!-- MODIFIED: Removed font-bold from li and applied it only to the first part, adding font-normal to official cadaster -->
+                                    <li class="pl-2">
+                                        <span class="font-bold">Split the database into two “realms”: 
                                         <span class="text-orange-500">In-Process</span> & 
-                                        <span class="text-blue-500">Parcel Fabric</span> <span class="font-normal">(official cadaster).</span>
+                                        <span class="text-blue-500">Parcel Fabric</span></span> <span class="font-normal">(official cadaster).</span>
                                     </li>
                                     <li class="pl-2">
                                         <!-- MODIFIED: Made this text bold -->
@@ -777,15 +806,43 @@
                     </div>
                 </section>
 
-                <!-- National Cadaster Tasks for Editing Page -->
+                <!-- National Cadaster Tasks for Editing Page (UPDATED CONTENT) -->
                 <section id="page-tasks" class="page-content hidden">
-                    <div class="p-6 sm:p-8 bg-bg-light rounded-xl border-l-4 border-secondary-accent shadow-lg">
-                        <h2 class="text-4xl font-bold text-primary-accent mb-4">National Cadaster Tasks for Editing</h2>
-                        <p class="text-text-dark">
-                            <span class="text-secondary-accent font-semibold">Placeholder:</span> This page will outline the standard operating procedures, workflows, and task management guidelines for authorized Cadaster editors. Content coming soon...
-                        </p>
-                        <div class="h-64 mt-4 flex items-center justify-center bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg">
-                            <p class="text-gray-500">Editing Workflow Diagram</p>
+                    <div class="space-y-10">
+                        <!-- Main Title Block -->
+                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                            <h2 class="text-4xl font-extrabold text-primary-accent">Editing with Parcel Fabric</h2>
+                        </div>
+
+                        <!-- Content Block: Preparing Editing Environment -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Preparing Editing Environment with ArcGIS Pro</h3>
+                            
+                            <div class="text-text-dark leading-relaxed">
+                                <p class="mb-4">
+                                    We created a template APRX file with a map and a scene, which includes:
+                                </p>
+                                <ul class="list-disc list-outside ml-6 space-y-2">
+                                    <li>Default definition queries for the layers.</li>
+                                    <li>Symbology & labels</li>
+                                    <li>Pop-ups configurations</li>
+                                    <li>Scales dependencies (labels & layer visualization)</li>
+                                    <li>Hiding nonessential fields</li>
+                                </ul>
+                            </div>
+
+                            <!-- Map & Scene Image -->
+                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" 
+                                     alt="ArcGIS Pro Map and Scene Template Visualization" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Map+and+Scene+Image+Failed+to+Load';">
+                            </div>
+
+                            <!-- Added Description Text -->
+                            <p class="mt-6 text-text-dark leading-relaxed">
+                                This template APRX is used by automated workflows, serving as the starting point for cadastral editors when initiating their record-editing tasks (described below). It helps streamline work by preserving predefined GIS settings and reducing setup time in ArcGIS Pro.
+                            </p>
                         </div>
                     </div>
                 </section>
