@@ -566,16 +566,133 @@
                     </div>
                 </section>
 
-                <!-- Defining Schema Page -->
+                <!-- Defining Schema Page (UPDATED) -->
                 <section id="page-schema" class="page-content hidden">
-                    <div class="p-6 sm:p-8 bg-bg-light rounded-xl border-l-4 border-secondary-accent shadow-lg">
-                        <h2 class="text-4xl font-bold text-primary-accent mb-4">Defining Schema</h2>
-                        <p class="text-text-dark">
-                            <span class="text-secondary-accent font-semibold">Placeholder:</span> This page will define the logical and physical data model (tables, fields, indexes, and relationships) of the core Cadaster database structure. Content coming soon...
-                        </p>
-                        <div class="h-64 mt-4 flex items-center justify-center bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg">
-                            <p class="text-gray-500">UML/ERD Diagram Placeholder</p>
+                    <div class="space-y-10">
+                        <!-- Title Block -->
+                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                            <h2 class="text-4xl font-extrabold text-primary-accent">Defining Schema</h2>
                         </div>
+
+                        <!-- Content Block -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <div class="space-y-4 text-text-dark">
+                                <!-- MODIFIED: Changed list-inside to list-outside and added ml-5 for proper alignment -->
+                                <ul class="list-disc list-outside ml-5 space-y-3">
+                                    <!-- MODIFIED: Applied font-bold to the entire list item for consistent bolding -->
+                                    <li class="pl-2 font-bold">
+                                        Split the database into two “realms”: 
+                                        <span class="text-orange-500">In-Process</span> & 
+                                        <span class="text-blue-500">Parcel Fabric</span> <span class="font-normal">(official cadaster).</span>
+                                    </li>
+                                    <li class="pl-2">
+                                        <!-- MODIFIED: Made this text bold -->
+                                        <span class="font-bold">While the Parcel Fabric comes with a built-in schema we also considered what information is needed for:</span>
+                                        <!-- MODIFIED: Changed from ul (bullets) to ol (numbers) with list-decimal -->
+                                        <ol class="list-decimal list-outside ml-6 mt-2 space-y-1 text-gray-700 font-normal">
+                                            <li>Other divisions in the organization (for instance “UpdatedByRecord” field)</li>
+                                            <li>Private surveying companies</li>
+                                            <li>Other government ministries</li>
+                                            <li>Municipalities</li>
+                                            <li>The public</li>
+                                        </ol>
+                                    </li>
+                                    <li class="pl-2">
+                                        <span class="font-semibold">Reducing the number of tables and domains to minimize complexity.</span>
+                                        <div class="mt-2 p-3 bg-gray-50 border-l-2 border-primary-accent text-sm">
+                                            <p class="font-medium">Example:</p>
+                                            <p>Both tax parcels (British parcels) and cadastral parcels reside in the same parcel-type feature class, differentiated by a Boolean field.</p>
+                                            <p class="mt-1">The same approach is applied to the Blocks feature class.</p>
+                                        </div>
+                                    </li>
+                                    <li class="pl-2">
+                                        <span class="font-semibold">Adding 3D cadastral (Multipatch) Feature Classes</span>, along with their corresponding 2D projected (Polygon) Feature Classes into the Parcel Fabric schema. This allows for visualization on platforms that do not yet support 3D data.
+                                    </li>
+                                    <li class="pl-2 font-bold">
+                                        Set fields properties <span class="font-normal">(Nullables\length\Domains…).</span>
+                                    </li>
+                                    <li class="pl-2 font-bold">
+                                        Indexing necessary fields.
+                                    </li>
+                                    <li class="pl-2 font-bold">
+                                        <a href="https://dbdocs.io/embed/4fec58181bb416f09f8ef0f69433584f/7d300d9cdbc448c789a0495d633c520c" target="_blank" class="text-secondary-accent hover:underline">Designed a schema diagram (ERD) using DBML.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- NEW BLOCK: Schema Visualization -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Schema Visualization</h3>
+                            
+                            <div class="space-y-4 text-text-dark leading-relaxed">
+                                <p>
+                                    To help visualize, this chart shows how in the same geodatabase we have what we call the in-process data (in the yellow bubble) and the official cadaster data as (inside a dataset with Parcel Fabric)
+                                </p>
+                                <p>
+                                    The In-Process data is all of the converted CAD files that been processes and load by the cadastral reviewer (using Cyclamen\Palm).
+                                    This data is not modified by any editor and it’s not under versioning.
+                                </p>
+                                <p>
+                                    The cadaster reviewer can rewrite all of the converted plan data by running again the Cyclamen\Palm applications.
+                                </p>
+                                <p>
+                                    The official cadaster features can only be modified by the cadaster editor when editing in a branch version.
+                                    It contains 2 parcels type: Parcels2D and Blocks.
+                                    The 3D Cadaster tables are part of the parcel fabric dataset (with a similar
+                                    fields structure) but it’s not being control by the parcel fabric.
+                                </p>
+                            </div>
+
+                            <!-- Schema Image -->
+                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" 
+                                     alt="Schema Visualization Diagram showing In-Process data vs Official Cadaster Parcel Fabric" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Schema+Image+Failed+to+Load';">
+                            </div>
+                        </div>
+
+                        <!-- NEW BLOCK: Applying Attribute Rules -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Applying Attribute Rules</h3>
+                            
+                            <div class="space-y-6 text-text-dark leading-relaxed">
+                                <div>
+                                    <p>
+                                        Because Arcade expressions was new territory for us, we learned by doing a bit of everything:
+                                        sometimes we'd write expressions from scratch, and other times we'd search for useful examples online.
+                                    </p>
+                                    <p class="text-sm text-gray-500 mt-1 italic">
+                                        (Only recently LLMs were able to generate valid Arcade expressions)
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-800 mb-2">Validation Rules:</h4>
+                                    <p>
+                                        As for now, we implement 21 validation rules. Most of the rules focus on ensuring geometric integrity
+                                        (self-intersecting or multipart features) and maintaining logical consistency within the database.
+                                    </p>
+                                    <p class="mt-2">
+                                        For example, several rules enforce uniqueness and sequential parcels numbers within their respective blocks.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-800 mb-2">Calculation Rules:</h4>
+                                    <p>
+                                        As for now, we implement 9 calculation rules.
+                                        Mostly they include assigning parcels names, extracting coordinate values (X, Y, Z) from 3D-point geometries and
+                                        retrieving GUIDs for related features.
+                                    </p>
+                                    <p class="mt-2">
+                                        Some rules ensure data completeness, for example retrieving the highest (latest) active parcel number of a block.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </section>
 
