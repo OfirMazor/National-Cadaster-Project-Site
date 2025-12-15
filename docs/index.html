@@ -4,56 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Towards a Next-Generation Land Parcels Management</title>
-    <!-- Load Tailwind CSS -->
+    
+    <!-- Load Tailwind CSS first -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Chart.js for dynamic charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <!-- Use Inter font family -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Changed main background to very light gray/white */
-            background-color: #F8F9FA; 
-            color: #343A40; /* Dark text for readability */
-            transition: all 0.3s ease;
-            /* Added for fixed sidebar layout: ensures body fills viewport and prevents document scroll */
-            height: 100vh;
-            overflow: hidden; 
-        }
-        /* Removed neon-glow, replaced with a subtle focus shadow */
-        .focus-shadow-blue:focus {
-            box-shadow: 0 0 0 3px rgba(69, 162, 255, 0.4); 
-        }
-        .text-neon {
-            color: #45A2FF; /* Primary blue accent */
-        }
-        
-        /* Combined custom styling for all checkboxes to be purple on checked state */
-        .custom-checkbox:checked {
-            /* Use primary accent color for checked background */
-            background-color: #593B9F; 
-            border-color: #593B9F;
-        }
-        /* Ensure the border is purple when unchecked, but the background is transparent */
-        .custom-checkbox {
-            color: #FFFFFF; /* White checkmark when checked */
-            border-color: #593B9F; /* Purple border color */
-        }
-
-        /* Custom style for the workflow diagram step */
-        .workflow-step {
-            /* Ensuring consistent width and highly visible styling for process steps */
-            @apply flex items-center justify-center space-x-3 p-4 rounded-xl text-white font-semibold shadow-2xl transition-transform duration-200 hover:scale-[1.02] text-sm sm:text-base border-b-4 border-b-white/50;
-        }
-        /* Custom style for the connecting arrow */
-        .workflow-arrow {
-            @apply flex justify-center items-center h-10;
-        }
-        .workflow-arrow svg {
-            @apply text-primary-accent w-6 h-6 animate-pulse; /* Subtle pulse animation */
-        }
-    </style>
+    
+    <!-- Configure Tailwind immediately after load -->
     <script>
         tailwind.config = {
             theme: {
@@ -63,7 +18,7 @@
                         'primary-accent': '#593B9F', // Deep Blue-Purple (Headers, CTA)
                         'secondary-accent': '#45A2FF', // Deep Blue (Links, Main UI)
                         
-                        // Data Visualization Colors - UPDATED
+                        // Data Visualization Colors
                         'app-color': '#15803d', // Dark Green (Applications)
                         'platform-color': '#007bff', // Dark Neon-Blue (Platforms)
                         'consumer-color': '#ea580c', // Dark Vivid-Orange (Consumers)
@@ -78,30 +33,66 @@
             }
         }
     </script>
+    
+    <!-- Load Chart.js for dynamic charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA; 
+            color: #343A40;
+            transition: all 0.3s ease;
+            height: 100vh;
+            overflow: hidden; 
+        }
+        .focus-shadow-blue:focus {
+            box-shadow: 0 0 0 3px rgba(69, 162, 255, 0.4); 
+        }
+        .text-neon {
+            color: #45A2FF;
+        }
+        .custom-checkbox:checked {
+            background-color: #593B9F; 
+            border-color: #593B9F;
+        }
+        .custom-checkbox {
+            color: #FFFFFF;
+            border-color: #593B9F;
+        }
+    </style>
+
+    <!-- Tailwind-specific styles -->
+    <style type="text/tailwindcss">
+        .workflow-step {
+            @apply flex items-center justify-center space-x-3 p-4 rounded-xl text-white font-semibold shadow-2xl transition-transform duration-200 hover:scale-[1.02] text-sm sm:text-base border-b-4 border-b-white/50;
+        }
+        .workflow-arrow {
+            @apply flex justify-center items-center h-10;
+        }
+        .workflow-arrow svg {
+            @apply text-primary-accent w-6 h-6 animate-pulse;
+        }
+    </style>
 </head>
 <body class="bg-[#F8F9FA] text-text-dark flex">
 
     <!-- 1. Fixed Side Menu (Sidebar) -->
-    <!-- Added fixed positioning and height to stick to the left -->
     <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 flex-shrink-0 transition-all duration-300 bg-primary-accent shadow-xl z-20">
         <div class="p-4 border-b border-white/20 h-16 flex items-center justify-end overflow-hidden">
-            <!-- Title element - MODIFIED: Changed "Portal Menu" to "Menu" -->
             <h1 id="sidebar-title" class="text-xl font-extrabold text-white whitespace-nowrap transition-opacity duration-300 w-full opacity-100">Menu</h1>
-            
-            <!-- Toggle Button -->
             <button id="toggle-sidebar-btn" class="text-white hover:text-secondary-accent transition duration-200 focus:outline-none flex-shrink-0 ml-2" aria-label="Toggle Menu">
-                <!-- Chevron icon rotates to indicate collapse/expand state -->
                 <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300 rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
         </div>
         
-        <!-- Navigation Tabs - MODIFIED ORDER & ACTIVE STATE -->
+        <!-- Navigation Tabs -->
         <nav class="p-2 space-y-2">
-            <!-- 1. Home Link (RENAMED TO ABOUT) -->
+            <!-- 1. About Link -->
             <a href="#" data-page="home" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium transition duration-200 bg-secondary-accent/10 text-white border-l-4 border-secondary-accent shadow-md">
-                <!-- Changed Icon to Info Circle for "About" -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -122,12 +113,11 @@
 
             <!-- 4. ETL Pipeline & Integration -->
             <a href="#" data-page="etl" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
-                <!-- New icon: Switch Horizontal, representing flow/transformation -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
                 <span class="ml-3 whitespace-nowrap sidebar-text">ETL Pipeline & Integration</span>
             </a>
             
-            <!-- 5. National Cadaster Tasks for Editing (RENAMED) -->
+            <!-- 5. Editing with Parcel Fabric -->
             <a href="#" data-page="tasks" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                 <span class="ml-3 whitespace-nowrap sidebar-text">Editing with Parcel Fabric</span>
@@ -142,35 +132,30 @@
     </aside>
 
     <!-- 2. Main Content Area Wrapper -->
-    <!-- Use a wrapper div that simulates flex-1 behavior and contains the scrollable main content -->
-    <div class="flex-1 overflow-y-auto" style="margin-left: 16rem;"> <!-- 16rem = 64px width of expanded sidebar -->
+    <!-- Changed to use transition class and default ml-64 (expanded) -->
+    <div id="main-content" class="flex-1 overflow-y-auto transition-all duration-300 ml-64">
         <main class="p-6 sm:p-10 min-h-screen">
             
             <!-- Header for Mobile/Small Screens -->
             <header class="block md:hidden mb-6">
                 <h2 class="text-3xl font-extrabold text-text-dark">Towards a Next-Generation Land Parcels Management</h2>
-                <!-- Subtitle modified: fixed typo and added font-bold -->
                 <p class="font-bold text-subtitle-color">The Journey of the Survey of Israel</p>
             </header>
 
             <!-- Content Containers (Pages) -->
             <div id="content-container" class="space-y-20">
 
-                <!-- HOME PAGE (Landing Page) - SET TO ACTIVE -->
+                <!-- HOME PAGE (Landing Page) -->
                 <section id="page-home" class="page-content active">
-                    <!-- Main Header Block - MODIFIED: Updated text and border color -->
                     <div class="mb-10 p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-yellow-border">
                         <h1 class="text-5xl font-extrabold text-primary-accent mb-2 tracking-tight">
                             Towards a Next-Generation Land Parcels Management
                         </h1>
-                        <!-- Subtitle modified: fixed typo and added font-bold -->
                         <p class="text-xl font-bold text-subtitle-color">
                             The Journey of the Survey of Israel
                         </p>
                     </div>
 
-                    <!-- About the Project -->
-                    <!-- Changed layout to use separated sections with spacing -->
                     <div class="space-y-10">
 
                         <!-- SECTION: About the Project -->
@@ -178,7 +163,6 @@
                             <h2 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">
                                 About the Project
                             </h2>
-                            <!-- Project Description Paragraph -->
                             <p class="text-text-dark leading-relaxed">
                                 Modernizing Israel's national cadastral systems and data is a mega-scale initiative that brings together countless organizational and external factors to shape the future of land administration in the state. This project introduces a fully redesigned cadastral data structure and includes a comprehensive effort to extract, transform, and standardize decades of existing data. It also reimagines the workflows used to update and maintain cadastral information, ensuring they are efficient, transparent, valid, and aligned with modern best practices. At the same time, rebuilding the platforms and applications that consume, process, and share this data - creating a new, integrated ecosystem that supports better decision-making and public services. Throughout the process, quality analysis ensures the accuracy, reliability, integrity and completeness of every dataset. Although many historical attempts were made to achieve these, none fully succeeded due to previous technological and organizational limitations. Today, by embracing advanced technologies suchs as Esri’s Parcel Fabric, the project finally positioned to deliver a sustainable, innovative, and future-ready cadastral infrastructure for the state.
                             </p>
@@ -189,7 +173,6 @@
                             <h2 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">
                                 Goals & Vision
                             </h2>
-                            <!-- Goal List -->
                             <ul class="list-disc list-inside space-y-3 text-text-dark ml-4">
                                 <li class="pl-2">
                                     Applying faster modifications in the cadastral data by automating the edits workflow (as much as possible), saving time and effort for GIS editors due to the high volume of cadastral plans being submitted (~ 1,000 plans per year).
@@ -211,159 +194,102 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- END: Goals & Vision Section -->
-
 
                         <!-- SECTION: Timeline & Historical Context -->
                         <div class="bg-bg-light p-6 sm:p-8 rounded-xl border border-gray-200 shadow-lg">
                             <h2 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">Timeline & Historical Context</h2>
                             
-                            <!-- Paragraph text color changed to dark text -->
                             <p class="text-text-dark leading-relaxed mb-8">
                                 The <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> began back in 1920 as the Survey Department under the British Mandate, and officially became the Survey of Israel in 1948. Later, it came under the <a href="https://www.gov.il/en/departments/ministry_of_construction_and_housing/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Ministry of Construction and Housing</a> with the first national cadaster database around 1995. Before 2023 There were few attempts to modernize the cadaster data, but all ended in failure. In 2023, our CEO had a vision to build a digital twin for all the government and municipal data in Israel, therefore our mapping & GIS division started to think again how to modernize the cadastral data and the applications around it. We are hoping to launch the new national cadaster database and its new applications early next year.
                             </p>
                             
-                            <!-- START: Timeline Chart - MODIFIED POSITIONING AND WIDTH -->
+                            <!-- Timeline Chart -->
                             <div class="relative w-full overflow-x-auto py-20 border-t border-gray-300">
-
-                                <!-- REMOVED fixed w-[1600px] to make it responsive -->
                                 <div class="relative flex items-center w-full overflow-visible">
-
-                                    <!-- Horizontal line -->
                                     <div class="absolute inset-x-0 top-1/2 h-1 bg-gray-400 rounded-full"></div>
-
-                                    <!-- Events -->
                                     <div class="relative flex justify-start w-full h-full overflow-visible">
-
-                                        <!-- 1920 (Above line) - Position adjusted to percentage: 0% -->
+                                        <!-- 1920 -->
                                         <div class="absolute w-[120px] text-center overflow-visible" style="left: 0%;">
-                                            <!-- Year Marker/Connector (Start at center, go up) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform -translate-y-full"></div>
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            
-                                            <!-- Event Text Box (Positioned far above marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: -65px;">
                                                 Survey Dept – British Mandate
                                             </div>
-                                            
-                                            <!-- Year Text (Positioned clearly below marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: 15px;">1920</div>
                                         </div>
-
-                                        <!-- 1948 (Below line) - Position adjusted to percentage: 20% -->
+                                        <!-- 1948 -->
                                         <div class="absolute w-[120px] text-center overflow-visible" style="left: 20%;">
-                                            <!-- Year Marker/Connector (Start at center, go down) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform translate-y-0.5"></div>
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-
-                                            <!-- Event Text Box (Positioned far below marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: 65px;">
                                                 Survey of Israel
                                             </div>
-                                            
-                                            <!-- Year Text (Positioned clearly above marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: -30px;">1948</div>
                                         </div>
-
-                                        <!-- 1977 (Above line) - Position adjusted to percentage: 40% -->
+                                        <!-- 1977 -->
                                         <div class="absolute w-[120px] text-center overflow-visible" style="left: 40%;">
-                                            <!-- Year Marker/Connector (Start at center, go up) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform -translate-y-full"></div>
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            
-                                            <!-- Event Text Box (Positioned far above marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: -65px;">
                                                 Under Ministry of Housing
                                             </div>
-                                            
-                                            <!-- Year Text (Positioned clearly below marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: 15px;">1977</div>
                                         </div>
-
-                                        <!-- 1995 (Below line) - Position adjusted to percentage: 60% -->
+                                        <!-- 1995 -->
                                         <div class="absolute w-[120px] text-center overflow-visible" style="left: 60%;">
-                                            <!-- Year Marker/Connector (Start at center, go down) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform translate-y-0.5"></div>
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-
-                                            <!-- Event Text Box (Positioned far below marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: 65px;">
                                                 First cadaster DB
                                             </div>
-                                            
-                                            <!-- Year Text (Positioned clearly above marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: -30px;">1995</div>
                                         </div>
-
-                                        <!-- 2023 (Highlight - Above line) - Position adjusted to percentage: 80% -->
+                                        <!-- 2023 -->
                                         <div class="absolute w-[120px] text-center overflow-visible" style="left: 80%;">
-                                            <!-- Year Marker/Connector (Start at center, go up) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform -translate-y-full"></div>
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            
-                                            <!-- Event Text Box (Positioned far above marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent" style="top: -65px;">
                                                 Start modernization
                                             </div>
-                                            
-                                            <!-- Year Text (Positioned clearly below marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-primary-accent" style="top: 15px;">2023</div>
                                         </div>
-
-                                        <!-- 2026 (Highlight - Below line) - Position adjusted to percentage: 98% -->
+                                        <!-- 2026 -->
                                         <div class="absolute w-[120px] text-center overflow-visible" style="right: 0%;">
-                                            <!-- Year Marker/Connector (Start at center, go down) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform translate-y-0.5"></div>
                                             <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-
-                                            <!-- Event Text Box (Positioned far below marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent" style="top: 65px;">
                                                 Go-live modernization
                                             </div>
-                                            
-                                            <!-- Year Text (Positioned clearly above marker) -->
                                             <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-primary-accent" style="top: -30px;">2026</div>
                                         </div>
-
-                                        <!-- Arrow - Adjusted to align with 100% boundary of the chart -->
+                                        <!-- Arrow -->
                                         <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-accent">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
                                             </svg>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
-                            <!-- END: Timeline Chart -->
-                                
                         </div>
-                        <!-- END: Timeline & Historical Context -->
                         
-                        
-                        <!-- SECTION: Applications, Platforms and Consumers - WRAPPED IN NEW BLOCK -->
+                        <!-- SECTION: Applications, Platforms and Consumers -->
                         <div class="bg-bg-light p-6 sm:p-8 rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-1">
                                 Applications, Platforms and Consumers
                             </h3>
 
-                            <!-- Filter Checkboxes (Legend) - TEXT COLOR MODIFIED TO MATCH BLOCKS -->
                             <div class="flex flex-wrap space-x-6 mb-6">
-                                <!-- Application (Dark Green) -->
                                 <label class="flex items-center space-x-2 text-app-color cursor-pointer">
                                     <input type="checkbox" id="filter-application" data-filter="application" checked
                                            class="custom-checkbox form-checkbox h-5 w-5 border-2 rounded transition duration-150 ease-in-out focus:ring-0">
                                     <span class="text-lg font-medium">Applications</span> 
                                 </label>
-                                
-                                <!-- Platforms (Dark Neon-Blue) -->
                                 <label class="flex items-center space-x-2 text-platform-color cursor-pointer">
                                     <input type="checkbox" id="filter-platform" data-filter="platform" checked
                                            class="custom-checkbox form-checkbox h-5 w-5 border-2 rounded transition duration-150 ease-in-out focus:ring-0">
                                     <span class="text-lg font-medium">Platforms</span>
                                 </label>
-                                
-                                <!-- Consumers (Dark Vivid-Orange) -->
                                 <label class="flex items-center space-x-2 text-consumer-color cursor-pointer">
                                     <input type="checkbox" id="filter-consumer" data-filter="consumer" checked
                                            class="custom-checkbox form-checkbox h-5 w-5 border-2 rounded transition duration-150 ease-in-out focus:ring-0">
@@ -371,171 +297,113 @@
                                 </label>
                             </div>
 
-                            <!-- Blocks Container -->
                             <div id="app-blocks-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
-                                
-                                <!-- === APPLICATION BLOCKS (Dark Green) === -->
-                                
-                                <!-- Palm - MODIFIED: Added relative group and tooltip -->
                                 <div class="app-block p-4 bg-app-color border border-app-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="application">
                                     <span class="block text-xl font-semibold text-white">Palm</span>
-                                    <!-- Tooltip Content (appears on hover) -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-app-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         An engine designed to automate extensive testing and validation of 3D cadastral plans (in DWG format) and seamlessly load their data into the database’s InProcess environment
                                     </div>
                                 </div>
-
-                                <!-- Cyclamen - MODIFIED: Added relative group and tooltip with the new 2D text -->
                                 <div class="app-block p-4 bg-app-color border border-app-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="application">
                                     <span class="block text-xl font-semibold text-white">Cyclamen</span>
-                                    <!-- Tooltip Content (appears on hover) -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-app-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         An engine designed to automate extensive testing and validation of 2D cadastral plans (in DWG format) and seamlessly load their data into the database’s InProcess environment
                                     </div>
                                 </div>
-
-                                <!-- Parcel Fabric Tasks - MODIFIED: Added relative group and new tooltip text -->
                                 <div class="app-block p-4 bg-app-color border border-app-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="application">
                                     <span class="block text-xl font-semibold text-white">Parcel Fabric Tasks</span>
-                                    <!-- Tooltip Content (appears on hover) -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-app-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         Wizardy workflows for land parcel editing and manegent in ArcGIS Pro
                                     </div>
                                 </div>
-
-                                <!-- CMS (Application - Dark Green) -->
                                 <div class="app-block p-4 bg-app-color border border-app-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="application">
                                     <span class="block text-xl font-semibold text-white">CMS</span>
-                                    <!-- Tooltip Content (appears on hover) - Text color must be white for contrast on the dark primary-accent background -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-app-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         Cadaster Management System (CMS) helps the Cadaster Records Reviewers and Cadastral Editors teams to manage projects, workflows, and daily tasks in a visual, collaborative, and customizable web-platform.
                                     </div>
                                 </div>
-
-
-                                <!-- === PLATFORM BLOCKS (Dark Neon-Blue) === -->
-                                
-                                <!-- Govmap (Platform - Dark Neon-Blue) -->
                                 <div class="app-block p-4 bg-platform-color border border-platform-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="platform">
                                     <a href="https://www.govmap.gov.il/" target="_blank" class="block text-xl font-semibold text-white no-underline">
                                         Govmap
                                     </a>
-                                    <!-- Tooltip Content (appears on hover) -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-platform-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         Governmental geographic computing cloud that consolidates most governmental and institutional information that can be represented in a geographic format.
                                     </div>
                                 </div>
-                                
-                                <!-- Topocad (Platform - Dark Neon-Blue) -->
                                 <div class="app-block p-4 bg-platform-color border border-platform-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="platform">
                                     <a href="https://www.topocad.gov.il/home" target="_blank" class="block text-xl font-semibold text-white no-underline">
                                         Topocad
                                     </a>
-                                    <!-- Tooltip Content (appears on hover) -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-platform-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         The TopoCad system provides land records information and enables the purchase of data from the Survey of Israel.
                                     </div>
                                 </div>
-
-                                <!-- Datagov (Platform - Dark Neon-Blue) -->
                                 <div class="app-block p-4 bg-platform-color border border-platform-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="platform">
                                     <a href="https://data.gov.il/he" target="_blank" class="block text-xl font-semibold text-white no-underline">
                                         Datagov
                                     </a>
-                                    <!-- Tooltip Content (appears on hover) -->
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-platform-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                         A governmental web platform offering access to a wide range of official government data.
                                     </div>
                                 </div>
-                                
-
-                                <!-- === CONSUMER BLOCKS (Dark Vivid-Orange) === -->
-                                
-                                <!-- Government offices & Municipalities (Consumer - Dark Vivid-Orange) -->
                                 <div class="app-block p-4 bg-consumer-color border border-consumer-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 col-span-2 sm:col-span-1" data-type="consumer">
                                     <span class="block text-xl font-semibold text-white">Govt. Offices & Municipalities</span>
                                 </div>
-                                
-                                <!-- Cadastral Editors (Consumer - Dark Vivid-Orange) -->
                                 <div class="app-block p-4 bg-consumer-color border border-consumer-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200" data-type="consumer">
                                     <span class="block text-xl font-semibold text-white">Cadastral Editors</span>
                                 </div>
-
-                                <!-- Cadastral Records Reviewers (Consumer - Dark Vivid-Orange) -->
                                 <div class="app-block p-4 bg-consumer-color border border-consumer-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200" data-type="consumer">
                                     <span class="block text-xl font-semibold text-white">Cadastral Records Reviewers</span>
                                 </div>
-
-                                <!-- Land Surveyors (Consumer - Dark Vivid-Orange) -->
                                 <div class="app-block p-4 bg-consumer-color border border-consumer-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200" data-type="consumer">
                                     <span class="block text-xl font-semibold text-white">Land Surveyors</span>
                                 </div>
-
-                                <!-- Urban Planning professional (Consumer - Dark Vivid-Orange) -->
                                 <div class="app-block p-4 bg-consumer-color border border-consumer-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 col-span-2 sm:col-span-1" data-type="consumer">
                                     <span class="block text-xl font-semibold text-white">Urban Planning Pro.</span>
                                 </div>
-
-                                <!-- Public (Consumer - Dark Vivid-Orange) -->
                                 <div class="app-block p-4 bg-consumer-color border border-consumer-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200" data-type="consumer">
                                     <span class="block text-xl font-semibold text-white">Public</span>
                                 </div>
-
                             </div>
                         </div>
-                        <!-- END: Applications, Platforms and Consumers Section -->
 
-                        <!-- SECTION: Statistics & Proportions (NEW) -->
+                        <!-- SECTION: Statistics & Proportions -->
                         <div class="bg-bg-light p-6 sm:p-8 rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">
                                 Statistics & Proportions
                             </h3>
 
-                            <!-- Chart container uses a multi-column layout -->
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-                                
-                                <!-- Chart 1: Monthly Volume (Bar Chart) -->
                                 <div class="col-span-1">
                                     <h4 class="text-lg font-semibold text-text-dark mb-3 text-center">Monthly Records Volume</h4>
                                     <canvas id="monthlyVolumeChart"></canvas>
                                 </div>
-
-                                <!-- Chart 2: Per Record & Staffing (Bar Chart) -->
                                 <div class="col-span-1">
                                     <h4 class="text-lg font-semibold text-text-dark mb-3 text-center">Parcels per Record & Staffing</h4>
                                     <canvas id="perRecordStaffingChart"></canvas>
                                 </div>
-
-                                <!-- Chart 3: Parcel Proportions (Doughnut) -->
                                 <div class="col-span-1">
                                     <h4 class="text-lg font-semibold text-text-dark mb-3 text-center">Parcel Proportions (Active vs. Retired)</h4>
                                     <canvas id="parcelChart"></canvas>
                                 </div>
-
-                                <!-- Chart 4: Block Proportions (Doughnut) -->
                                 <div class="col-span-1">
                                     <h4 class="text-lg font-semibold text-text-dark mb-3 text-center">Block Proportions (Active vs. Retired)</h4>
                                     <canvas id="blockChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <!-- END: Statistics & Proportions Section -->
                         
                     </div>
                 </section>
 
-                <!-- ETL Process Page (UPDATED) -->
+                <!-- ETL Process Page -->
                 <section id="page-etl" class="page-content hidden">
                     <div class="space-y-10">
-                        <!-- Main Page Title -->
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                             <h2 class="text-4xl font-extrabold text-primary-accent">ETL Pipeline & Data Integration</h2>
                         </div>
-
-                        <!-- Content Block: Extract, Transform, and Load -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
-                            
                             <div class="space-y-4 text-text-dark leading-relaxed">
                                 <p>
                                     We designed a data pipeline to automate the migration. It starts by extracting all relevant tables from the old databases, which run on a “sealed” operating system, and transferring them to an open operating system under security supervision.
@@ -554,41 +422,34 @@
                                     When the full modernization project completed, we ran the pipeline one final time.
                                 </p>
                             </div>
-
-                            <!-- ETL Image -->
                             <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
-                                     alt="Extract, Transform, and Load Pipeline Diagram" 
-                                     class="w-full h-auto rounded-lg shadow-xl"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
+                                         alt="Extract, Transform, and Load Pipeline Diagram" 
+                                         class="w-full h-auto rounded-lg shadow-xl"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
+                                </a>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Defining Schema Page (UPDATED) -->
+                <!-- Defining Schema Page -->
                 <section id="page-schema" class="page-content hidden">
                     <div class="space-y-10">
-                        <!-- Title Block -->
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                             <h2 class="text-4xl font-extrabold text-primary-accent">Defining Schema</h2>
                         </div>
-
-                        <!-- Content Block -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <div class="space-y-4 text-text-dark">
-                                <!-- MODIFIED: Changed list-inside to list-outside and added ml-5 for proper alignment -->
                                 <ul class="list-disc list-outside ml-5 space-y-3">
-                                    <!-- MODIFIED: Removed font-bold from li and applied it only to the first part, adding font-normal to official cadaster -->
                                     <li class="pl-2">
                                         <span class="font-bold">Split the database into two “realms”: 
                                         <span class="text-orange-500">In-Process</span> & 
                                         <span class="text-blue-500">Parcel Fabric</span></span> <span class="font-normal">(official cadaster).</span>
                                     </li>
                                     <li class="pl-2">
-                                        <!-- MODIFIED: Made this text bold -->
                                         <span class="font-bold">While the Parcel Fabric comes with a built-in schema we also considered what information is needed for:</span>
-                                        <!-- MODIFIED: Changed from ul (bullets) to ol (numbers) with list-decimal -->
                                         <ol class="list-decimal list-outside ml-6 mt-2 space-y-1 text-gray-700 font-normal">
                                             <li>Other divisions in the organization (for instance “UpdatedByRecord” field)</li>
                                             <li>Private surveying companies</li>
@@ -620,11 +481,8 @@
                                 </ul>
                             </div>
                         </div>
-
-                        <!-- NEW BLOCK: Schema Visualization -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Schema Visualization</h3>
-                            
                             <div class="space-y-4 text-text-dark leading-relaxed">
                                 <p>
                                     To help visualize, this chart shows how in the same geodatabase we have what we call the in-process data (in the yellow bubble) and the official cadaster data as (inside a dataset with Parcel Fabric)
@@ -643,20 +501,17 @@
                                     fields structure) but it’s not being control by the parcel fabric.
                                 </p>
                             </div>
-
-                            <!-- Schema Image -->
                             <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" 
-                                     alt="Schema Visualization Diagram showing In-Process data vs Official Cadaster Parcel Fabric" 
-                                     class="w-full h-auto rounded-lg shadow-xl"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Schema+Image+Failed+to+Load';">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" 
+                                         alt="Schema Visualization Diagram showing In-Process data vs Official Cadaster Parcel Fabric" 
+                                         class="w-full h-auto rounded-lg shadow-xl"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Schema+Image+Failed+to+Load';">
+                                </a>
                             </div>
                         </div>
-
-                        <!-- NEW BLOCK: Applying Attribute Rules -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Applying Attribute Rules</h3>
-                            
                             <div class="space-y-6 text-text-dark leading-relaxed">
                                 <div>
                                     <p>
@@ -667,7 +522,6 @@
                                         (Only recently LLMs were able to generate valid Arcade expressions)
                                     </p>
                                 </div>
-                                
                                 <div>
                                     <h4 class="text-lg font-bold text-gray-800 mb-2">Validation Rules:</h4>
                                     <p>
@@ -678,7 +532,6 @@
                                         For example, several rules enforce uniqueness and sequential parcels numbers within their respective blocks.
                                     </p>
                                 </div>
-
                                 <div>
                                     <h4 class="text-lg font-bold text-gray-800 mb-2">Calculation Rules:</h4>
                                     <p>
@@ -692,7 +545,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </section>
 
@@ -709,21 +561,14 @@
                     </div>
                 </section>
 
-                <!-- Operational Workflow Page (Adjusted structure to separate old/new workflows into distinct blocks) -->
-                <section id="page-workflow" class="page-content hidden"> <!-- SET TO HIDDEN -->
-                    <!-- Outer container to add spacing between blocks -->
+                <!-- Operational Workflow Page -->
+                <section id="page-workflow" class="page-content hidden">
                     <div class="space-y-10">
-                        
-                        <!-- Block 1: Main Title "Operational Workflow" (Kept separate) -->
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                             <h2 class="text-4xl font-extrabold text-primary-accent">Operational Workflow</h2>
                         </div>
-
-                        <!-- Block 2: The Old Operational workflow (Now its own dedicated block) -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The Old Operational workflow</h3>
-
-                            <!-- Descriptive Text -->
                             <p class="text-text-dark leading-relaxed mb-6">
                                 The older operational workflow contains stations where each one of them has its own team. The flow starts with land surveyors from the
                                 private sector submitting their digital cadastral blueprints (CAD files and other related
@@ -739,21 +584,17 @@
                                 updating and modifying the official cadastral data- based on the approved
                                 in-process data.
                             </p>
-
-                            <!-- Image containing the full workflow diagram. Source updated to the requested GitHub URL. -->
                             <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" 
-                                    alt="Infographic showing the old operational pipeline process: Land Surveyors -> DWG -> Topocad -> Cadaster Reviewer -> Cyclamen -> Cadastral Databases -> Cadastral Editor" 
-                                    class="w-full h-auto rounded-lg shadow-xl" 
-                                    onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Old+Operational+Pipeline+Image+Failed+to+Load';">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" 
+                                        alt="Infographic showing the old operational pipeline process" 
+                                        class="w-full h-auto rounded-lg shadow-xl" 
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Old+Operational+Pipeline+Image+Failed+to+Load';">
+                                </a>
                             </div>
                         </div>
-
-                        <!-- Block 3: The New Operational Workflow (Now its own dedicated block) -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The New Operational Workflow</h3>
-                            
-                            <!-- Descriptive Text -->
                             <p class="text-text-dark leading-relaxed mb-6">
                                 In the new operational pipeline, there
                                 are still similarities to the old one, but a there's few key differences:
@@ -765,30 +606,26 @@
                                     <li>Finally, the editor uses ArcGIS Pro Tasks to update and edit official cadastral features. Once the task is done, a feedback is sent back to the Management System.</li>
                                 </ol>
                             </p>
-
-                            <!-- Image containing the new workflow diagram. Source updated to the requested GitHub URL. -->
                             <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" 
-                                    alt="Infographic showing the new operational pipeline process." 
-                                    class="w-full h-auto rounded-lg shadow-xl"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=New+Operational+Pipeline+Image+Failed+to+Load';">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" 
+                                        alt="Infographic showing the new operational pipeline process." 
+                                        class="w-full h-auto rounded-lg shadow-xl"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=New+Operational+Pipeline+Image+Failed+to+Load';">
+                                </a>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- National Cadaster Tasks for Editing Page (UPDATED CONTENT) -->
+                <!-- National Cadaster Tasks for Editing Page -->
                 <section id="page-tasks" class="page-content hidden">
                     <div class="space-y-10">
-                        <!-- Main Title Block -->
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                             <h2 class="text-4xl font-extrabold text-primary-accent">Editing with Parcel Fabric</h2>
                         </div>
-
-                        <!-- Content Block: Preparing Editing Environment -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Preparing Editing Environment with ArcGIS Pro</h3>
-                            
                             <div class="text-text-dark leading-relaxed">
                                 <p class="mb-4">
                                     We created a template APRX file with a map and a scene, which includes:
@@ -801,22 +638,20 @@
                                     <li>Hiding nonessential fields</li>
                                 </ul>
                             </div>
-
-                            <!-- Map & Scene Image -->
                             <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" 
-                                     alt="ArcGIS Pro Map and Scene Template Visualization" 
-                                     class="w-full h-auto rounded-lg shadow-xl"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Map+and+Scene+Image+Failed+to+Load';">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" 
+                                         alt="ArcGIS Pro Map and Scene Template Visualization" 
+                                         class="w-full h-auto rounded-lg shadow-xl"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Map+and+Scene+Image+Failed+to+Load';">
+                                </a>
                             </div>
-
-                            <!-- Added Description Text -->
                             <p class="mt-6 text-text-dark leading-relaxed">
                                 This template APRX is used by automated workflows, serving as the starting point for cadastral editors when initiating their record-editing tasks (described below). It helps streamline work by preserving predefined GIS settings and reducing setup time in ArcGIS Pro.
                             </p>
                         </div>
 
-                        <!-- NEW CONTENT BLOCK: Designing Editing Workflow with Tasks -->
+                        <!-- Designing Editing Workflow with Tasks -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Designing Editing Workflow with Tasks</h3>
                             
@@ -824,13 +659,10 @@
                                 <p>
                                     In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
                                 </p>
-                                
                                 <p class="font-bold text-lg mt-4">How we did it?</p>
-                                
                                 <p>
                                     We treated the term “record” as a combination of inputs and outputs (like an equation).
                                 </p>
-                                
                                 <p class="font-semibold mt-2">For example:</p>
                                 <ul class="list-disc list-outside ml-6 space-y-2">
                                     <li>
@@ -840,11 +672,9 @@
                                         Other plans will retire the input parcels and create new ones in their place. Hence, we created the <span class="font-semibold">“Retire & Create Cadaster”</span> task.
                                     </li>
                                 </ul>
-
                                 <p class="mt-2">
                                     These first two tasks are the most common ones that we will use. There’s also a version of the <span class="font-semibold">“Retire & Create Cadaster”</span> task for 3D plans.
                                 </p>
-                                
                                 <ul class="list-disc list-outside ml-6 space-y-2 mt-2">
                                     <li>
                                         Moreover, some plans don’t have any input parcels and simply create new ones from scratch. These will be handled by the <span class="font-semibold">“Create New Cadaster”</span> task.
@@ -855,21 +685,20 @@
                                 </ul>
                             </div>
 
-                            <!-- Added Image -->
                             <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" 
-                                     alt="Designing Editing Workflow with Tasks Diagram" 
-                                     class="w-full h-auto rounded-lg shadow-xl"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" 
+                                         alt="Designing Editing Workflow with Tasks Diagram" 
+                                         class="w-full h-auto rounded-lg shadow-xl"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
+                                </a>
                             </div>
 
-                            <!-- NEW TEXT STARTS HERE -->
                             <div class="mt-8 text-text-dark leading-relaxed space-y-6">
                                 <p>
                                     Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.
-                                </p>
-                                <p>
                                     Most of the steps rely on Python scripting tools that combine Parcel Fabric tools or other ArcGIS geoprocessing tools.
+                                    Here is a detailed overview of a typical task:
                                 </p>
 
                                 <!-- Step 1 -->
@@ -883,7 +712,7 @@
                                         <li>It then creates a new branch version and transfers the Parcel Fabric layers to it.</li>
                                         <li>Later, the map layers are filtered to the area of the plan by using definition queries.</li>
                                         <li>The plan’s boundary is added to the Records layer and that new record is activated.</li>
-                                        <li>Finally, the step report for any conflicts between the points from the plan (aka incoming points) and the active fabric points. This conflicts report is calculated to assist the editor in the next step. This action is optional.</li>
+                                        <li>Finally, this step compute a report of any conflicts between the plan points (source points) and the active fabric points. The conflict report is intended to assist the editor in the next step by suggesting an optimal distance to use in the second step, helping to avoid conflicts. This action is optional.</li>
                                     </ul>
                                     <p class="mt-2 text-sm italic text-gray-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">
                                         <span class="font-bold">Note:</span> In "Retire And Create" task type this step will also automatic retire the input parcels and lines and add the new parcels and lines from the plan data.
@@ -943,7 +772,7 @@
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 4: Evaluation</p>
                                     <p>
-                                        Step number 4 provide a set of post-edit evaluation tests on the edited area. The editor can choose to run all tests or only specific ones.
+                                        Step number 4 provide a set of post-edit evaluation tests on the edited area. The editor can choose to run all tests or only specific ones. Additionally, the editor can choose whether the selected evaluations run on the entire Area of Interest (AOI), the record extent, or the current visible camera extent. This flexible option is especially useful for handling large, complex records or areas with a high density of errors.  
                                     </p>
                                     <p class="mt-2">
                                         The goal here is to ensure there are no errors within the edited area. The editor can run these evaluations as many times as needed before proceeding to the final step.
@@ -969,9 +798,29 @@
                                         Finally, once all the errors are cleared, step number 5 will:
                                     </p>
                                     <ul class="list-disc list-outside ml-6 space-y-1">
-                                        <li>Perform reconcile and post to the edit version towards the default version.</li>
+                                        <li>Document the changes applied in the branch version (using the Version Manager service).</li>
+                                        <li>Perform reconcile & post to the edit version towards the default version.</li>
                                         <li>Send feedback to the Cadaster Management System to confirm that the task is completed.</li>
                                     </ul>
+                                </div>
+
+                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" target="_blank" rel="noopener noreferrer">
+                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" 
+                                             alt="Designing Editing Workflow with Tasks Diagram 2" 
+                                             class="w-full h-auto rounded-lg shadow-xl"
+                                             onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
+                                    </a>
+                                </div>
+
+                                <div class="mt-6 pt-4 border-t border-gray-200">
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Summary</p>
+                                    <p class="mb-4">
+                                        This task structure supports an almost fully automated workflow, where most of the hands-on editing occurs in the second step. In this step, active points need to be aligned with the source points. The time required to complete this step mainly depends on the editor’s experience, the number of points to update, and their density within the area.
+                                    </p>
+                                    <p>
+                                        Another time-consuming part of the process is the Evaluation step. The duration of this step depends on the editor’s experience, the number of errors found during editing, and any existing errors present before the current record editing.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -991,97 +840,84 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const pageContents = document.querySelectorAll('.page-content');
             const sidebarTitle = document.getElementById('sidebar-title');
+            const mainContent = document.getElementById('main-content');
             
-            // Collect all elements that contain the link text
             const sidebarTextElements = document.querySelectorAll('.sidebar-text');
 
-            let isExpanded = true; // State variable to track if the sidebar is expanded
+            let isExpanded = true; 
 
-            // Function to collapse the sidebar
             function collapseSidebar() {
                 if (sidebar) {
                     sidebar.classList.remove('w-64');
                     sidebar.classList.add('w-16');
                 }
-                
-                // Hide title and link text
                 if (sidebarTitle) {
                     sidebarTitle.classList.add('opacity-0');
                     sidebarTitle.classList.remove('opacity-100');
                 }
                 sidebarTextElements.forEach(span => span.classList.add('hidden'));
-                
-                // Rotate icon to point right
                 if (toggleIcon) {
                     toggleIcon.classList.add('rotate-180');
                     toggleIcon.classList.remove('rotate-0');
                 }
+                if (mainContent) {
+                    mainContent.classList.remove('ml-64');
+                    mainContent.classList.add('ml-16');
+                }
                 isExpanded = false;
             }
 
-            // Function to expand the sidebar
             function expandSidebar() {
                 if (sidebar) {
                     sidebar.classList.add('w-64');
                     sidebar.classList.remove('w-16');
                 }
-                
-                // Show title and link text
                 if (sidebarTitle) {
                     sidebarTitle.classList.remove('opacity-0');
                     sidebarTitle.classList.add('opacity-100');
                 }
                 sidebarTextElements.forEach(span => span.classList.remove('hidden'));
-                
-                // Icon points left
                 if (toggleIcon) {
                     toggleIcon.classList.remove('rotate-180');
                     toggleIcon.classList.add('rotate-0');
                 }
+                if (mainContent) {
+                    mainContent.classList.remove('ml-16');
+                    mainContent.classList.add('ml-64');
+                }
                 isExpanded = true;
             }
 
-            // Toggle handler
             if (toggleBtn) {
                 toggleBtn.addEventListener('click', () => {
                     isExpanded ? collapseSidebar() : expandSidebar();
                 });
             }
 
-            // Function to switch content page
             function switchPage(pageId) {
-                // Hide all pages
                 pageContents.forEach(section => {
                     section.classList.add('hidden');
                     section.classList.remove('active');
                 });
-
-                // Show the requested page
                 const targetPage = document.getElementById(`page-${pageId}`);
                 if (targetPage) {
                     targetPage.classList.remove('hidden');
                     targetPage.classList.add('active');
                 }
-
-                // Update active link style
                 navLinks.forEach(link => {
                     link.classList.remove('bg-secondary-accent/10', 'text-white', 'shadow-md', 'border-secondary-accent');
                     link.classList.add('text-gray-300', 'hover:bg-white/10', 'hover:text-white', 'border-transparent');
-                    
-                    // Re-apply active style to the correct link
                     if (link.dataset.page === pageId) {
                         link.classList.add('bg-secondary-accent/10', 'text-white', 'border-secondary-accent', 'shadow-md');
                         link.classList.remove('text-gray-300', 'hover:bg-white/10', 'hover:text-white', 'border-transparent');
                     }
                 });
                 
-                // On small screens, collapse the sidebar after selection
                 if (window.innerWidth < 768 && isExpanded) {
                     collapseSidebar();
                 }
             }
 
-            // Function to handle filtering of application blocks
             function filterBlocks() {
                 const isApplicationChecked = document.getElementById('filter-application')?.checked;
                 const isPlatformChecked = document.getElementById('filter-platform')?.checked;
@@ -1104,20 +940,17 @@
                 });
             }
 
-            // Event listeners for filter checkboxes
             document.getElementById('filter-application')?.addEventListener('change', filterBlocks);
             document.getElementById('filter-platform')?.addEventListener('change', filterBlocks);
             document.getElementById('filter-consumer')?.addEventListener('change', filterBlocks);
 
 
-            // Initial state: Start collapsed on mobile, expanded on desktop
             if (window.innerWidth < 768) {
                 collapseSidebar();
             } else {
                 expandSidebar();
             }
 
-            // Event listeners for navigation links
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1125,18 +958,13 @@
                 });
             });
 
-            // Load the initial page and apply initial filters
-            switchPage('home'); // **THIS IS THE CHANGE TO MAKE HOME THE DEFAULT OPENING PAGE**
+            switchPage('home'); 
             filterBlocks();
 
-            // --- Chart Data & Initialization ---
-            
-            // Proportions Colors
-            const activeProportionColor = '#9333ea'; // Bright-vivid purple
-            const retiredProportionColor = '#dc2626'; // Red color
-            const barChartColor = '#FFC300'; // Requested Yellow/Gold
+            const activeProportionColor = '#9333ea'; 
+            const retiredProportionColor = '#dc2626'; 
+            const barChartColor = '#FFC300'; 
 
-            // Data for Chart 1 & 2 (Split from original averageData)
             const monthlyVolumeData = {
                 labels: ['Records Received', 'Records Completed'],
                 values: [115, 100]
@@ -1147,29 +975,22 @@
                 values: [13, 5, 5]
             };
 
-            // Data for Parcel Chart
             const parcelData = {
                 labels: ['Active Parcels (1,100,000)', 'Retired Parcels (494,850)'],
                 values: [1100000, 494850]
             };
 
-            // Data for Block Chart
             const blockData = {
                 labels: ['Active Blocks (22,450)', 'Retired Blocks (6,350)'],
                 values: [22450, 6350]
             };
 
-            // Base colors from Tailwind config for chart visualization
-            // const primaryAccent = '#593B9F'; // Deep Blue-Purple - No longer used for bar charts
-
-            // Helper function for tooltip number formatting
             const numberFormatCallback = {
                 label: function(context) {
                     let label = context.label.includes('(') ? context.label.split('(')[0].trim() : context.label;
                     if (label) {
                         label += ': ';
                     }
-                    // Extract and format number from tooltip label for display
                     if (context.parsed !== null) {
                         label += new Intl.NumberFormat().format(context.parsed);
                     }
@@ -1177,8 +998,6 @@
                 }
             };
 
-
-            // --- Chart 1: Monthly Volume Chart (Bar) ---
             const monthlyVolumeCtx = document.getElementById('monthlyVolumeChart');
             if (monthlyVolumeCtx) {
                 new Chart(monthlyVolumeCtx, {
@@ -1201,7 +1020,7 @@
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: '#E9ECEF' // light gray grid lines
+                                    color: '#E9ECEF' 
                                 }
                             },
                             x: {
@@ -1222,7 +1041,6 @@
                 });
             }
             
-            // --- Chart 2: Per Record & Staffing Chart (Bar) ---
             const perRecordStaffingCtx = document.getElementById('perRecordStaffingChart');
             if (perRecordStaffingCtx) {
                 new Chart(perRecordStaffingCtx, {
@@ -1245,7 +1063,7 @@
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: '#E9ECEF' // light gray grid lines
+                                    color: '#E9ECEF' 
                                 }
                             },
                             x: {
@@ -1266,7 +1084,6 @@
                 });
             }
 
-            // --- Chart 3: Parcel Proportions (Doughnut) ---
             const parcelCtx = document.getElementById('parcelChart');
             if (parcelCtx) {
                 new Chart(parcelCtx, {
@@ -1277,8 +1094,8 @@
                             label: 'Count',
                             data: parcelData.values,
                             backgroundColor: [
-                                activeProportionColor,   // Active Parcels (Bright Purple)
-                                retiredProportionColor   // Retired Parcels (Red)
+                                activeProportionColor,   
+                                retiredProportionColor   
                             ],
                             hoverOffset: 4,
                             borderWidth: 2,
@@ -1310,7 +1127,6 @@
                 });
             }
 
-            // --- Chart 4: Block Proportions (Doughnut) ---
             const blockCtx = document.getElementById('blockChart');
             if (blockCtx) {
                 new Chart(blockCtx, {
@@ -1321,8 +1137,8 @@
                             label: 'Count',
                             data: blockData.values,
                             backgroundColor: [
-                                activeProportionColor,   // Active Blocks (Bright Purple)
-                                retiredProportionColor   // Retired Blocks (Red)
+                                activeProportionColor,   
+                                retiredProportionColor   
                             ],
                             hoverOffset: 4,
                             borderWidth: 2,
