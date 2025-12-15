@@ -41,38 +41,6 @@
             border-color: #593B9F; /* Purple border color */
         }
 
-        /* --- DEPRECATED/REMOVED CHECKBOX STYLES --- 
-        /* Custom styling for Platform (Dark Neon-Blue) checkbox */
-        .platform-checkbox:checked {
-            background-color: #007bff; /* Dark Neon-Blue */
-            border-color: #007bff;
-        }
-        .platform-checkbox {
-            color: #181C26; 
-            border-color: #007bff;
-        }
-        
-        /* Custom styling for Application (Dark Green) checkbox */
-        .application-checkbox:checked {
-            background-color: #15803d; /* Dark Green */
-            border-color: #15803d;
-        }
-        .application-checkbox {
-            color: #181C26; 
-            border-color: #15803d;
-        }
-        
-        /* Custom styling for Consumer (Dark Vivid-Orange) checkbox */
-        .consumer-checkbox:checked {
-            background-color: #ea580c; /* Dark Vivid-Orange */
-            border-color: #ea580c;
-        }
-        .consumer-checkbox {
-            color: #181C26; 
-            border-color: #ea580c;
-        }
-        /* ------------------------------------------- */
-        
         /* Custom style for the workflow diagram step */
         .workflow-step {
             /* Ensuring consistent width and highly visible styling for process steps */
@@ -131,19 +99,22 @@
         
         <!-- Navigation Tabs - MODIFIED ORDER & ACTIVE STATE -->
         <nav class="p-2 space-y-2">
-            <!-- 1. Home Link (NOW ACTIVE) -->
+            <!-- 1. Home Link (RENAMED TO ABOUT) -->
             <a href="#" data-page="home" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium transition duration-200 bg-secondary-accent/10 text-white border-l-4 border-secondary-accent shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                <span class="ml-3 whitespace-nowrap sidebar-text">Home</span>
+                <!-- Changed Icon to Info Circle for "About" -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="ml-3 whitespace-nowrap sidebar-text">About</span>
             </a>
 
-            <!-- 2. Operational Workflow (MOVED & ACTIVE STATE REMOVED) -->
+            <!-- 2. Operational Workflow -->
             <a href="#" data-page="workflow" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m7 3h4m-4 0v-4m4 4v-4" /></svg>
                 <span class="ml-3 whitespace-nowrap sidebar-text">Operational Workflow</span>
             </a>
             
-            <!-- 3. Defining Schema (MOVED) -->
+            <!-- 3. Defining Schema -->
             <a href="#" data-page="schema" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10M10 5v14M16 5v14M20 7v10" /></svg>
                 <span class="ml-3 whitespace-nowrap sidebar-text">Defining Schema</span>
@@ -844,6 +815,167 @@
                                 This template APRX is used by automated workflows, serving as the starting point for cadastral editors when initiating their record-editing tasks (described below). It helps streamline work by preserving predefined GIS settings and reducing setup time in ArcGIS Pro.
                             </p>
                         </div>
+
+                        <!-- NEW CONTENT BLOCK: Designing Editing Workflow with Tasks -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Designing Editing Workflow with Tasks</h3>
+                            
+                            <div class="text-text-dark leading-relaxed space-y-4">
+                                <p>
+                                    In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
+                                </p>
+                                
+                                <p class="font-bold text-lg mt-4">How we did it?</p>
+                                
+                                <p>
+                                    We treated the term “record” as a combination of inputs and outputs (like an equation).
+                                </p>
+                                
+                                <p class="font-semibold mt-2">For example:</p>
+                                <ul class="list-disc list-outside ml-6 space-y-2">
+                                    <li>
+                                        Some plans keep the same input parcels but improve their boundaries to be more accurate. For these, we created the <span class="font-semibold">“Improve Current Cadaster”</span> task.
+                                    </li>
+                                    <li>
+                                        Other plans will retire the input parcels and create new ones in their place. Hence, we created the <span class="font-semibold">“Retire & Create Cadaster”</span> task.
+                                    </li>
+                                </ul>
+
+                                <p class="mt-2">
+                                    These first two tasks are the most common ones that we will use. There’s also a version of the <span class="font-semibold">“Retire & Create Cadaster”</span> task for 3D plans.
+                                </p>
+                                
+                                <ul class="list-disc list-outside ml-6 space-y-2 mt-2">
+                                    <li>
+                                        Moreover, some plans don’t have any input parcels and simply create new ones from scratch. These will be handled by the <span class="font-semibold">“Create New Cadaster”</span> task.
+                                    </li>
+                                    <li>
+                                        Finally, we also added a <span class="font-semibold">“Free Edit”</span> task for changes that aren’t tied to a specific cadaster plan - like fixing typos, correcting overlaps, closing gaps and so on...
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Added Image -->
+                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" 
+                                     alt="Designing Editing Workflow with Tasks Diagram" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
+                            </div>
+
+                            <!-- NEW TEXT STARTS HERE -->
+                            <div class="mt-8 text-text-dark leading-relaxed space-y-6">
+                                <p>
+                                    Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.
+                                </p>
+                                <p>
+                                    Most of the steps rely on Python scripting tools that combine Parcel Fabric tools or other ArcGIS geoprocessing tools.
+                                </p>
+
+                                <!-- Step 1 -->
+                                <div>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 1: Start Record Editing</p>
+                                    <p class="mb-2">
+                                        The first step is fully automated and it prepares the data and the map for editing:
+                                    </p>
+                                    <ul class="list-disc list-outside ml-6 space-y-1">
+                                        <li>It begins with an early and quick validations to ensure the editor doesn’t start working with incorrect data. For example, verify that the user is signed-in to the Portal and that the cadastral plan status is approved by the reviewer.</li>
+                                        <li>It then creates a new branch version and transfers the Parcel Fabric layers to it.</li>
+                                        <li>Later, the map layers are filtered to the area of the plan by using definition queries.</li>
+                                        <li>The plan’s boundary is added to the Records layer and that new record is activated.</li>
+                                        <li>Finally, the step report for any conflicts between the points from the plan (aka incoming points) and the active fabric points. This conflicts report is calculated to assist the editor in the next step. This action is optional.</li>
+                                    </ul>
+                                    <p class="mt-2 text-sm italic text-gray-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">
+                                        <span class="font-bold">Note:</span> In "Retire And Create" task type this step will also automatic retire the input parcels and lines and add the new parcels and lines from the plan data.
+                                    </p>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 2: Import or Modify Points</p>
+                                    <p class="mb-2">
+                                        In the second step, we use a costume version of the Import Parcel Fabric Points (IPFP) GP tool.
+                                    </p>
+                                    <p class="mb-2">
+                                        The IPFP tool is abuilt in Parcel Fabric tool that aligns the active points according to the points from the plan (aka source points) by moving them to the correct locations (like a magnet does).
+                                    </p>
+                                    <p class="mb-4">
+                                        And if it necessary, new points can be created to match the points from the plan. And as the points move, the related parcel, blocks and lines move accordingly.
+                                    </p>
+
+                                    <p class="mb-2 font-bold text-gray-800">We customized this tool to improve efficiency by implementing the following enhancements:</p>
+
+                                    <div class="space-y-4 ml-1">
+                                        <div>
+                                            <p class="font-semibold text-gray-800">a. Automated parameter handling</p>
+                                            <p class="mt-1">Tool parameter values are filled automatically and hidden from the user interface. For example:</p>
+                                            <ul class="list-disc list-outside ml-6 mt-1 space-y-1 text-text-dark">
+                                                <li>Instead of manually entering the record name, the tool retrieves the currently active record name using CIM.</li>
+                                                <li>The Proximity Matching method is set as a fixed (constant) option.</li>
+                                                <li>The command is restricted to run only on active points by applying a constant query.</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div>
+                                            <p class="font-semibold text-gray-800">b. Visual conflict representation</p>
+                                            <p class="mt-1">When conflicts are detected, the tool automatically generates red ring-shaped polygons on the map, rather than outputting the results to a database table. The polygon radius is defined by the tool’s search distance parameter, allowing editors to quickly and visually identify conflict locations.</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <p class="font-semibold text-gray-800">c. Structured logging output</p>
+                                            <p class="mt-1">The tool’s log messages were customized to be displayed in a tabular format, making the results easier to read and interpret for editors.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 3: Update Attributes</p>
+                                    <p class="mb-2">
+                                        Next, once all of the fabric features are aligned with all the plan features:
+                                    </p>
+                                    <p>
+                                        The tool here will automatically update the fabric layers attributes based on the plan data. For instance, the old land designation of a parcel is replaced with the newer land designation. This step will also run the Build Active command if the editor set this parameter on.
+                                    </p>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 4: Evaluation</p>
+                                    <p>
+                                        Step number 4 provide a set of post-edit evaluation tests on the edited area. The editor can choose to run all tests or only specific ones.
+                                    </p>
+                                    <p class="mt-2">
+                                        The goal here is to ensure there are no errors within the edited area. The editor can run these evaluations as many times as needed before proceeding to the final step.
+                                    </p>
+                                    <p class="mt-4 font-semibold text-gray-800">
+                                        The evaluation step can be considered as a collection of (mostly built-in) tools that evaluate or track:
+                                    </p>
+                                    <ul class="list-disc list-outside ml-6 mt-2 space-y-1 text-text-dark">
+                                        <li>Validation attribute rules</li>
+                                        <li>Topology rules</li>
+                                        <li>Adjacent active points</li>
+                                        <li>Disconnected active points</li>
+                                        <li>Gaps and overlaps</li>
+                                        <li>Stated versus calculated area bias</li>
+                                        <li>Volumetric overlaps (for 3D parcels and their subtractions).</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Step 5 -->
+                                <div>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 5: Completion</p>
+                                    <p class="mb-2">
+                                        Finally, once all the errors are cleared, step number 5 will:
+                                    </p>
+                                    <ul class="list-disc list-outside ml-6 space-y-1">
+                                        <li>Perform reconcile and post to the edit version towards the default version.</li>
+                                        <li>Send feedback to the Cadaster Management System to confirm that the task is completed.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </section>
 
