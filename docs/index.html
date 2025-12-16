@@ -123,10 +123,22 @@
                 <span class="ml-3 whitespace-nowrap sidebar-text">Editing with Parcel Fabric</span>
             </a>
 
-            <!-- 6. Database Technical Specifications -->
-            <a href="#" data-page="specs" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 17h10a2 2 0 002-2V9a2 2 0 00-2-2H7a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>
-                <span class="ml-3 whitespace-nowrap sidebar-text">Database Technical Specs</span>
+            <!-- 6. Challenges (Replacing Database Technical Specs) -->
+            <a href="#" data-page="challenges" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
+                <!-- Alert Triangle Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span class="ml-3 whitespace-nowrap sidebar-text">Challenges</span>
+            </a>
+
+            <!-- 7. What's Next? (New) -->
+            <a href="#" data-page="next" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
+                <!-- Trending Up / Forward Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span class="ml-3 whitespace-nowrap sidebar-text">What's Next?</span>
             </a>
         </nav>
     </aside>
@@ -200,7 +212,7 @@
                             <h2 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">Timeline & Historical Context</h2>
                             
                             <p class="text-text-dark leading-relaxed mb-8">
-                                The <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> began back in 1920 as the Survey Department under the British Mandate, and officially became the Survey of Israel in 1948. Later, it came under the <a href="https://www.gov.il/en/departments/ministry_of_construction_and_housing/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Ministry of Construction and Housing</a> with the first national cadaster database around 1995. Before 2023 There were few attempts to modernize the cadaster data, but all ended in failure. In 2023, our CEO had a vision to build a digital twin for all the government and municipal data in Israel, therefore our mapping & GIS division started to think again how to modernize the cadastral data and the applications around it. We are hoping to launch the new national cadaster database and its new applications early next year.
+                                The <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> began back in 1920 as the Survey Department under the British Mandate, and officially became the Survey of Israel in 1948. Later, it came under the <a href="https://www.gov.il/en/departments/ministry_of_construction_and_housing/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Ministry of Construction and Housing</a> with the first national cadaster database around 1995. Before 2023 There were few attempts to modernize the cadaster data, but all ended in failure. In 2023, our CEO had a vision to build a digital twin for all the government and municipal data in Israel, therefore our mapping & GIS division started to think again how to modernize the cadastral data and the applications around it. We are hoping to launch the new national cadaster database and its new applications in early 2026.
                             </p>
                             
                             <!-- Timeline Chart -->
@@ -548,15 +560,74 @@
                     </div>
                 </section>
 
-                <!-- Database Technical Specifications Page -->
-                <section id="page-specs" class="page-content hidden">
+                <!-- Challenges Page (Replaces Database Technical Specifications) -->
+                <section id="page-challenges" class="page-content hidden">
+                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                        <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
+                    </div>
+                    
+                    <div class="space-y-6 mt-10">
+                        <!-- Challenge 1 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Performance Issues (Map Rendering)</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                The most critical issue we encountered was related to the rendering of features on the map while we were editing. It was very difficult for us to pinpoint what was causing the problem, and for a moment, we thought we had tried every performance tip and suggestion. Eventually, what saved us from the misery was reinstalling the SDE on the database server and recreating the database from scratch. The previous one likely had many issues and noises because we had performed many testing and made changes in the settings too many times. In addition, when we upgraded to ArcGIS Pro 3.5, we experienced even better and smoother performance.
+                            </p>
+                        </div>
+
+                        <!-- Challenge 2 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Learning & Adopting New Technology</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Since Parcel Fabric was new to us, it took us time to understand its logic, discover and experiment with the tools, and automate them. We later teach the editors how to use the tools and wrote a short user guide.
+                            </p>
+                        </div>
+
+                        <!-- Challenge 3 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Editing 3D Data</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Currently, 3D editing is limited in ArcGIS Pro and is not fully supported in the Parcel Fabric product. Hence we needed to find workarounds for adding or modifying 3D data.
+                            </p>
+                        </div>
+
+                        <!-- Challenge 4 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Software Bugs</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Along the way we have reported 9 bugs in ArcGIS Pro.
+                            </p>
+                        </div>
+
+                        <!-- Challenge 5 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. National Security</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Completing projects during times of conflict is inherently challenging, and this challenge is significantly amplified when daily work is disrupted by ongoing rocket attacks, frequent air-raid alarms, and the constant need to seek shelter. Throughout this period, our systems were required to undergo numerous updates and operational restrictions to defend against heightened cyber threats, often while infrastructure and connectivity were unstable. In parallel, many team members were called up for reserve military duty, creating staffing gaps and loss of continuity, while additional workdays were lost due to direct security incidents. Despite working under continuous stress, uncertainty, and physical danger, the team remained committed to meeting project deadlines, demonstrating resilience and adaptability under extraordinary national security conditions.
+                            </p>
+                        </div>
+
+                        <!-- Generated Theme Image -->
+                        <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                            <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" target="_blank" rel="noopener noreferrer">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" 
+                                     alt="Challenges Theme Image" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Theme+Image';">
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What's Next Page (New) -->
+                <section id="page-next" class="page-content hidden">
                     <div class="p-6 sm:p-8 bg-bg-light rounded-xl border-l-4 border-secondary-accent shadow-lg">
-                        <h2 class="text-4xl font-bold text-primary-accent mb-4">Database Technical Specifications</h2>
+                        <h2 class="text-4xl font-bold text-primary-accent mb-4">What's Next?</h2>
                         <p class="text-text-dark">
-                            <span class="text-secondary-accent font-semibold">Placeholder:</span> This page will detail the technical architecture, including the chosen database platform (e.g., PostgreSQL/PostGIS), hardware requirements, backup strategy, and security protocols. Content coming soon...
+                            <span class="text-secondary-accent font-semibold">Placeholder:</span> This page will outline the future roadmap, upcoming features, and the long-term vision for the National Cadaster Project.
                         </p>
                         <div class="h-64 mt-4 flex items-center justify-center bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg">
-                            <p class="text-gray-500">Technical Stack Overview</p>
+                            <p class="text-gray-500">Future Roadmap Overview</p>
                         </div>
                     </div>
                 </section>
