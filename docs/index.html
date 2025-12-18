@@ -10,24 +10,26 @@
     
     <!-- 2. Configure Tailwind Object -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        // Placer.ai inspired palette:
-                        'primary-accent': '#593B9F', // Deep Blue-Purple (Headers, CTA)
-                        'secondary-accent': '#45A2FF', // Deep Blue (Links, Main UI)
-                        
-                        // Data Visualization Colors
-                        'app-color': '#15803d', // Dark Green (Applications)
-                        'platform-color': '#007bff', // Dark Neon-Blue (Platforms)
-                        'consumer-color': '#ea580c', // Dark Vivid-Orange (Consumers)
-                        'yellow-border': '#F5E427', // Custom Yellow Border Color
-                        'subtitle-color': '#D6C720', // New subtitle color
+        window.tailwind = {
+            config: {
+                theme: {
+                    extend: {
+                        colors: {
+                            // Placer.ai inspired palette:
+                            'primary-accent': '#593B9F', // Deep Blue-Purple (Headers, CTA)
+                            'secondary-accent': '#45A2FF', // Deep Blue (Links, Main UI)
+                            
+                            // Data Visualization Colors
+                            'app-color': '#15803d', // Dark Green (Applications)
+                            'platform-color': '#007bff', // Dark Neon-Blue (Platforms)
+                            'consumer-color': '#ea580c', // Dark Vivid-Orange (Consumers)
+                            'yellow-border': '#F5E427', // Custom Yellow Border Color
+                            'subtitle-color': '#D6C720', // New subtitle color
 
-                        // Base Colors
-                        'bg-light': '#FFFFFF', // Clean White
-                        'text-dark': '#343A40', // Near Black/Dark Gray
+                            // Base Colors
+                            'bg-light': '#FFFFFF', // Clean White
+                            'text-dark': '#343A40', // Near Black/Dark Gray
+                        }
                     }
                 }
             }
@@ -82,7 +84,7 @@
     <!-- 1. Fixed Side Menu (Sidebar) -->
     <aside id="sidebar" class="fixed top-0 left-0 h-full flex-shrink-0 transition-all duration-300 bg-primary-accent shadow-xl z-20 w-16 md:w-64">
         <div class="p-4 border-b border-white/20 h-16 flex items-center justify-end overflow-hidden">
-            <h1 id="sidebar-title" class="text-xl font-extrabold text-white whitespace-nowrap transition-opacity duration-300 w-full opacity-0 md:opacity-100 hidden md:block">Menu</h1>
+            <h1 id="sidebar-title" class="text-xl font-extrabold text-white whitespace-nowrap transition-opacity duration-300 w-full opacity-100 hidden md:block">Menu</h1>
             
             <button id="toggle-sidebar-btn" class="text-white hover:text-secondary-accent transition duration-200 focus:outline-none flex-shrink-0 ml-2" aria-label="Toggle Menu">
                 <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300 rotate-180 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -93,9 +95,8 @@
         
         <!-- Navigation Tabs -->
         <nav class="p-2 space-y-2">
-            <!-- 1. About Link (Renamed from Home) -->
+            <!-- 1. About Link -->
             <a href="#" data-page="home" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium transition duration-200 bg-secondary-accent/10 text-white border-l-4 border-secondary-accent shadow-md">
-                <!-- Info Icon for About -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -109,7 +110,7 @@
             </a>
             
             <!-- 3. Defining Schema -->
-            <a href="#" data-page="schema" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
+            <a href="#" data-page="schema" class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10M10 5v14M16 5v14M20 7v10" /></svg>
                 <span class="ml-3 whitespace-nowrap sidebar-text hidden md:inline">Defining Schema</span>
             </a>
@@ -290,7 +291,6 @@
                             <h3 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-1">
                                 Applications, Platforms and Consumers
                             </h3>
-
                             <div class="flex flex-wrap space-x-6 mb-6">
                                 <label class="flex items-center space-x-2 text-app-color cursor-pointer">
                                     <input type="checkbox" id="filter-application" data-filter="application" checked
@@ -308,7 +308,6 @@
                                     <span class="text-lg font-medium">Consumers</span>
                                 </label>
                             </div>
-
                             <div id="app-blocks-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
                                 <div class="app-block p-4 bg-app-color border border-app-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="application">
                                     <span class="block text-xl font-semibold text-white">Palm</span>
@@ -384,7 +383,6 @@
                             <h3 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">
                                 Statistics & Proportions
                             </h3>
-
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
                                 <div class="col-span-1">
                                     <h4 class="text-lg font-semibold text-text-dark mb-3 text-center">Monthly Records Volume</h4>
@@ -414,50 +412,66 @@
                                 </svg>
                             </a>
                         </div>
-
                     </div>
                 </section>
 
-                <!-- ETL Process Page -->
-                <section id="page-etl" class="page-content hidden">
+                <!-- Operational Workflow Page -->
+                <section id="page-workflow" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                            <h2 class="text-4xl font-extrabold text-primary-accent">ETL Pipeline & Data Integration</h2>
+                            <h2 class="text-4xl font-extrabold text-primary-accent">Operational Workflow</h2>
                         </div>
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
-                            <div class="space-y-4 text-text-dark leading-relaxed">
-                                <p>
-                                    We designed a data pipeline to automate the migration. It starts by extracting all relevant tables from the old databases, which run on a “sealed” operating system, and transferring them to an open operating system under security supervision.
-                                </p>
-                                <p>
-                                    Once transferred, many data manipulation scripts handled the data transformation by cleaning values, fixing values, filling missing data and aligning the structure to match the new schema.
-                                </p>
-                                <p>
-                                    The resulting transformed data is stored in a File GDB.
-                                </p>
-                                <p>
-                                    And finally, we load the transformed data from that File GDB into an empty enterprise GDB, there, we can enable branch versioning, adding indexes and publish feature services.
-                                </p>
-                                <p>
-                                    Since the entire modernization project took nearly three years, we ran this whole pipeline every month or two.
-                                    When the full modernization project completed, we ran the pipeline one final time.
-                                </p>
-                            </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
-                                         alt="Extract, Transform, and Load Pipeline Diagram" 
-                                         class="w-full h-auto rounded-lg shadow-xl"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The Old Operational workflow</h3>
+                            <p class="text-text-dark leading-relaxed mb-6">
+                                The older operational workflow contains stations where each one of them has its own team. The flow starts with land surveyors from the
+                                private sector submitting their digital cadastral blueprints (CAD files and other related
+                                documents) through the TopoCad platform.
+                                <br><br>
+                                After submission, the cadaster plan is checked and verified by a cadaster
+                                reviewer who uses the Cyclamen app. Cyclamen runs a series of checks and validations on the CAD file.
+                                If the file passes all tests, Cyclamen converts the CAD data into GIS format
+                                and store it as "In-Process" data across several databases (and not
+                                in one location).
+                                <br><br>
+                                Once the reviewer decides to approve the plan, the editor steps-in and starts
+                                updating and modifying the official cadastral data- based on the approved
+                                in-process data.
+                            </p>
+                            <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" 
+                                        alt="Infographic showing the old operational pipeline process" 
+                                        class="w-full h-auto rounded-lg shadow-xl" 
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Old+Operational+Pipeline+Image+Failed+to+Load';">
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Next Page Navigation -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The New Operational Workflow</h3>
+                            <p class="text-text-dark leading-relaxed mb-6">
+                                In the new operational pipeline, there
+                                are still similarities to the old one, but a there's few key differences:
+                                <ol class="list-decimal list-inside ml-4 space-y-1 mt-2">
+                                    <li>TopoCad now runs a newer version that was adjusted to work with the new database.</li>
+                                    <li>The CAD file is sent and stored in a new Cadaster Management System.</li>
+                                    <li>The cadaster reviewer now uses an improved version of the Cyclamen app to validate and convert the CAD data. In addition, there’s a new app called Palm, which works like Cyclamen but focuses on checking and validating 3D cadastral plans instead of 2D ones.</li>
+                                    <li>The converted in-process data is now stored in the same database with the official cadaster data.</li>
+                                    <li>Finally, the editor uses ArcGIS Pro Tasks to update and edit official cadastral features. Once the task is done, a feedback is sent back to the Management System.</li>
+                                </ol>
+                            </p>
+                            <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" 
+                                        alt="Infographic showing the new operational pipeline process." 
+                                        class="w-full h-auto rounded-lg shadow-xl"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=New+Operational+Pipeline+Image+Failed+to+Load';">
+                                </a>
+                            </div>
+                        </div>
                         <div class="flex justify-end mt-10">
-                            <a href="#" data-page="tasks" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: Editing with Parcel Fabric 
+                            <a href="#" data-page="schema" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                                Next: Defining Schema 
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
@@ -473,6 +487,8 @@
                             <h2 class="text-4xl font-extrabold text-primary-accent">Defining Schema</h2>
                         </div>
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <!-- ADDED TITLE HERE -->
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Main Principles</h3>
                             <div class="space-y-4 text-text-dark">
                                 <ul class="list-disc list-outside ml-5 space-y-3">
                                     <li class="pl-2">
@@ -514,7 +530,7 @@
                             </div>
                         </div>
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Schema Visualization</h3>
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Geodatabase Structure</h3>
                             <div class="space-y-4 text-text-dark leading-relaxed">
                                 <p>
                                     To help visualize, this chart shows how in the same geodatabase we have what we call the in-process data (in the yellow bubble) and the official cadaster data as (inside a dataset with Parcel Fabric)
@@ -577,8 +593,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Next Page Navigation -->
                         <div class="flex justify-end mt-10">
                             <a href="#" data-page="etl" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
                                 Next: ETL Pipeline & Integration 
@@ -590,147 +604,44 @@
                     </div>
                 </section>
 
-                <!-- Challenges Page (Replaces Database Technical Specifications) -->
-                <section id="page-challenges" class="page-content hidden">
-                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                        <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
-                    </div>
-                    
-                    <div class="space-y-6 mt-10">
-                        <!-- Challenge 1 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Performance Issues (Map Rendering)</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                The most critical issue we encountered was related to the rendering of features on the map while we were editing. It was very difficult for us to pinpoint what was causing the problem, and for a moment, we thought we had tried every performance tip and suggestion. Eventually, what saved us from the misery was reinstalling the SDE on the database server and recreating the database from scratch. The previous one likely had many issues and noises because we had performed many testing and made changes in the settings too many times. In addition, when we upgraded to ArcGIS Pro 3.5, we experienced even better and smoother performance.
-                            </p>
-                        </div>
-
-                        <!-- Challenge 2 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Learning & Adopting New Technology</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Since Parcel Fabric was new to us, it took us time to understand its logic, discover and experiment with the tools, and automate them. We later teach the editors how to use the tools and wrote a short user guide.
-                            </p>
-                        </div>
-
-                        <!-- Challenge 3 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Editing 3D Data</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Currently, 3D editing is limited in ArcGIS Pro and is not fully supported in the Parcel Fabric product. Hence we needed to find workarounds for adding or modifying 3D data.
-                            </p>
-                        </div>
-
-                        <!-- Challenge 4 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Software Bugs</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Along the way we have reported 9 bugs in ArcGIS Pro.
-                            </p>
-                        </div>
-
-                        <!-- Challenge 5 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. National Security</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Completing projects during times of conflict is inherently challenging, and this challenge is significantly amplified when daily work is disrupted by ongoing rocket attacks, frequent air-raid alarms, and the constant need to seek shelter. Throughout this period, our systems were required to undergo numerous updates and operational restrictions to defend against heightened cyber threats, often while infrastructure and connectivity were unstable. In parallel, many team members were called up for reserve military duty, creating staffing gaps and loss of continuity, while additional workdays were lost due to direct security incidents. Despite working under continuous stress, uncertainty, and physical danger, the team remained committed to meeting project deadlines, demonstrating resilience and adaptability under extraordinary national security conditions.
-                            </p>
-                        </div>
-
-                        <!-- Generated Theme Image -->
-                        <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                            <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" target="_blank" rel="noopener noreferrer">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" 
-                                     alt="Challenges Theme Image" 
-                                     class="w-full h-auto rounded-lg shadow-xl"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Theme+Image';">
-                            </a>
-                        </div>
-
-                        <!-- Next Page Navigation -->
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="next" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: What's Next? 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- What's Next Page (New) -->
-                <section id="page-next" class="page-content hidden">
-                    <div class="p-6 sm:p-8 bg-bg-light rounded-xl border-l-4 border-secondary-accent shadow-lg">
-                        <h2 class="text-4xl font-bold text-primary-accent mb-4">What's Next?</h2>
-                        <p class="text-text-dark">
-                            <span class="text-secondary-accent font-semibold">Placeholder:</span> This page will outline the future roadmap, upcoming features, and the long-term vision for the National Cadaster Project.
-                        </p>
-                        <div class="h-64 mt-4 flex items-center justify-center bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg">
-                            <p class="text-gray-500">Future Roadmap Overview</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Operational Workflow Page -->
-                <section id="page-workflow" class="page-content hidden">
+                <!-- ETL Pipeline Page -->
+                <section id="page-etl" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                            <h2 class="text-4xl font-extrabold text-primary-accent">Operational Workflow</h2>
+                            <h2 class="text-4xl font-extrabold text-primary-accent">ETL Pipeline & Data Integration</h2>
                         </div>
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The Old Operational workflow</h3>
-                            <p class="text-text-dark leading-relaxed mb-6">
-                                The older operational workflow contains stations where each one of them has its own team. The flow starts with land surveyors from the
-                                private sector submitting their digital cadastral blueprints (CAD files and other related
-                                documents) through the TopoCad platform.
-                                <br><br>
-                                After submission, the cadaster plan is checked and verified by a cadaster
-                                reviewer who uses the Cyclamen app. Cyclamen runs a series of checks and validations on the CAD file.
-                                If the file passes all tests, Cyclamen converts the CAD data into GIS format
-                                and store it as "In-Process" data across several databases (and not
-                                in one location).
-                                <br><br>
-                                Once the reviewer decides to approve the plan, the editor steps-in and starts
-                                updating and modifying the official cadastral data- based on the approved
-                                in-process data.
-                            </p>
-                            <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" 
-                                        alt="Infographic showing the old operational pipeline process" 
-                                        class="w-full h-auto rounded-lg shadow-xl" 
-                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Old+Operational+Pipeline+Image+Failed+to+Load';">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
+                            <div class="space-y-4 text-text-dark leading-relaxed">
+                                <p>
+                                    We designed a data pipeline to automate the migration. It starts by extracting all relevant tables from the old databases, which run on a “sealed” operating system, and transferring them to an open operating system under security supervision.
+                                </p>
+                                <p>
+                                    Once transferred, many data manipulation scripts handled the data transformation by cleaning values, fixing values, filling missing data and aligning the structure to match the new schema.
+                                </p>
+                                <p>
+                                    The resulting transformed data is stored in a File GDB.
+                                </p>
+                                <p>
+                                    And finally, we load the transformed data from that File GDB into an empty enterprise GDB, there, we can enable branch versioning, adding indexes and publish feature services.
+                                </p>
+                                <p>
+                                    Since the entire modernization project took nearly three years, we ran this whole pipeline every month or two.
+                                    When the full modernization project completed, we ran the pipeline one final time.
+                                </p>
+                            </div>
+                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
+                                         alt="Extract, Transform, and Load Pipeline Diagram" 
+                                         class="w-full h-auto rounded-lg shadow-xl"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
                                 </a>
                             </div>
                         </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The New Operational Workflow</h3>
-                            <p class="text-text-dark leading-relaxed mb-6">
-                                In the new operational pipeline, there
-                                are still similarities to the old one, but a there's few key differences:
-                                <ol class="list-decimal list-inside ml-4 space-y-1 mt-2">
-                                    <li>TopoCad now runs a newer version that was adjusted to work with the new database.</li>
-                                    <li>The CAD file is sent and stored in a new Cadaster Management System.</li>
-                                    <li>The cadaster reviewer now uses an improved version of the Cyclamen app to validate and convert the CAD data. In addition, there’s a new app called Palm, which works like Cyclamen but focuses on checking and validating 3D cadastral plans instead of 2D ones.</li>
-                                    <li>The converted in-process data is now stored in the same database with the official cadaster data.</li>
-                                    <li>Finally, the editor uses ArcGIS Pro Tasks to update and edit official cadastral features. Once the task is done, a feedback is sent back to the Management System.</li>
-                                </ol>
-                            </p>
-                            <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" 
-                                        alt="Infographic showing the new operational pipeline process." 
-                                        class="w-full h-auto rounded-lg shadow-xl"
-                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=New+Operational+Pipeline+Image+Failed+to+Load';">
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Next Page Navigation -->
                         <div class="flex justify-end mt-10">
-                            <a href="#" data-page="schema" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: Defining Schema 
+                            <a href="#" data-page="tasks" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                                Next: Editing with Parcel Fabric 
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
@@ -739,7 +650,7 @@
                     </div>
                 </section>
 
-                <!-- National Cadaster Tasks for Editing Page -->
+                <!-- Editing with Parcel Fabric Page -->
                 <section id="page-tasks" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
@@ -775,7 +686,6 @@
                         <!-- Designing Editing Workflow with Tasks -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Designing Editing Workflow with Tasks</h3>
-                            
                             <div class="text-text-dark leading-relaxed space-y-4">
                                 <p>
                                     In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
@@ -805,7 +715,6 @@
                                     </li>
                                 </ul>
                             </div>
-
                             <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
                                 <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" target="_blank" rel="noopener noreferrer">
                                     <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" 
@@ -814,14 +723,12 @@
                                          onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
                                 </a>
                             </div>
-
                             <div class="mt-8 text-text-dark leading-relaxed space-y-6">
                                 <p>
                                     Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.
                                     Most of the steps rely on Python scripting tools that combine Parcel Fabric tools or other ArcGIS geoprocessing tools.
                                     Here is a detailed overview of a typical task:
                                 </p>
-
                                 <!-- Step 1 -->
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 1: Start Record Editing</p>
@@ -839,7 +746,6 @@
                                         <span class="font-bold">Note:</span> In "Retire And Create" task type this step will also automatic retire the input parcels and lines and add the new parcels and lines from the plan data.
                                     </p>
                                 </div>
-
                                 <!-- Step 2 -->
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 2: Import or Modify Points</p>
@@ -852,9 +758,7 @@
                                     <p class="mb-4">
                                         And if it necessary, new points can be created to match the points from the plan. And as the points move, the related parcel, blocks and lines move accordingly.
                                     </p>
-
                                     <p class="mb-2 font-bold text-gray-800">We customized this tool to improve efficiency by implementing the following enhancements:</p>
-
                                     <div class="space-y-4 ml-1">
                                         <div>
                                             <p class="font-semibold text-gray-800">a. Automated parameter handling</p>
@@ -865,19 +769,16 @@
                                                 <li>The command is restricted to run only on active points by applying a constant query.</li>
                                             </ul>
                                         </div>
-                                        
                                         <div>
                                             <p class="font-semibold text-gray-800">b. Visual conflict representation</p>
                                             <p class="mt-1">When conflicts are detected, the tool automatically generates red ring-shaped polygons on the map, rather than outputting the results to a database table. The polygon radius is defined by the tool’s search distance parameter, allowing editors to quickly and visually identify conflict locations.</p>
                                         </div>
-                                        
                                         <div>
                                             <p class="font-semibold text-gray-800">c. Structured logging output</p>
                                             <p class="mt-1">The tool’s log messages were customized to be displayed in a tabular format, making the results easier to read and interpret for editors.</p>
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Step 3 -->
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 3: Update Attributes</p>
@@ -888,7 +789,6 @@
                                         The tool here will automatically update the fabric layers attributes based on the plan data. For instance, the old land designation of a parcel is replaced with the newer land designation. This step will also run the Build Active command if the editor set this parameter on.
                                     </p>
                                 </div>
-
                                 <!-- Step 4 -->
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 4: Evaluation</p>
@@ -911,7 +811,6 @@
                                         <li>Volumetric overlaps (for 3D parcels and their subtractions).</li>
                                     </ul>
                                 </div>
-
                                 <!-- Step 5 -->
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 5: Completion</p>
@@ -924,7 +823,6 @@
                                         <li>Send feedback to the Cadaster Management System to confirm that the task is completed.</li>
                                     </ul>
                                 </div>
-
                                 <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
                                     <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" target="_blank" rel="noopener noreferrer">
                                         <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" 
@@ -933,7 +831,6 @@
                                              onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
                                     </a>
                                 </div>
-
                                 <div class="mt-6 pt-4 border-t border-gray-200">
                                     <p class="font-bold text-lg text-primary-accent mb-2">Summary</p>
                                     <p class="mb-4">
@@ -945,8 +842,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Next Page Navigation -->
                         <div class="flex justify-end mt-10">
                             <a href="#" data-page="challenges" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
                                 Next: Challenges 
@@ -958,6 +853,133 @@
                     </div>
                 </section>
 
+                <!-- Challenges Page -->
+                <section id="page-challenges" class="page-content hidden">
+                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                        <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
+                    </div>
+                    <div class="space-y-6 mt-10">
+                        <!-- Challenge 1 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Performance Issues (Map Rendering)</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                The most critical issue we encountered was related to the rendering of features on the map while we were editing. It was very difficult for us to pinpoint what was causing the problem, and for a moment, we thought we had tried every performance tip and suggestion. Eventually, what saved us from the misery was reinstalling the SDE on the database server and recreating the database from scratch. The previous one likely had many issues and noises because we had performed many testing and made changes in the settings too many times. In addition, when we upgraded to ArcGIS Pro 3.5, we experienced even better and smoother performance.
+                            </p>
+                        </div>
+                        <!-- Challenge 2 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Learning & Adopting New Technology</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Since Parcel Fabric was new to us, it took us time to understand its logic, discover and experiment with the tools, and automate them. We later teach the editors how to use the tools and wrote a short user guide.
+                            </p>
+                        </div>
+                        <!-- Challenge 3 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Editing 3D Data</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Currently, 3D editing is limited in ArcGIS Pro and is not fully supported in the Parcel Fabric product. Hence we needed to find workarounds for adding or modifying 3D data.
+                            </p>
+                        </div>
+                        <!-- Challenge 4 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Software Bugs</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Along the way we have reported 9 bugs in ArcGIS Pro.
+                            </p>
+                        </div>
+                        <!-- Challenge 5 -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. National Security</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Completing projects during times of conflict is inherently challenging, and this challenge is significantly amplified when daily work is disrupted by ongoing rocket attacks, frequent air-raid alarms, and the constant need to seek shelter. Throughout this period, our systems were required to undergo numerous updates and operational restrictions to defend against heightened cyber threats, often while infrastructure and connectivity were unstable. In parallel, many team members were called up for reserve military duty, creating staffing gaps and loss of continuity, while additional workdays were lost due to direct security incidents. Despite working under continuous stress, uncertainty, and physical danger, the team remained committed to meeting project deadlines, demonstrating resilience and adaptability under extraordinary national security conditions.
+                            </p>
+                        </div>
+                        <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                            <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" target="_blank" rel="noopener noreferrer">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" 
+                                     alt="Challenges Theme Image" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Theme+Image';">
+                            </a>
+                        </div>
+                        <div class="flex justify-end mt-10">
+                            <a href="#" data-page="next" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                                Next: What's Next? 
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What's Next Page -->
+                <section id="page-next" class="page-content hidden">
+                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                        <h2 class="text-4xl font-extrabold text-primary-accent mb-4">What's Next?</h2>
+                        <p class="text-lg text-text-dark leading-relaxed">
+                            The following next points outline the strategic direction for the continued evolution of the modernization.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-6 mt-10">
+                        <!-- 1. Relocate to Cloud -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Relocate to Cloud</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Relocate the database and supporting services to a secure government cloud environment (Project Nimbus, currently in beta). This move will improve scalability, resilience, availability, and compliance with government-level security standards, while laying the foundation for future cloud-native capabilities.
+                            </p>
+                        </div>
+                        <!-- 2. Improving Data Quality -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Improving Data Quality & Completeness Enhancement</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Continue systematic improvement of the quality, accuracy, and completeness of existing datasets. This includes refining geometries, validating attributes, closing data gaps, and strengthening quality assurance processes to ensure reliable and authoritative cadastral information.
+                            </p>
+                        </div>
+                        <!-- 3. Tasks and Tool Optimization -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Tasks and Tool Optimization</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Further optimize tasks, workflows, and supporting tools to improve performance, stability, and efficiency. Emphasis will be placed on reducing processing time, minimizing manual intervention, simplifying complex steps, and enhancing the overall user experience for editors.
+                            </p>
+                        </div>
+                        <!-- 4. Multilingual Support -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Multilingual Support and Accessibility</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Develop fully translated versions of tasks and interfaces in additional languages (Arabic and Russian). This will increase accessibility, reduce misunderstandings, and support a more diverse group of editors.
+                            </p>
+                        </div>
+                        <!-- 5. Comprehensive Documentation -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. Comprehensive Documentation and Knowledge Sharing</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Produce a more detailed and structured user guide and tutorials covering task workflows, tools, best practices, common pitfalls, and troubleshooting. The guide will serve both as onboarding material for new users and as a reference for experienced editors.
+                            </p>
+                        </div>
+                        <!-- 6. Advancing the 3D Cadaster -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">6. Advancing the 3D Cadaster</h3>
+                            <p class="text-text-dark leading-relaxed">
+                                Progress the 3D cadaster framework by converting existing multipatch geometries into standardized Esri 3D Object formats. This step will improve interoperability, visualization, and long-term maintainability of 3D cadastral data.
+                            </p>
+                        </div>
+                        <!-- 7. Monitoring & Analytics -->
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">7. Monitoring & Analytics</h3>
+                            <p class="text-text-dark leading-relaxed mb-4">
+                                Establish systematic monitoring and analysis of task logs to support data-driven improvements. Key questions to be addressed include:
+                            </p>
+                            <ul class="list-disc list-outside ml-6 space-y-2 text-text-dark">
+                                <li>Which task steps are the most time-consuming or error-prone?</li>
+                                <li>What is the average and variance of task completion times based on historical data?</li>
+                                <li>Are there recurring bottlenecks associated with specific tools or workflow steps?</li>
+                                <li>Do certain editors consistently encounter difficulties that indicate a need for training, workflow refinement, or tool enhancement?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
@@ -984,7 +1006,6 @@
                 if (sidebarTitle) {
                     sidebarTitle.classList.add('opacity-0');
                     sidebarTitle.classList.remove('opacity-100');
-                    sidebarTitle.classList.remove('md:opacity-100');
                 }
                 sidebarTextElements.forEach(span => {
                     span.classList.add('hidden');
@@ -993,7 +1014,6 @@
                 if (toggleIcon) {
                     toggleIcon.classList.add('rotate-180');
                     toggleIcon.classList.remove('rotate-0');
-                    toggleIcon.classList.remove('md:rotate-0');
                 }
                 if (mainContent) {
                     mainContent.classList.remove('md:ml-64');
@@ -1082,7 +1102,6 @@
             document.getElementById('filter-platform')?.addEventListener('change', filterBlocks);
             document.getElementById('filter-consumer')?.addEventListener('change', filterBlocks);
 
-
             if (window.innerWidth < 768) {
                 collapseSidebar();
             } else {
@@ -1096,7 +1115,6 @@
                 });
             });
 
-            // Add event listeners for next page links
             const nextPageLinks = document.querySelectorAll('.next-page-link');
             nextPageLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
