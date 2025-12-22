@@ -8,7 +8,10 @@
     <!-- 1. Load Tailwind CSS CDN FIRST -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Configure Tailwind Object -->
+    <!-- 2. FontAwesome for the new Workflow Page -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- 3. Configure Tailwind Object -->
     <script>
         window.tailwind = {
             config: {
@@ -42,6 +45,8 @@
     <!-- Use Inter font family -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap'); /* From uploaded file */
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #F8F9FA; 
@@ -63,6 +68,120 @@
         .custom-checkbox {
             color: #FFFFFF;
             border-color: #593B9F;
+        }
+
+        /* --- STYLES FROM OPERATIONAL WORKFLOW.HTML --- */
+        
+        /* Global Particle Animation */
+        @keyframes traverse {
+            0% { top: 0; opacity: 0; background-color: #3b82f6; } /* Blue (Start) */
+            2% { opacity: 1; }
+            25% { background-color: #3b82f6; } 
+            35% { background-color: #6366f1; } /* Indigo (Review) */
+            60% { background-color: #f97316; } /* Orange (Storage) */
+            85% { background-color: #10b981; } /* Emerald (End) */
+            98% { opacity: 1; }
+            100% { top: 100%; opacity: 0; background-color: #10b981; }
+        }
+
+        .global-particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: traverse 5s linear infinite;
+            z-index: 20;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 4px rgba(0,0,0,0.1);
+            border: 2px solid white;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .connector-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #e2e8f0;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        
+        /* Pulse animation for active elements */
+        .pulse-ring {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            animation: pulse-blue 2s infinite;
+        }
+        
+        @keyframes pulse-blue {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+
+        .db-grid {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        /* Scribble Animation for Pen */
+        @keyframes scribble {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(10deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+        
+        .animate-scribble {
+            display: inline-block;
+            animation: scribble 0.8s ease-in-out infinite;
+        }
+
+        /* Database Glow Animation */
+        @keyframes glowFade {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.4)); transform: scale(1); }
+            50% { opacity: 0.7; filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.9)); transform: scale(1.1); }
+        }
+        
+        .animate-glow-fade {
+            animation: glowFade 2s infinite ease-in-out;
+        }
+
+        /* Gold Border Fade Animation for CMS */
+        @keyframes borderFade {
+            0%, 100% { border-color: #F5E427; opacity: 1; }
+            50% { border-color: rgba(245, 228, 39, 0.3); }
+        }
+        
+        .animate-border-fade {
+            animation: borderFade 3s infinite ease-in-out;
+        }
+
+        /* Blue Glow Animation for Station 1 */
+        @keyframes glowBlue {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.4)); transform: scale(1); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.9)); transform: scale(1.1); }
+        }
+
+        .animate-glow-blue {
+            animation: glowBlue 2s infinite ease-in-out;
+        }
+
+        /* Yellow Glow Animation for Station 3 */
+        @keyframes glowYellow {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px rgba(245, 228, 39, 0.4)); transform: scale(1); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 10px rgba(245, 228, 39, 0.9)); transform: scale(1.1); }
+        }
+
+        .animate-glow-yellow {
+            animation: glowYellow 2s infinite ease-in-out;
         }
     </style>
 
@@ -452,40 +571,316 @@
                     </div>
                 </section>
 
-                <!-- Operational Workflow Page -->
+                <!-- Operational Workflow Page (UPDATED WITH NEW CONTENT) -->
                 <section id="page-workflow" class="page-content hidden">
-                    <div class="space-y-10">
-                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                            <h2 class="text-4xl font-extrabold text-primary-accent">Operational Workflow</h2>
-                        </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The Old Operational workflow</h3>
-                            <p class="text-text-dark leading-relaxed mb-6">
-                                The older operational workflow contains stations where each one of them has its own team...
-                            </p>
-                            <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Old%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Old%20Operational%20Pipeline.png" 
-                                        alt="Old Pipeline" 
-                                        class="w-full h-auto rounded-lg shadow-xl" 
-                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Old+Operational+Pipeline+Image+Failed+to+Load';">
-                                </a>
+                    
+                    <!-- Content from uploaded file -->
+                    <div class="relative w-full h-full bg-[#f0f4f8]">
+                        
+                        <!-- Header -->
+                        <header class="bg-purple-700 text-white py-6 px-4 relative overflow-hidden transition-all duration-500 rounded-b-xl mb-4">
+                            <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                                <i class="fa-solid fa-map absolute top-10 left-10 text-9xl"></i>
+                                <i class="fa-solid fa-layer-group absolute bottom-10 right-10 text-9xl"></i>
                             </div>
-                        </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The New Operational Workflow</h3>
-                            <p class="text-text-dark leading-relaxed mb-6">
-                                In the new operational pipeline...
-                            </p>
-                            <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/New%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/New%20Operational%20Pipeline.png" 
-                                        alt="New Pipeline" 
-                                        class="w-full h-auto rounded-lg shadow-xl"
-                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=New+Operational+Pipeline+Image+Failed+to+Load';">
-                                </a>
+                            <div class="max-w-4xl mx-auto text-center relative z-10">
+                                <div class="inline-block bg-[#F5E427] text-slate-900 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">Operational Workflow</div>
+                                
+                                <!-- Mode Toggle Switch -->
+                                <div class="flex justify-center items-center gap-4 mb-6">
+                                    <button onclick="switchMode('old')" id="btn-old" class="bg-white text-slate-900 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 ring-2 ring-white">
+                                        Old Lifecycle
+                                    </button>
+                                    <button onclick="switchMode('new')" id="btn-new" class="bg-slate-800 text-slate-400 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 hover:bg-slate-700 border border-slate-700">
+                                        New Lifecycle
+                                    </button>
+                                </div>
+
+                                <h1 id="page-title" class="text-3xl md:text-4xl font-bold mb-2 transition-all duration-300">The Old Cadastral Plan Lifecycle</h1>
                             </div>
-                        </div>
+                        </header>
+
+                        <!-- Main Workflow Container -->
+                        <main class="max-w-5xl mx-auto px-4 py-8 relative min-h-[800px]">
+                            
+                            <!-- Central Line (Shared) -->
+                            <div class="connector-line hidden md:block"></div>
+                            
+                            <!-- GLOBAL TRAVELING PARTICLES -->
+                            <!-- Multiple particles with staggered delays for continuous flow -->
+                            <div class="hidden md:block global-particle" style="animation-delay: 0s;"></div>
+                            <div class="hidden md:block global-particle" style="animation-delay: -1.25s;"></div>
+                            <div class="hidden md:block global-particle" style="animation-delay: -2.5s;"></div>
+                            <div class="hidden md:block global-particle" style="animation-delay: -3.75s;"></div>
+
+                            <!-- OLD LIFECYCLE CONTENT -->
+                            <div id="content-old">
+                                
+                                <!-- Step 1: Submission -->
+                                <div class="relative flex flex-col md:flex-row items-center mb-10 group">
+                                    <div class="w-full md:w-1/2 flex justify-center md:justify-end md:pr-12 mb-4 md:mb-0">
+                                        <div class="w-20 h-20 bg-white rounded-full border-4 border-blue-500 flex items-center justify-center z-10 shadow-lg pulse-ring">
+                                            <i class="fa-solid fa-hard-hat text-2xl text-blue-600 animate-glow-blue"></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-1/2 md:pl-12">
+                                        <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-blue-500 card-hover transition-all duration-300">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <h3 class="text-lg font-bold text-slate-800">1. Submission</h3>
+                                            </div>
+                                            <p class="text-slate-600 mb-3 text-sm">
+                                                Land surveyors from the private sector submitting their cadastral plans (CAD files and other related documents) through the Topocad platform.
+                                                Topocad is like a hub platform that provides data access and visualization mainly for land surveyors (but it's open for the public also).
+                                            </p>
+                                            <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
+                                                <i class="fa-solid fa-cloud-arrow-up text-blue-400 text-lg"></i>
+                                                <div class="text-sm">
+                                                    <span class="block font-semibold">Topocad Platform</span>
+                                                    <span class="text-xs text-slate-500">Public/Surveyor Access Hub</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Review -->
+                                <div class="relative flex flex-col md:flex-row-reverse items-center mb-10">
+                                    <div class="w-full md:w-1/2 flex justify-center md:justify-start md:pl-12 mb-4 md:mb-0">
+                                        <div class="w-20 h-20 bg-white rounded-full border-4 border-indigo-500 flex items-center justify-center z-10 shadow-lg relative">
+                                            <i class="fa-solid fa-gear fa-spin text-3xl text-indigo-600"></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-1/2 md:pr-12">
+                                        <div class="bg-white p-5 rounded-xl shadow-md border-r-4 border-indigo-500 card-hover transition-all duration-300 text-left">
+                                            <div class="flex flex-row justify-between items-start mb-2">
+                                                <h3 class="text-lg font-bold text-slate-800">2. Review & Validation</h3>
+                                            </div>
+                                            <p class="text-slate-600 mb-3 text-sm">
+                                                The submission files are reviewed by the Cadaster reviewers, who initiate the Cyclamen app.
+                                                When errors are found, the land surveyors is requested to fix their files.
+                                            </p>
+                                            <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
+                                                <i class="fa-solid fa-list-check" style="color: #B197FC;"></i>
+                                                <div class="text-sm">
+                                                    <span class="block font-semibold">Cyclamen</span>
+                                                    <span class="text-xs text-slate-500">Automated testing wizard</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Conversion & Storage -->
+                                <div class="relative flex flex-col md:flex-row items-center mb-10">
+                                    <div class="w-full md:w-1/2 flex justify-center md:justify-end md:pr-12 mb-4 md:mb-0">
+                                        <div class="w-20 h-20 bg-white rounded-full border-4 border-orange-400 flex items-center justify-center z-10 shadow-lg">
+                                            <i class="fa-solid fa-database text-2xl text-orange-500 animate-glow-yellow"></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-1/2 md:pl-12">
+                                        <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-orange-400 card-hover transition-all duration-300">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <h3 class="text-lg font-bold text-slate-800">3. Conversion & Storage</h3>
+                                            </div>
+                                            <div class="flex items-center gap-4 mb-3">
+                                                 <div class="text-center">
+                                                    <i class="fa-regular fa-file-code text-xl text-blue-900 mb-1"></i>
+                                                    <div class="text-xs font-bold text-blue-900">CAD</div>
+                                                 </div>
+                                                 <i class="fa-solid fa-arrow-right text-black text-sm"></i>
+                                                 <div class="text-center">
+                                                    <i class="fa-solid fa-globe text-xl text-green-500 mb-1"></i>
+                                                    <div class="text-xs font-bold text-green-600">GIS</div>
+                                                 </div>
+                                            </div>
+                                            <p class="text-slate-600 mb-3 text-sm">
+                                                Cyclamen converts the CAD data into GIS format and store it as "In-Process" data across several databases (and not in one location).
+                                                Notice that up to this station, the official cadastral data hasn't been modified yet.
+                                            </p>
+                                            <div class="border border-slate-200 p-2 rounded bg-slate-50 text-[10px] text-slate-500 flex justify-around items-end h-12 relative overflow-hidden">
+                                                <div class="flex flex-col items-center z-10">
+                                                    <i class="fa-solid fa-server text-orange-500"></i>
+                                                    <span class="font-bold text-orange-700">Oracle</span>
+                                                </div>
+                                                <div class="flex flex-col items-center z-10">
+                                                    <i class="fa-solid fa-server text-orange-500"></i>
+                                                    <span class="font-bold text-orange-700">ArcStorm</span>
+                                                </div>
+                                                <div class="flex flex-col items-center z-10">
+                                                    <i class="fa-solid fa-server text-orange-500"></i>
+                                                    <span class="font-bold text-orange-700">SDE</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Final Approval -->
+                                <div class="relative flex flex-col md:flex-row-reverse items-center">
+                                    <div class="w-full md:w-1/2 flex justify-center md:justify-start md:pl-12 mb-4 md:mb-0">
+                                        <div class="w-20 h-20 bg-emerald-600 rounded-full border-4 border-white flex items-center justify-center z-10 shadow-xl ring-4 ring-emerald-100">
+                                            <i class="fa-solid fa-pen-to-square text-2xl text-white animate-scribble"></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-1/2 md:pr-12">
+                                        <div class="bg-white p-5 rounded-xl shadow-lg border-t-8 border-emerald-500 card-hover transition-all duration-300 text-left">
+                                            <div class="flex flex-row justify-between items-start mb-2">
+                                                <h3 class="text-lg font-bold text-slate-800">4. Updating Official Cadaster Data</h3>
+                                            </div>
+                                            <p class="text-slate-600 mb-3 text-sm">
+                                                Once the cadaster reviewer decides to approve the plan, the cadaster editor steps-in and starts updating and modifying the official cadastral data.
+                                                The editing is done on a custom-developed app that supports ESRI's old Coverage file format; these files are stored in ArcStorm.
+                                            </p>
+                                            <div class="flex flex-col gap-2">
+                                                <button class="bg-slate-50 text-emerald-700 py-2 px-4 rounded font-semibold text-xs flex items-center justify-start gap-2 border border-emerald-200">
+                                                     <i class="fa-solid fa-draw-polygon" style="color: #059669;"></i> Official Data Modified
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- END OLD CONTENT -->
+
+                            <!-- NEW LIFECYCLE CONTENT -->
+                            <div id="content-new" class="hidden">
+                                 
+                                 <!-- Step 1: Submission (NEW) -->
+                                 <div class="relative flex flex-col md:flex-row items-center mb-10 group">
+                                    <div class="w-full md:w-1/2 flex justify-center md:justify-end md:pr-12 mb-4 md:mb-0">
+                                        <div class="w-20 h-20 bg-white rounded-full border-4 border-blue-500 flex items-center justify-center z-10 shadow-lg pulse-ring">
+                                            <i class="fa-solid fa-hard-hat text-2xl text-blue-600 animate-glow-blue"></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-1/2 md:pl-12">
+                                        <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-blue-500 card-hover transition-all duration-300">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <h3 class="text-lg font-bold text-slate-800">1. Submission</h3>
+                                            </div>
+                                            <p class="text-slate-600 mb-3 text-sm">
+                                                Land surveyors from the private sector submit cadastral plans via Topocad (Generation B), which has been adjusted to work with the new database schema.
+                                            </p>
+                                            <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
+                                                <i class="fa-solid fa-cloud-arrow-up text-blue-400 text-lg"></i>
+                                                <div class="text-sm">
+                                                    <span class="block font-semibold">Topocad (Gen B)</span>
+                                                    <span class="text-xs text-slate-500">Updated Submission Platform</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CMS WRAPPER: Starts from Station 2 to Station 4 -->
+                                <div class="relative border-[12px] border-dashed border-[#F5E427] bg-yellow-50/50 rounded-3xl p-4 md:p-8 my-12 animate-border-fade">
+                                    <div class="absolute -top-7 left-1/2 transform -translate-x-1/2 bg-[#F5E427] text-slate-900 px-6 py-2 rounded-full font-bold text-lg shadow-md whitespace-nowrap">
+                                        Cadaster Management System (CMS)
+                                    </div>
+
+                                    <!-- Step 2: Review (NEW) -->
+                                    <div class="relative flex flex-col md:flex-row-reverse items-center mb-10 pt-8">
+                                        <div class="w-full md:w-1/2 flex justify-center md:justify-start md:pl-12 mb-4 md:mb-0">
+                                            <div class="w-20 h-20 bg-white rounded-full border-4 border-indigo-500 flex items-center justify-center z-10 shadow-lg relative">
+                                                <i class="fa-solid fa-gear fa-spin text-3xl text-indigo-600"></i>
+                                            </div>
+                                        </div>
+                                        <div class="w-full md:w-1/2 md:pr-12">
+                                            <div class="bg-white p-5 rounded-xl shadow-md border-r-4 border-indigo-500 card-hover transition-all duration-300 text-left">
+                                                <div class="flex flex-row justify-between items-start mb-2">
+                                                    <h3 class="text-lg font-bold text-slate-800">2. Review & Validation</h3>
+                                                </div>
+                                                <p class="text-slate-600 mb-3 text-sm">
+                                                    Reviewers use <strong>Cyclamen 2</strong> (improved version) for 2D plans, and the new <strong>Palm</strong> app for checking 3D cadastral plans.
+                                                    CMS facilitates information sharing between all parties.
+                                                </p>
+                                                <div class="flex flex-col gap-2">
+                                                    <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
+                                                        <i class="fa-solid fa-list-check" style="color: #B197FC;"></i>
+                                                        <div class="text-sm">
+                                                            <span class="block font-semibold">Cyclamen 2</span>
+                                                            <span class="text-xs text-slate-500">Automated testing wizard for 2D plans</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
+                                                        <i class="fa-solid fa-cube text-indigo-400"></i>
+                                                        <div class="text-sm">
+                                                            <span class="block font-semibold">Palm</span>
+                                                            <span class="text-xs text-slate-500">Automated testing wizard for 3D Plans</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 3: Conversion & Storage (NEW) -->
+                                    <div class="relative flex flex-col md:flex-row items-center mb-10">
+                                        <div class="w-full md:w-1/2 flex justify-center md:justify-end md:pr-12 mb-4 md:mb-0">
+                                            <div class="w-20 h-20 bg-white rounded-full border-4 border-orange-400 flex items-center justify-center z-10 shadow-lg">
+                                                <i class="fa-solid fa-database text-2xl text-orange-500 animate-glow-yellow"></i>
+                                            </div>
+                                        </div>
+                                        <div class="w-full md:w-1/2 md:pl-12">
+                                            <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-orange-400 card-hover transition-all duration-300">
+                                                <div class="flex justify-between items-start mb-2">
+                                                    <h3 class="text-lg font-bold text-slate-800">3. Conversion & Storage</h3>
+                                                </div>
+                                                <div class="flex items-center gap-4 mb-3">
+                                                     <div class="text-center">
+                                                        <i class="fa-regular fa-file-code text-xl text-blue-900 mb-1"></i>
+                                                        <div class="text-xs font-bold text-blue-900">CAD</div>
+                                                     </div>
+                                                     <i class="fa-solid fa-arrow-right text-black text-sm"></i>
+                                                     <div class="text-center">
+                                                        <i class="fa-solid fa-globe text-xl text-green-500 mb-1"></i>
+                                                        <div class="text-xs font-bold text-green-600">GIS</div>
+                                                     </div>
+                                                </div>
+                                                <p class="text-slate-600 mb-3 text-sm">
+                                                    Converted in-process data is now stored alongside the official cadaster data in a <strong>Single Unified Database</strong>, rather than distributed files.
+                                                </p>
+                                                <div class="bg-slate-50 p-4 rounded-lg flex items-center justify-center gap-4 border border-orange-100">
+                                                    <i class="fa-solid fa-server text-3xl text-orange-500"></i>
+                                                    <span class="font-bold text-orange-800">National Cadaster Database</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 4: Final Approval (NEW) -->
+                                    <div class="relative flex flex-col md:flex-row-reverse items-center">
+                                        <div class="w-full md:w-1/2 flex justify-center md:justify-start md:pl-12 mb-4 md:mb-0">
+                                            <div class="w-20 h-20 bg-emerald-600 rounded-full border-4 border-white flex items-center justify-center z-10 shadow-xl ring-4 ring-emerald-100">
+                                                <i class="fa-solid fa-pen-to-square text-2xl text-white animate-scribble"></i>
+                                            </div>
+                                        </div>
+                                        <div class="w-full md:w-1/2 md:pr-12">
+                                            <div class="bg-white p-5 rounded-xl shadow-lg border-t-8 border-emerald-500 card-hover transition-all duration-300 text-left">
+                                                <div class="flex flex-row justify-between items-start mb-2">
+                                                    <h3 class="text-lg font-bold text-slate-800">4. Updating Official Data</h3>
+                                                </div>
+                                                <p class="text-slate-600 mb-3 text-sm">
+                                                    The cadaster editor uses <strong>ArcGIS Pro Tasks, advanced editing tools and Parcel Fabric built-in tools</strong> to update and modify official cadster features.
+                                                    A vital data evaluation step is integrated within the tasks workflow.
+                                                    Upon task completion, feedback is sent back to the CMS to close the loop.
+                                                </p>
+                                                <div class="flex flex-col gap-2">
+                                                    <button class="bg-slate-50 text-emerald-700 py-2 px-4 rounded font-semibold text-xs flex items-center justify-start gap-2 border border-emerald-200">
+                                                         <i class="fa-solid fa-map-location-dot"></i> ArcGIS Pro Tasks
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- END CMS WRAPPER -->
+
+                            </div>
+                            <!-- END NEW CONTENT -->
+
+                        </main>
                     </div>
                 </section>
 
@@ -504,19 +899,243 @@
                                         <span class="text-orange-500">In-Process</span> & 
                                         <span class="text-blue-500">Parcel Fabric</span></span> <span class="font-normal">(official cadaster).</span>
                                     </li>
+                                    <li class="pl-2">
+                                        <span class="font-bold">While the Parcel Fabric comes with a built-in schema we also considered what information is needed for stakeholders:</span>
+                                        <ol class="list-decimal list-outside ml-6 mt-2 space-y-1 text-gray-700 font-normal">
+                                            <li>Other divisions in the organization</li>
+                                            <li>Private surveying companies</li>
+                                            <li>Other government ministries</li>
+                                            <li>Municipalities</li>
+                                            <li>The public</li>
+                                        </ol>
+                                    </li>
+                                    <li class="pl-2 font-semibold">Reducing complexity by merging redundant tables and using Boolean fields for differentiation.</li>
+                                    <li class="pl-2 font-semibold">Integrating 3D Multipatch Feature Classes along with 2D projections.</li>
+                                    <li class="pl-2 font-bold">Establishing field properties and indexing.</li>
                                 </ul>
                             </div>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Geodatabase Structure</h3>
+                            <p class="text-text-dark leading-relaxed mb-6">
+                                To help visualize, this chart shows how in the same geodatabase we have what we call the in-process data and the official cadaster data.
+                                In-process data contains converted CAD files, while official cadaster data is managed via Parcel Fabric in branch versions.
+                            </p>
+                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" 
+                                         alt="Schema Visualization" 
+                                         class="w-full h-auto rounded-lg shadow-xl"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Schema+Image+Failed+to+Load';">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Applying Attribute Rules</h3>
+                            <div class="space-y-6 text-text-dark leading-relaxed">
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-800 mb-2">Validation Rules:</h4>
+                                    <p>We implement 21 validation rules focusing on ensuring geometric integrity and maintaining logical consistency within the database.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-800 mb-2">Calculation Rules:</h4>
+                                    <p>We implement 9 calculation rules, mostly assigning names, extracting coordinates, and retrieving related feature data.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-10">
+                            <a href="#" data-page="etl" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                                Next: ETL Pipeline & Integration 
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </section>
 
-                <!-- ... (Remaining pages hidden as in previous version) ... -->
+                <!-- ETL Pipeline Page -->
+                <section id="page-etl" class="page-content hidden">
+                    <div class="space-y-10">
+                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                            <h2 class="text-4xl font-extrabold text-primary-accent">ETL Pipeline & Data Integration</h2>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
+                            <div class="space-y-4 text-text-dark leading-relaxed">
+                                <p>
+                                    We designed a data pipeline to automate the migration. It starts by extracting relevant tables from the old databases and transferring them to an open environment under security supervision.
+                                </p>
+                                <p>
+                                    Manipulation scripts handled transformation by cleaning values and aligning structure to the new schema.
+                                </p>
+                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" target="_blank" rel="noopener noreferrer">
+                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
+                                             alt="ETL Pipeline" 
+                                             class="w-full h-auto rounded-lg shadow-xl"
+                                             onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-10">
+                            <a href="#" data-page="tasks" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                                Next: Editing with Parcel Fabric 
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
 
+                <!-- Editing with Parcel Fabric Page -->
+                <section id="page-tasks" class="page-content hidden">
+                    <div class="space-y-10">
+                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                            <h2 class="text-4xl font-extrabold text-primary-accent">Editing with Parcel Fabric</h2>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Preparing Editing Environment with ArcGIS Pro</h3>
+                            <div class="text-text-dark leading-relaxed">
+                                <p class="mb-4">We created a template APRX file with a map and a scene, including definition queries, symbology, labels, and scale dependencies.</p>
+                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" target="_blank" rel="noopener noreferrer">
+                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" 
+                                             alt="ArcGIS Pro Scene" 
+                                             class="w-full h-auto rounded-lg shadow-xl"
+                                             onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Map+and+Scene+Image+Failed+to+Load';">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Designing Editing Workflow with Tasks</h3>
+                            <div class="text-text-dark leading-relaxed space-y-4">
+                                <p>We grouped 15 record types into 5 general tasks: "Improve Current Cadaster", "Retire & Create Cadaster", "Create New Cadaster", "3D Tasks", and "Free Edit".</p>
+                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" target="_blank" rel="noopener noreferrer">
+                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" 
+                                             alt="Task Design 1" 
+                                             class="w-full h-auto rounded-lg shadow-xl"
+                                             onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
+                                    </a>
+                                </div>
+                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" target="_blank" rel="noopener noreferrer">
+                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" 
+                                             alt="Task Design 2" 
+                                             class="w-full h-auto rounded-lg shadow-xl"
+                                             onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-10">
+                            <a href="#" data-page="challenges" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                                Next: Challenges 
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Challenges Page -->
+                <section id="page-challenges" class="page-content hidden">
+                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                        <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
+                    </div>
+                    <div class="space-y-6 mt-10">
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Performance Issues</h3>
+                            <p class="text-text-dark leading-relaxed">Pinpointing rendering issues required re-creating the database and upgrading to ArcGIS Pro 3.5.</p>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Learning Curve</h3>
+                            <p class="text-text-dark leading-relaxed">Adopting Parcel Fabric's logic and teaching editors required significant effort.</p>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. National Security</h3>
+                            <p class="text-text-dark leading-relaxed">Working during conflicts, unstable connectivity, and staffing gaps due to reserve military duty.</p>
+                        </div>
+                        <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
+                            <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" target="_blank" rel="noopener noreferrer">
+                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" 
+                                     alt="Challenges Theme" 
+                                     class="w-full h-auto rounded-lg shadow-xl"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Image+Failed+to+Load';">
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What's Next Page -->
+                <section id="page-next" class="page-content hidden">
+                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
+                        <h2 class="text-4xl font-extrabold text-primary-accent">What's Next?</h2>
+                    </div>
+                    <div class="space-y-6 mt-10">
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Relocate to Cloud</h3>
+                            <p class="text-text-dark leading-relaxed">Moving database and services to Project Nimbus government cloud environment.</p>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Improving Data Quality</h3>
+                            <p class="text-text-dark leading-relaxed">Systematic improvement of accuracy and completeness of existing datasets.</p>
+                        </div>
+                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Advancing the 3D Cadaster</h3>
+                            <p class="text-text-dark leading-relaxed">Converting Multipatch geometries into standardized Esri 3D Object formats.</p>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
 
     <script>
+        // --- FUNCTION FROM OPERATIONAL WORKFLOW.HTML ---
+        function switchMode(mode) {
+            const contentOld = document.getElementById('content-old');
+            const contentNew = document.getElementById('content-new');
+            const btnOld = document.getElementById('btn-old');
+            const btnNew = document.getElementById('btn-new');
+            const pageTitle = document.getElementById('page-title');
+
+            if (mode === 'old') {
+                // Content Visibility
+                contentOld.classList.remove('hidden');
+                contentNew.classList.add('hidden');
+                
+                // Title
+                pageTitle.textContent = "The Old Cadastral Plan Lifecycle";
+                
+                // Button Styling (Active)
+                btnOld.className = "bg-white text-slate-900 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 ring-2 ring-white";
+                
+                // Button Styling (Inactive)
+                btnNew.className = "bg-slate-800 text-slate-400 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 hover:bg-slate-700 border border-slate-700";
+            
+            } else {
+                // Content Visibility
+                contentOld.classList.add('hidden');
+                contentNew.classList.remove('hidden');
+
+                // Title
+                pageTitle.textContent = "The New Cadastral Plan Lifecycle";
+
+                // Button Styling (Active)
+                btnNew.className = "bg-white text-slate-900 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 ring-2 ring-white";
+
+                // Button Styling (Inactive)
+                btnOld.className = "bg-slate-800 text-slate-400 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 hover:bg-slate-700 border border-slate-700";
+            }
+        }
+
+        // --- EXISTING SCRIPT ---
         document.addEventListener('DOMContentLoaded', () => {
             const sidebar = document.getElementById('sidebar');
             const toggleBtn = document.getElementById('toggle-sidebar-btn');
@@ -543,6 +1162,7 @@
                     span.classList.remove('md:inline');
                 });
                 if (toggleIcon) {
+                    // Arrow points Right when collapsed
                     toggleIcon.classList.add('rotate-180');
                     toggleIcon.classList.remove('rotate-0');
                 }
@@ -567,6 +1187,7 @@
                     span.classList.add('inline');
                 });
                 if (toggleIcon) {
+                    // Arrow points Left when expanded
                     toggleIcon.classList.add('rotate-0');
                     toggleIcon.classList.remove('rotate-180');
                 }
