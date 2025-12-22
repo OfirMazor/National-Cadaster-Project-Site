@@ -188,7 +188,7 @@
                             </h2>
                             <ul class="list-disc list-inside space-y-3 text-text-dark ml-4">
                                 <li class="pl-2">
-                                    Applying faster modifications in the cadastral data by automating the edits workflow (as much as possible), saving time and effort for GIS editors due to the high volume of cadastral plans being submitted (~ 1,000 plans per year).
+                                    Applying faster modifications in the cadastral data by automating the edits workflow (as much as possible), saving time and effort for GIS editors .
                                 </li>
                                 <li class="pl-2">
                                     Flexible system that can adapt to changes in technology or organization needs in the near or far future.
@@ -216,72 +216,92 @@
                                 The <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> began back in 1920 as the Survey Department under the British Mandate, and officially became the Survey of Israel in 1948. Later, it came under the <a href="https://www.gov.il/en/departments/ministry_of_construction_and_housing/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Ministry of Construction and Housing</a> with the first national cadaster database around 1995. Before 2023 There were few attempts to modernize the cadaster data, but all ended in failure. In 2023, our CEO had a vision to build a digital twin for all the government and municipal data in Israel, therefore our mapping & GIS division started to think again how to modernize the cadastral data and the applications around it. We are hoping to launch the new national cadaster database and its new applications early next year.
                             </p>
                             
-                            <!-- Timeline Chart -->
-                            <div class="relative w-full overflow-x-auto py-20 border-t border-gray-300">
-                                <div class="relative flex items-center w-full overflow-visible">
-                                    <div class="absolute inset-x-0 top-1/2 h-1 bg-gray-400 rounded-full"></div>
-                                    <div class="relative flex justify-start w-full h-full overflow-visible">
-                                        <!-- 1920 -->
-                                        <div class="absolute w-[120px] text-center overflow-visible" style="left: 0%;">
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform -translate-y-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: -65px;">
-                                                Survey Dept – British Mandate
-                                            </div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: 15px;">1920</div>
+                            <!-- Timeline Chart (Refined Tighter Design) -->
+                            <div class="relative w-full py-16 sm:py-20 border-t border-gray-300 px-4">
+                                <!-- Main Flex Container for Points -->
+                                <div class="relative flex justify-between items-center w-full max-w-6xl mx-auto">
+                                    
+                                    <!-- Background Line -->
+                                    <div class="absolute left-0 right-0 top-1/2 h-1 bg-gray-400 rounded-full -translate-y-1/2 z-0"></div>
+                                    <!-- Arrow at the end -->
+                                    <div class="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-accent z-10 bg-[#F8F9FA] rounded-full">
+                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                    </div>
+                            
+                                    <!-- Point 1: 1920 (Top Text, Bottom Date) -->
+                                    <div class="relative flex flex-col items-center z-10 group w-1/6">
+                                        <!-- Text Box (Top) -->
+                                        <div class="absolute bottom-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
+                                            Survey Dept – British Mandate
                                         </div>
-                                        <!-- 1948 -->
-                                        <div class="absolute w-[120px] text-center overflow-visible" style="left: 20%;">
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform translate-y-0.5"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: 65px;">
-                                                Survey of Israel
-                                            </div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: -30px;">1948</div>
-                                        </div>
-                                        <!-- 1977 -->
-                                        <div class="absolute w-[120px] text-center overflow-visible" style="left: 40%;">
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform -translate-y-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: -65px;">
-                                                Under Ministry of Housing
-                                            </div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: 15px;">1977</div>
-                                        </div>
-                                        <!-- 1995 -->
-                                        <div class="absolute w-[120px] text-center overflow-visible" style="left: 60%;">
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform translate-y-0.5"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark" style="top: 65px;">
-                                                First cadaster DB
-                                            </div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-text-dark" style="top: -30px;">1995</div>
-                                        </div>
-                                        <!-- 2023 -->
-                                        <div class="absolute w-[120px] text-center overflow-visible" style="left: 80%;">
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform -translate-y-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent" style="top: -65px;">
-                                                Start modernization
-                                            </div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-primary-accent" style="top: 15px;">2023</div>
-                                        </div>
-                                        <!-- 2026 -->
-                                        <div class="absolute w-[120px] text-center overflow-visible" style="right: 0%;">
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 w-0.5 h-10 bg-primary-accent transform translate-y-0.5"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary-accent rounded-full"></div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-[11px] w-full p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent" style="top: 65px;">
-                                                Go-live modernization
-                                            </div>
-                                            <div class="absolute left-1/2 -translate-x-1/2 text-sm font-bold text-primary-accent" style="top: -30px;">2026</div>
-                                        </div>
-                                        <!-- Arrow -->
-                                        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-accent">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                                            </svg>
+                                        <!-- Vertical Line to Text -->
+                                        <div class="absolute bottom-3 h-5 w-0.5 bg-primary-accent"></div>
+                                        
+                                        <!-- Central Dot -->
+                                        <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
+                                        
+                                        <!-- Date (Bottom) -->
+                                        <div class="absolute top-6 text-xs sm:text-sm font-bold text-text-dark">1920</div>
+                                    </div>
+                            
+                                    <!-- Point 2: 1948 (Bottom Text, Top Date) -->
+                                    <div class="relative flex flex-col items-center z-10 group w-1/6">
+                                        <!-- Date (Top) -->
+                                        <div class="absolute bottom-6 text-xs sm:text-sm font-bold text-text-dark">1948</div>
+                            
+                                        <!-- Central Dot -->
+                                        <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
+                            
+                                        <!-- Vertical Line to Text -->
+                                        <div class="absolute top-3 h-5 w-0.5 bg-primary-accent"></div>
+                                        <!-- Text Box (Bottom) -->
+                                        <div class="absolute top-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
+                                            Survey of Israel
                                         </div>
                                     </div>
+                            
+                                    <!-- Point 3: 1977 (Top Text, Bottom Date) -->
+                                    <div class="relative flex flex-col items-center z-10 group w-1/6">
+                                         <div class="absolute bottom-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
+                                            Under Ministry of Housing
+                                        </div>
+                                        <div class="absolute bottom-3 h-5 w-0.5 bg-primary-accent"></div>
+                                        <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
+                                        <div class="absolute top-6 text-xs sm:text-sm font-bold text-text-dark">1977</div>
+                                    </div>
+                            
+                                    <!-- Point 4: 1995 (Bottom Text, Top Date) -->
+                                    <div class="relative flex flex-col items-center z-10 group w-1/6">
+                                        <div class="absolute bottom-6 text-xs sm:text-sm font-bold text-text-dark">1995</div>
+                                        <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
+                                        <div class="absolute top-3 h-5 w-0.5 bg-primary-accent"></div>
+                                        <div class="absolute top-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
+                                            First cadaster DB
+                                        </div>
+                                    </div>
+                            
+                                    <!-- Point 5: 2023 (Top Text, Bottom Date) -->
+                                    <div class="relative flex flex-col items-center z-10 group w-1/6">
+                                        <div class="absolute bottom-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent text-center leading-tight transition-transform hover:scale-105">
+                                            Start modernization
+                                        </div>
+                                        <div class="absolute bottom-3 h-5 w-0.5 bg-primary-accent"></div>
+                                        <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
+                                        <div class="absolute top-6 text-xs sm:text-sm font-bold text-primary-accent">2023</div>
+                                    </div>
+                            
+                                    <!-- Point 6: 2026 (Bottom Text, Top Date) -->
+                                    <div class="relative flex flex-col items-center z-10 group w-1/6">
+                                        <div class="absolute bottom-6 text-xs sm:text-sm font-bold text-primary-accent">2026</div>
+                                        <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
+                                        <div class="absolute top-3 h-5 w-0.5 bg-primary-accent"></div>
+                                        <div class="absolute top-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent text-center leading-tight transition-transform hover:scale-105">
+                                            Go-live modernization
+                                        </div>
+                                    </div>
+                            
                                 </div>
                             </div>
                         </div>
