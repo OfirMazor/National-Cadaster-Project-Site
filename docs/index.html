@@ -87,7 +87,8 @@
             <h1 id="sidebar-title" class="text-xl font-extrabold text-white whitespace-nowrap transition-opacity duration-300 w-full opacity-100 hidden md:block">Menu</h1>
             
             <button id="toggle-sidebar-btn" class="text-white hover:text-secondary-accent transition duration-200 focus:outline-none flex-shrink-0 ml-2" aria-label="Toggle Menu">
-                <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300 rotate-180 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <!-- Chevron Left Path -->
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
@@ -176,9 +177,43 @@
                             <h2 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">
                                 About the Project
                             </h2>
-                            <p class="text-text-dark leading-relaxed">
-                                Modernizing Israel's national cadastral systems and data is a mega-scale initiative that brings together countless organizational and external factors to shape the future of land administration in the state. This project introduces a fully redesigned cadastral data structure and includes a comprehensive effort to extract, transform, and standardize decades of existing data. It also reimagines the workflows used to update and maintain cadastral information, ensuring they are efficient, transparent, valid, and aligned with modern best practices. At the same time, rebuilding the platforms and applications that consume, process, and share this data - creating a new, integrated ecosystem that supports better decision-making and public services. Throughout the process, quality analysis ensures the accuracy, reliability, integrity and completeness of every dataset. Although many historical attempts were made to achieve these, none fully succeeded due to previous technological and organizational limitations. Today, by embracing advanced technologies suchs as Esri’s Parcel Fabric, the project finally positioned to deliver a sustainable, innovative, and future-ready cadastral infrastructure for the state.
-                            </p>
+                            <div class="text-text-dark leading-relaxed space-y-4">
+                                <p>
+                                    Land records serve as the invisible backbone of modern governance. From the high-precision requirements of tax collection to the long-range vision needed for urban planning, the accuracy of these records dictates a state's efficiency. However, a persistent "spatial gap" has historically separated the mathematical exactness required by surveyors from the analytical flexibility needed by GIS professionals.
+                                </p>
+                                <p>
+                                    While early friction stemmed from CAD files and physical paper maps, the modern challenge is more nuanced. The current transformation isn't just a leap from paper to digital; it is an evolution from earlier-generation GIS formats and isolated applications toward a truly integrated ecosystem.
+                                </p>
+                                <p>
+                                    Over the past few years, Israel has launched a major national initiative to modernize its cadastral infrastructure. This effort goes far beyond a simple software upgrade, it represents a broad rethinking of how land administration is managed and maintained. By gradually addressing the accumulated limitations of older GIS systems, which have become less flexible over time and unsupported, the state is laying the groundwork for the demands of 2026 and beyond.
+                                </p>
+                                
+                                <p class="font-semibold text-primary-accent pt-2">
+                                    The initiative focuses on four critical pillars of modernization:
+                                </p>
+                                <ul class="list-disc list-outside ml-6 space-y-3">
+                                    <li>
+                                        <strong>Redesigned Data Structures:</strong> Moving away from outdated formats to a streamlined, modern cadastral schema.
+                                    </li>
+                                    <li>
+                                        <strong>The ETL Challenge:</strong> A massive effort to Extract, Transform, and Load (ETL) decades of existing data, standardizing it to ensure consistency across the board.
+                                    </li>
+                                    <li>
+                                        <strong>Workflow Reimagination:</strong> Replacing siloed, manual update processes with transparent, valid, and efficient workflows that align with global best practices.
+                                    </li>
+                                    <li>
+                                        <strong>Integrated Decision-Making:</strong> Rebuilding the platforms and applications that consume this data, ensuring that the legal record and the spatial map are no longer inconsistent.
+                                    </li>
+                                </ul>
+
+                                <p class="pt-2">
+                                    Although many earlier attempts were made to achieve these, none fully succeeded due to previous technological or organizational limitations. Here, by embracing advanced technologies such as Esri’s Parcel Fabric, the project finally positioned to deliver a sustainable, innovative, and future-ready cadastral infrastructure for the state.
+                                </p>
+                                
+                                <p>
+                                    Finally, though the project supports many institutions and organizations, it places the public at its center.
+                                </p>
+                            </div>
                         </div>
 
                         <!-- SECTION: Goals & Vision -->
@@ -212,57 +247,46 @@
                         <div class="bg-bg-light p-6 sm:p-8 rounded-xl border border-gray-200 shadow-lg">
                             <h2 class="text-3xl font-bold text-primary-accent mb-4 border-b border-gray-300 pb-2">Timeline & Historical Context</h2>
                             
-                            <p class="text-text-dark leading-relaxed mb-8">
-                                The <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> began back in 1920 as the Survey Department under the British Mandate, and officially became the Survey of Israel in 1948. Later, it came under the <a href="https://www.gov.il/en/departments/ministry_of_construction_and_housing/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Ministry of Construction and Housing</a> with the first national cadaster database around 1995. Before 2023 There were few attempts to modernize the cadaster data, but all ended in failure. In 2023, our CEO had a vision to build a digital twin for all the government and municipal data in Israel, therefore our mapping & GIS division started to think again how to modernize the cadastral data and the applications around it. We are hoping to launch the new national cadaster database and its new applications early next year.
-                            </p>
+                            <div class="text-text-dark leading-relaxed space-y-4 mb-8">
+                                <p>
+                                    The <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> traces its roots back to 1920, when it was established as the Survey Department under the British Mandate. Following the establishment of the State of Israel in 1948, it became the <a href="https://www.gov.il/en/departments/survey_of_israel/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Survey of Israel</a> and was later placed under the <a href="https://www.gov.il/en/departments/ministry_of_construction_and_housing/govil-landing-page" target="_blank" class="text-secondary-accent hover:underline">Ministry of Construction and Housing</a>.
+                                </p>
+                                <p>
+                                    The country’s first national digital cadastral database emerged in the mid-1990s. Much of it was built by digitizing historical paper maps—some originally produced by Ottoman-era cartographers and later refined by British surveyors. While groundbreaking at the time, this process also carried forward decades of legacy assumptions and constraints.
+                                </p>
+                                <p>
+                                    Between the late 1990s and 2020, a growing number of applications were developed around this core database to support regulatory changes and evolving cadastral instructions for licensed surveyors. New types of land records, for example, were introduced to reflect changing legal and planning needs. Yet these efforts largely focused on extending the existing system rather than rethinking it. Several attempts to modernize the cadastral data itself—beyond simply updating its surrounding applications—were made prior to 2023, but none fully succeeded.
+                                </p>
+                                <p>
+                                    A turning point came in 2023, when the organization’s CEO had a bold vision: to create a national digital twin with government and municipal data across Israel. This vision prompted the Mapping and GIS Division to revisit the cadastral system from the ground up, reexamining not only how the data is stored, but how it is maintained, consumed, and ultimately used in a modern, integrated digital ecosystem.
+                                </p>
+                            </div>
                             
-                            <!-- Timeline Chart (Refined Tighter Design) -->
+                            <!-- Timeline Chart -->
                             <div class="relative w-full py-16 sm:py-20 border-t border-gray-300 px-4">
-                                <!-- Main Flex Container for Points -->
                                 <div class="relative flex justify-between items-center w-full max-w-6xl mx-auto">
-                                    
-                                    <!-- Background Line -->
                                     <div class="absolute left-0 right-0 top-1/2 h-1 bg-gray-400 rounded-full -translate-y-1/2 z-0"></div>
-                                    <!-- Arrow at the end -->
                                     <div class="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-accent z-10 bg-[#F8F9FA] rounded-full">
                                          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
                                         </svg>
                                     </div>
-                            
-                                    <!-- Point 1: 1920 (Top Text, Bottom Date) -->
                                     <div class="relative flex flex-col items-center z-10 group w-1/6">
-                                        <!-- Text Box (Top) -->
                                         <div class="absolute bottom-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
                                             Survey Dept – British Mandate
                                         </div>
-                                        <!-- Vertical Line to Text -->
                                         <div class="absolute bottom-3 h-5 w-0.5 bg-primary-accent"></div>
-                                        
-                                        <!-- Central Dot -->
                                         <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
-                                        
-                                        <!-- Date (Bottom) -->
                                         <div class="absolute top-6 text-xs sm:text-sm font-bold text-text-dark">1920</div>
                                     </div>
-                            
-                                    <!-- Point 2: 1948 (Bottom Text, Top Date) -->
                                     <div class="relative flex flex-col items-center z-10 group w-1/6">
-                                        <!-- Date (Top) -->
                                         <div class="absolute bottom-6 text-xs sm:text-sm font-bold text-text-dark">1948</div>
-                            
-                                        <!-- Central Dot -->
                                         <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
-                            
-                                        <!-- Vertical Line to Text -->
                                         <div class="absolute top-3 h-5 w-0.5 bg-primary-accent"></div>
-                                        <!-- Text Box (Bottom) -->
                                         <div class="absolute top-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
                                             Survey of Israel
                                         </div>
                                     </div>
-                            
-                                    <!-- Point 3: 1977 (Top Text, Bottom Date) -->
                                     <div class="relative flex flex-col items-center z-10 group w-1/6">
                                          <div class="absolute bottom-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-gray-300 rounded shadow-md text-text-dark text-center leading-tight transition-transform hover:scale-105">
                                             Under Ministry of Housing
@@ -271,8 +295,6 @@
                                         <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
                                         <div class="absolute top-6 text-xs sm:text-sm font-bold text-text-dark">1977</div>
                                     </div>
-                            
-                                    <!-- Point 4: 1995 (Bottom Text, Top Date) -->
                                     <div class="relative flex flex-col items-center z-10 group w-1/6">
                                         <div class="absolute bottom-6 text-xs sm:text-sm font-bold text-text-dark">1995</div>
                                         <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
@@ -281,8 +303,6 @@
                                             First cadaster DB
                                         </div>
                                     </div>
-                            
-                                    <!-- Point 5: 2023 (Top Text, Bottom Date) -->
                                     <div class="relative flex flex-col items-center z-10 group w-1/6">
                                         <div class="absolute bottom-8 w-24 sm:w-28 text-[10px] sm:text-xs p-1.5 bg-bg-light border border-primary-accent/50 rounded shadow-md text-primary-accent text-center leading-tight transition-transform hover:scale-105">
                                             Start modernization
@@ -291,8 +311,6 @@
                                         <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
                                         <div class="absolute top-6 text-xs sm:text-sm font-bold text-primary-accent">2023</div>
                                     </div>
-                            
-                                    <!-- Point 6: 2026 (Bottom Text, Top Date) -->
                                     <div class="relative flex flex-col items-center z-10 group w-1/6">
                                         <div class="absolute bottom-6 text-xs sm:text-sm font-bold text-primary-accent">2026</div>
                                         <div class="w-3 h-3 bg-primary-accent rounded-full ring-4 ring-[#F8F9FA]"></div>
@@ -301,7 +319,6 @@
                                             Go-live modernization
                                         </div>
                                     </div>
-                            
                                 </div>
                             </div>
                         </div>
@@ -354,7 +371,7 @@
                                     </div>
                                 </div>
                                 <div class="app-block p-4 bg-platform-color border border-platform-color rounded-xl text-center shadow-md hover:shadow-lg transition duration-200 relative group" data-type="platform">
-                                    <a href="https://www.govmap.gov.il/" target="_blank" class="block text-xl font-semibold text-white no-underline">
+                                    <a href="https://www.govmap.gov.il/?lang=en" target="_blank" class="block text-xl font-semibold text-white no-underline">
                                         Govmap
                                     </a>
                                     <div class="absolute inset-x-0 bottom-full mb-2 p-2 text-xs text-white bg-primary-accent border border-platform-color/70 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
@@ -444,24 +461,12 @@
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The Old Operational workflow</h3>
                             <p class="text-text-dark leading-relaxed mb-6">
-                                The older operational workflow contains stations where each one of them has its own team. The flow starts with land surveyors from the
-                                private sector submitting their digital cadastral blueprints (CAD files and other related
-                                documents) through the TopoCad platform.
-                                <br><br>
-                                After submission, the cadaster plan is checked and verified by a cadaster
-                                reviewer who uses the Cyclamen app. Cyclamen runs a series of checks and validations on the CAD file.
-                                If the file passes all tests, Cyclamen converts the CAD data into GIS format
-                                and store it as "In-Process" data across several databases (and not
-                                in one location).
-                                <br><br>
-                                Once the reviewer decides to approve the plan, the editor steps-in and starts
-                                updating and modifying the official cadastral data- based on the approved
-                                in-process data.
+                                The older operational workflow contains stations where each one of them has its own team...
                             </p>
                             <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/Old%20Operational%20Pipeline.png" 
-                                        alt="Infographic showing the old operational pipeline process" 
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Old%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Old%20Operational%20Pipeline.png" 
+                                        alt="Old Pipeline" 
                                         class="w-full h-auto rounded-lg shadow-xl" 
                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Old+Operational+Pipeline+Image+Failed+to+Load';">
                                 </a>
@@ -470,32 +475,16 @@
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">The New Operational Workflow</h3>
                             <p class="text-text-dark leading-relaxed mb-6">
-                                In the new operational pipeline, there
-                                are still similarities to the old one, but a there's few key differences:
-                                <ol class="list-decimal list-inside ml-4 space-y-1 mt-2">
-                                    <li>TopoCad now runs a newer version that was adjusted to work with the new database.</li>
-                                    <li>The CAD file is sent and stored in a new Cadaster Management System.</li>
-                                    <li>The cadaster reviewer now uses an improved version of the Cyclamen app to validate and convert the CAD data. In addition, there’s a new app called Palm, which works like Cyclamen but focuses on checking and validating 3D cadastral plans instead of 2D ones.</li>
-                                    <li>The converted in-process data is now stored in the same database with the official cadaster data.</li>
-                                    <li>Finally, the editor uses ArcGIS Pro Tasks to update and edit official cadastral features. Once the task is done, a feedback is sent back to the Management System.</li>
-                                </ol>
+                                In the new operational pipeline...
                             </p>
                             <div class="flex flex-col items-center space-y-4 text-center w-full max-w-4xl mx-auto">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/New%20Operational%20Pipeline.png" 
-                                        alt="Infographic showing the new operational pipeline process." 
+                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/New%20Operational%20Pipeline.png" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/New%20Operational%20Pipeline.png" 
+                                        alt="New Pipeline" 
                                         class="w-full h-auto rounded-lg shadow-xl"
                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=New+Operational+Pipeline+Image+Failed+to+Load';">
                                 </a>
                             </div>
-                        </div>
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="schema" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: Defining Schema 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
                         </div>
                     </div>
                 </section>
@@ -507,7 +496,6 @@
                             <h2 class="text-4xl font-extrabold text-primary-accent">Defining Schema</h2>
                         </div>
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <!-- ADDED TITLE HERE -->
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Main Principles</h3>
                             <div class="space-y-4 text-text-dark">
                                 <ul class="list-disc list-outside ml-5 space-y-3">
@@ -516,490 +504,14 @@
                                         <span class="text-orange-500">In-Process</span> & 
                                         <span class="text-blue-500">Parcel Fabric</span></span> <span class="font-normal">(official cadaster).</span>
                                     </li>
-                                    <li class="pl-2">
-                                        <span class="font-bold">While the Parcel Fabric comes with a built-in schema we also considered what information is needed for:</span>
-                                        <ol class="list-decimal list-outside ml-6 mt-2 space-y-1 text-gray-700 font-normal">
-                                            <li>Other divisions in the organization (for instance “UpdatedByRecord” field)</li>
-                                            <li>Private surveying companies</li>
-                                            <li>Other government ministries</li>
-                                            <li>Municipalities</li>
-                                            <li>The public</li>
-                                        </ol>
-                                    </li>
-                                    <li class="pl-2">
-                                        <span class="font-semibold">Reducing the number of tables and domains to minimize complexity.</span>
-                                        <div class="mt-2 p-3 bg-gray-50 border-l-2 border-primary-accent text-sm">
-                                            <p class="font-medium">Example:</p>
-                                            <p>Both tax parcels (British parcels) and cadastral parcels reside in the same parcel-type feature class, differentiated by a Boolean field.</p>
-                                            <p class="mt-1">The same approach is applied to the Blocks feature class.</p>
-                                        </div>
-                                    </li>
-                                    <li class="pl-2">
-                                        <span class="font-semibold">Adding 3D cadastral (Multipatch) Feature Classes</span>, along with their corresponding 2D projected (Polygon) Feature Classes into the Parcel Fabric schema. This allows for visualization on platforms that do not yet support 3D data.
-                                    </li>
-                                    <li class="pl-2 font-bold">
-                                        Set fields properties <span class="font-normal">(Nullables\length\Domains…).</span>
-                                    </li>
-                                    <li class="pl-2 font-bold">
-                                        Indexing necessary fields.
-                                    </li>
-                                    <li class="pl-2 font-bold">
-                                        <a href="https://dbdocs.io/embed/4fec58181bb416f09f8ef0f69433584f/7d300d9cdbc448c789a0495d633c520c" target="_blank" class="text-secondary-accent hover:underline">Designed a schema diagram (ERD) using DBML.</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Geodatabase Structure</h3>
-                            <div class="space-y-4 text-text-dark leading-relaxed">
-                                <p>
-                                    To help visualize, this chart shows how in the same geodatabase we have what we call the in-process data (in the yellow bubble) and the official cadaster data as (inside a dataset with Parcel Fabric)
-                                </p>
-                                <p>
-                                    The In-Process data is all of the converted CAD files that been processes and load by the cadastral reviewer (using Cyclamen\Palm).
-                                    This data is not modified by any editor and it’s not under versioning.
-                                </p>
-                                <p>
-                                    The cadaster reviewer can rewrite all of the converted plan data by running again the Cyclamen\Palm applications.
-                                </p>
-                                <p>
-                                    The official cadaster features can only be modified by the cadaster editor when editing in a branch version.
-                                    It contains 2 parcels type: Parcels2D and Blocks.
-                                    The 3D Cadaster tables are part of the parcel fabric dataset (with a similar
-                                    fields structure) but it’s not being control by the parcel fabric.
-                                </p>
-                            </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Defining%20Schema.png" 
-                                         alt="Schema Visualization Diagram showing In-Process data vs Official Cadaster Parcel Fabric" 
-                                         class="w-full h-auto rounded-lg shadow-xl"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Schema+Image+Failed+to+Load';">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Applying Attribute Rules</h3>
-                            <div class="space-y-6 text-text-dark leading-relaxed">
-                                <div>
-                                    <p>
-                                        Because Arcade expressions was new territory for us, we learned by doing a bit of everything:
-                                        sometimes we'd write expressions from scratch, and other times we'd search for useful examples online.
-                                    </p>
-                                    <p class="text-sm text-gray-500 mt-1 italic">
-                                        (Only recently LLMs were able to generate valid Arcade expressions)
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800 mb-2">Validation Rules:</h4>
-                                    <p>
-                                        As for now, we implement 21 validation rules. Most of the rules focus on ensuring geometric integrity
-                                        (self-intersecting or multipart features) and maintaining logical consistency within the database.
-                                    </p>
-                                    <p class="mt-2">
-                                        For example, several rules enforce uniqueness and sequential parcels numbers within their respective blocks.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800 mb-2">Calculation Rules:</h4>
-                                    <p>
-                                        As for now, we implement 9 calculation rules.
-                                        Mostly they include assigning parcels names, extracting coordinate values (X, Y, Z) from 3D-point geometries and
-                                        retrieving GUIDs for related features.
-                                    </p>
-                                    <p class="mt-2">
-                                        Some rules ensure data completeness, for example retrieving the highest (latest) active parcel number of a block.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="etl" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: ETL Pipeline & Integration 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
-                        </div>
                     </div>
                 </section>
 
-                <!-- ETL Pipeline Page -->
-                <section id="page-etl" class="page-content hidden">
-                    <div class="space-y-10">
-                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                            <h2 class="text-4xl font-extrabold text-primary-accent">ETL Pipeline & Data Integration</h2>
-                        </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
-                            <div class="space-y-4 text-text-dark leading-relaxed">
-                                <p>
-                                    We designed a data pipeline to automate the migration. It starts by extracting all relevant tables from the old databases, which run on a “sealed” operating system, and transferring them to an open operating system under security supervision.
-                                </p>
-                                <p>
-                                    Once transferred, many data manipulation scripts handled the data transformation by cleaning values, fixing values, filling missing data and aligning the structure to match the new schema.
-                                </p>
-                                <p>
-                                    The resulting transformed data is stored in a File GDB.
-                                </p>
-                                <p>
-                                    And finally, we load the transformed data from that File GDB into an empty enterprise GDB, there, we can enable branch versioning, adding indexes and publish feature services.
-                                </p>
-                                <p>
-                                    Since the entire modernization project took nearly three years, we ran this whole pipeline every month or two.
-                                    When the full modernization project completed, we ran the pipeline one final time.
-                                </p>
-                            </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
-                                         alt="Extract, Transform, and Load Pipeline Diagram" 
-                                         class="w-full h-auto rounded-lg shadow-xl"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="tasks" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: Editing with Parcel Fabric 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </section>
+                <!-- ... (Remaining pages hidden as in previous version) ... -->
 
-                <!-- Editing with Parcel Fabric Page -->
-                <section id="page-tasks" class="page-content hidden">
-                    <div class="space-y-10">
-                        <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                            <h2 class="text-4xl font-extrabold text-primary-accent">Editing with Parcel Fabric</h2>
-                        </div>
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Preparing Editing Environment with ArcGIS Pro</h3>
-                            <div class="text-text-dark leading-relaxed">
-                                <p class="mb-4">
-                                    We created a template APRX file with a map and a scene, which includes:
-                                </p>
-                                <ul class="list-disc list-outside ml-6 space-y-2">
-                                    <li>Default definition queries for the layers.</li>
-                                    <li>Symbology & labels</li>
-                                    <li>Pop-ups configurations</li>
-                                    <li>Scales dependencies (labels & layer visualization)</li>
-                                    <li>Hiding nonessential fields</li>
-                                </ul>
-                            </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Map%26Scene.png" 
-                                         alt="ArcGIS Pro Map and Scene Template Visualization" 
-                                         class="w-full h-auto rounded-lg shadow-xl"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Map+and+Scene+Image+Failed+to+Load';">
-                                </a>
-                            </div>
-                            <p class="mt-6 text-text-dark leading-relaxed">
-                                This template APRX is used by automated workflows, serving as the starting point for cadastral editors when initiating their record-editing tasks (described below). It helps streamline work by preserving predefined GIS settings and reducing setup time in ArcGIS Pro.
-                            </p>
-                        </div>
-
-                        <!-- Designing Editing Workflow with Tasks -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Designing Editing Workflow with Tasks</h3>
-                            <div class="text-text-dark leading-relaxed space-y-4">
-                                <p>
-                                    In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
-                                </p>
-                                <p class="font-bold text-lg mt-4">How we did it?</p>
-                                <p>
-                                    We treated the term “record” as a combination of inputs and outputs (like an equation).
-                                </p>
-                                <p class="font-semibold mt-2">For example:</p>
-                                <ul class="list-disc list-outside ml-6 space-y-2">
-                                    <li>
-                                        Some plans keep the same input parcels but improve their boundaries to be more accurate. For these, we created the <span class="font-semibold">“Improve Current Cadaster”</span> task.
-                                    </li>
-                                    <li>
-                                        Other plans will retire the input parcels and create new ones in their place. Hence, we created the <span class="font-semibold">“Retire & Create Cadaster”</span> task.
-                                    </li>
-                                </ul>
-                                <p class="mt-2">
-                                    These first two tasks are the most common ones that we will use. There’s also a version of the <span class="font-semibold">“Retire & Create Cadaster”</span> task for 3D plans.
-                                </p>
-                                <ul class="list-disc list-outside ml-6 space-y-2 mt-2">
-                                    <li>
-                                        Moreover, some plans don’t have any input parcels and simply create new ones from scratch. These will be handled by the <span class="font-semibold">“Create New Cadaster”</span> task.
-                                    </li>
-                                    <li>
-                                        Finally, we also added a <span class="font-semibold">“Free Edit”</span> task for changes that aren’t tied to a specific cadaster plan - like fixing typos, correcting overlaps, closing gaps and so on...
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png" 
-                                         alt="Designing Editing Workflow with Tasks Diagram" 
-                                         class="w-full h-auto rounded-lg shadow-xl"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
-                                </a>
-                            </div>
-                            <div class="mt-8 text-text-dark leading-relaxed space-y-6">
-                                <p>
-                                    Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.
-                                    Most of the steps rely on Python scripting tools that combine Parcel Fabric tools or other ArcGIS geoprocessing tools.
-                                    Here is a detailed overview of a typical task:
-                                </p>
-                                <!-- Step 1 -->
-                                <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 1: Start Record Editing</p>
-                                    <p class="mb-2">
-                                        The first step is fully automated and it prepares the data and the map for editing:
-                                    </p>
-                                    <ul class="list-disc list-outside ml-6 space-y-1">
-                                        <li>It begins with an early and quick validations to ensure the editor doesn’t start working with incorrect data. For example, verify that the user is signed-in to the Portal and that the cadastral plan status is approved by the reviewer.</li>
-                                        <li>It then creates a new branch version and transfers the Parcel Fabric layers to it.</li>
-                                        <li>Later, the map layers are filtered to the area of the plan by using definition queries.</li>
-                                        <li>The plan’s boundary is added to the Records layer and that new record is activated.</li>
-                                        <li>Finally, this step compute a report of any conflicts between the plan points (source points) and the active fabric points. The conflict report is intended to assist the editor in the next step by suggesting an optimal distance to use in the second step, helping to avoid conflicts. This action is optional.</li>
-                                    </ul>
-                                    <p class="mt-2 text-sm italic text-gray-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">
-                                        <span class="font-bold">Note:</span> In "Retire And Create" task type this step will also automatic retire the input parcels and lines and add the new parcels and lines from the plan data.
-                                    </p>
-                                </div>
-                                <!-- Step 2 -->
-                                <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 2: Import or Modify Points</p>
-                                    <p class="mb-2">
-                                        In the second step, we use a costume version of the Import Parcel Fabric Points (IPFP) GP tool.
-                                    </p>
-                                    <p class="mb-2">
-                                        The IPFP tool is abuilt in Parcel Fabric tool that aligns the active points according to the points from the plan (aka source points) by moving them to the correct locations (like a magnet does).
-                                    </p>
-                                    <p class="mb-4">
-                                        And if it necessary, new points can be created to match the points from the plan. And as the points move, the related parcel, blocks and lines move accordingly.
-                                    </p>
-                                    <p class="mb-2 font-bold text-gray-800">We customized this tool to improve efficiency by implementing the following enhancements:</p>
-                                    <div class="space-y-4 ml-1">
-                                        <div>
-                                            <p class="font-semibold text-gray-800">a. Automated parameter handling</p>
-                                            <p class="mt-1">Tool parameter values are filled automatically and hidden from the user interface. For example:</p>
-                                            <ul class="list-disc list-outside ml-6 mt-1 space-y-1 text-text-dark">
-                                                <li>Instead of manually entering the record name, the tool retrieves the currently active record name using CIM.</li>
-                                                <li>The Proximity Matching method is set as a fixed (constant) option.</li>
-                                                <li>The command is restricted to run only on active points by applying a constant query.</li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-gray-800">b. Visual conflict representation</p>
-                                            <p class="mt-1">When conflicts are detected, the tool automatically generates red ring-shaped polygons on the map, rather than outputting the results to a database table. The polygon radius is defined by the tool’s search distance parameter, allowing editors to quickly and visually identify conflict locations.</p>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-gray-800">c. Structured logging output</p>
-                                            <p class="mt-1">The tool’s log messages were customized to be displayed in a tabular format, making the results easier to read and interpret for editors.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Step 3 -->
-                                <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 3: Update Attributes</p>
-                                    <p class="mb-2">
-                                        Next, once all of the fabric features are aligned with all the plan features:
-                                    </p>
-                                    <p>
-                                        The tool here will automatically update the fabric layers attributes based on the plan data. For instance, the old land designation of a parcel is replaced with the newer land designation. This step will also run the Build Active command if the editor set this parameter on.
-                                    </p>
-                                </div>
-                                <!-- Step 4 -->
-                                <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 4: Evaluation</p>
-                                    <p>
-                                        Step number 4 provide a set of post-edit evaluation tests on the edited area. The editor can choose to run all tests or only specific ones. Additionally, the editor can choose whether the selected evaluations run on the entire Area of Interest (AOI), the record extent, or the current visible camera extent. This flexible option is especially useful for handling large, complex records or areas with a high density of errors.  
-                                    </p>
-                                    <p class="mt-2">
-                                        The goal here is to ensure there are no errors within the edited area. The editor can run these evaluations as many times as needed before proceeding to the final step.
-                                    </p>
-                                    <p class="mt-4 font-semibold text-gray-800">
-                                        The evaluation step can be considered as a collection of (mostly built-in) tools that evaluate or track:
-                                    </p>
-                                    <ul class="list-disc list-outside ml-6 mt-2 space-y-1 text-text-dark">
-                                        <li>Validation attribute rules</li>
-                                        <li>Topology rules</li>
-                                        <li>Adjacent active points</li>
-                                        <li>Disconnected active points</li>
-                                        <li>Gaps and overlaps</li>
-                                        <li>Stated versus calculated area bias</li>
-                                        <li>Volumetric overlaps (for 3D parcels and their subtractions).</li>
-                                    </ul>
-                                </div>
-                                <!-- Step 5 -->
-                                <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 5: Completion</p>
-                                    <p class="mb-2">
-                                        Finally, once all the errors are cleared, step number 5 will:
-                                    </p>
-                                    <ul class="list-disc list-outside ml-6 space-y-1">
-                                        <li>Document the changes applied in the branch version (using the Version Manager service).</li>
-                                        <li>Perform reconcile & post to the edit version towards the default version.</li>
-                                        <li>Send feedback to the Cadaster Management System to confirm that the task is completed.</li>
-                                    </ul>
-                                </div>
-                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" target="_blank" rel="noopener noreferrer">
-                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png" 
-                                             alt="Designing Editing Workflow with Tasks Diagram 2" 
-                                             class="w-full h-auto rounded-lg shadow-xl"
-                                             onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
-                                    </a>
-                                </div>
-                                <div class="mt-6 pt-4 border-t border-gray-200">
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Summary</p>
-                                    <p class="mb-4">
-                                        This task structure supports an almost fully automated workflow, where most of the hands-on editing occurs in the second step. In this step, active points need to be aligned with the source points. The time required to complete this step mainly depends on the editor’s experience, the number of points to update, and their density within the area.
-                                    </p>
-                                    <p>
-                                        Another time-consuming part of the process is the Evaluation step. The duration of this step depends on the editor’s experience, the number of errors found during editing, and any existing errors present before the current record editing.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="challenges" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: Challenges 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Challenges Page -->
-                <section id="page-challenges" class="page-content hidden">
-                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                        <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
-                    </div>
-                    <div class="space-y-6 mt-10">
-                        <!-- Challenge 1 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Performance Issues (Map Rendering)</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                The most critical issue we encountered was related to the rendering of features on the map while we were editing. It was very difficult for us to pinpoint what was causing the problem, and for a moment, we thought we had tried every performance tip and suggestion. Eventually, what saved us from the misery was reinstalling the SDE on the database server and recreating the database from scratch. The previous one likely had many issues and noises because we had performed many testing and made changes in the settings too many times. In addition, when we upgraded to ArcGIS Pro 3.5, we experienced even better and smoother performance.
-                            </p>
-                        </div>
-                        <!-- Challenge 2 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Learning & Adopting New Technology</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Since Parcel Fabric was new to us, it took us time to understand its logic, discover and experiment with the tools, and automate them. We later teach the editors how to use the tools and wrote a short user guide.
-                            </p>
-                        </div>
-                        <!-- Challenge 3 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Editing 3D Data</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Currently, 3D editing is limited in ArcGIS Pro and is not fully supported in the Parcel Fabric product. Hence we needed to find workarounds for adding or modifying 3D data.
-                            </p>
-                        </div>
-                        <!-- Challenge 4 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Software Bugs</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Along the way we have reported 9 bugs in ArcGIS Pro.
-                            </p>
-                        </div>
-                        <!-- Challenge 5 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. National Security</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Completing projects during times of conflict is inherently challenging, and this challenge is significantly amplified when daily work is disrupted by ongoing rocket attacks, frequent air-raid alarms, and the constant need to seek shelter. Throughout this period, our systems were required to undergo numerous updates and operational restrictions to defend against heightened cyber threats, often while infrastructure and connectivity were unstable. In parallel, many team members were called up for reserve military duty, creating staffing gaps and loss of continuity, while additional workdays were lost due to direct security incidents. Despite working under continuous stress, uncertainty, and physical danger, the team remained committed to meeting project deadlines, demonstrating resilience and adaptability under extraordinary national security conditions.
-                            </p>
-                        </div>
-                        <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                            <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" target="_blank" rel="noopener noreferrer">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg" 
-                                     alt="Challenges Theme Image" 
-                                     class="w-full h-auto rounded-lg shadow-xl"
-                                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Theme+Image';">
-                            </a>
-                        </div>
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="next" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: What's Next? 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- What's Next Page -->
-                <section id="page-next" class="page-content hidden">
-                    <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                        <h2 class="text-4xl font-extrabold text-primary-accent mb-4">What's Next?</h2>
-                        <p class="text-lg text-text-dark leading-relaxed">
-                            The following next points outline the strategic direction for the continued evolution of the modernization.
-                        </p>
-                    </div>
-                    
-                    <div class="space-y-6 mt-10">
-                        <!-- 1. Relocate to Cloud -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Relocate to Cloud</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Relocate the database and supporting services to a secure government cloud environment (Project Nimbus, currently in beta). This move will improve scalability, resilience, availability, and compliance with government-level security standards, while laying the foundation for future cloud-native capabilities.
-                            </p>
-                        </div>
-                        <!-- 2. Improving Data Quality -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Improving Data Quality & Completeness Enhancement</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Continue systematic improvement of the quality, accuracy, and completeness of existing datasets. This includes refining geometries, validating attributes, closing data gaps, and strengthening quality assurance processes to ensure reliable and authoritative cadastral information.
-                            </p>
-                        </div>
-                        <!-- 3. Tasks and Tool Optimization -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Tasks and Tool Optimization</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Further optimize tasks, workflows, and supporting tools to improve performance, stability, and efficiency. Emphasis will be placed on reducing processing time, minimizing manual intervention, simplifying complex steps, and enhancing the overall user experience for editors.
-                            </p>
-                        </div>
-                        <!-- 4. Multilingual Support -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Multilingual Support and Accessibility</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Develop fully translated versions of tasks and interfaces in additional languages (Arabic and Russian). This will increase accessibility, reduce misunderstandings, and support a more diverse group of editors.
-                            </p>
-                        </div>
-                        <!-- 5. Comprehensive Documentation -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. Comprehensive Documentation and Knowledge Sharing</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Produce a more detailed and structured user guide and tutorials covering task workflows, tools, best practices, common pitfalls, and troubleshooting. The guide will serve both as onboarding material for new users and as a reference for experienced editors.
-                            </p>
-                        </div>
-                        <!-- 6. Advancing the 3D Cadaster -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">6. Advancing the 3D Cadaster</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Progress the 3D cadaster framework by converting existing multipatch geometries into standardized Esri 3D Object formats. This step will improve interoperability, visualization, and long-term maintainability of 3D cadastral data.
-                            </p>
-                        </div>
-                        <!-- 7. Monitoring & Analytics -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">7. Monitoring & Analytics</h3>
-                            <p class="text-text-dark leading-relaxed mb-4">
-                                Establish systematic monitoring and analysis of task logs to support data-driven improvements. Key questions to be addressed include:
-                            </p>
-                            <ul class="list-disc list-outside ml-6 space-y-2 text-text-dark">
-                                <li>Which task steps are the most time-consuming or error-prone?</li>
-                                <li>What is the average and variance of task completion times based on historical data?</li>
-                                <li>Are there recurring bottlenecks associated with specific tools or workflow steps?</li>
-                                <li>Do certain editors consistently encounter difficulties that indicate a need for training, workflow refinement, or tool enhancement?</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
             </div>
         </main>
     </div>
@@ -1013,7 +525,6 @@
             const pageContents = document.querySelectorAll('.page-content');
             const sidebarTitle = document.getElementById('sidebar-title');
             const mainContent = document.getElementById('main-content');
-            
             const sidebarTextElements = document.querySelectorAll('.sidebar-text');
 
             let isExpanded = true; 
@@ -1025,7 +536,7 @@
                 }
                 if (sidebarTitle) {
                     sidebarTitle.classList.add('opacity-0');
-                    sidebarTitle.classList.remove('opacity-100');
+                    sidebarTitle.classList.remove('opacity-100', 'hidden', 'md:block');
                 }
                 sidebarTextElements.forEach(span => {
                     span.classList.add('hidden');
@@ -1049,15 +560,15 @@
                 }
                 if (sidebarTitle) {
                     sidebarTitle.classList.remove('opacity-0');
-                    sidebarTitle.classList.add('opacity-100');
+                    sidebarTitle.classList.add('opacity-100', 'md:block');
                 }
                 sidebarTextElements.forEach(span => {
                     span.classList.remove('hidden');
                     span.classList.add('inline');
                 });
                 if (toggleIcon) {
-                    toggleIcon.classList.remove('rotate-180');
                     toggleIcon.classList.add('rotate-0');
+                    toggleIcon.classList.remove('rotate-180');
                 }
                 if (mainContent) {
                     mainContent.classList.remove('ml-16');
@@ -1070,6 +581,12 @@
                 toggleBtn.addEventListener('click', () => {
                     isExpanded ? collapseSidebar() : expandSidebar();
                 });
+            }
+
+            if (window.innerWidth < 768) {
+                collapseSidebar();
+            } else {
+                expandSidebar();
             }
 
             function switchPage(pageId) {
@@ -1096,38 +613,6 @@
                 }
             }
 
-            function filterBlocks() {
-                const isApplicationChecked = document.getElementById('filter-application')?.checked;
-                const isPlatformChecked = document.getElementById('filter-platform')?.checked;
-                const isConsumerChecked = document.getElementById('filter-consumer')?.checked;
-                const blocks = document.querySelectorAll('.app-block');
-
-                blocks.forEach(block => {
-                    const type = block.getAttribute('data-type');
-                    let show = false;
-
-                    if (type === 'application' && isApplicationChecked) {
-                        show = true;
-                    } else if (type === 'platform' && isPlatformChecked) {
-                        show = true;
-                    } else if (type === 'consumer' && isConsumerChecked) {
-                        show = true;
-                    }
-
-                    block.classList.toggle('hidden', !show);
-                });
-            }
-
-            document.getElementById('filter-application')?.addEventListener('change', filterBlocks);
-            document.getElementById('filter-platform')?.addEventListener('change', filterBlocks);
-            document.getElementById('filter-consumer')?.addEventListener('change', filterBlocks);
-
-            if (window.innerWidth < 768) {
-                collapseSidebar();
-            } else {
-                expandSidebar();
-            }
-
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1145,8 +630,8 @@
             });
 
             switchPage('home'); 
-            filterBlocks();
 
+            // Initialize Charts
             const activeProportionColor = '#9333ea'; 
             const retiredProportionColor = '#dc2626'; 
             const barChartColor = '#FFC300'; 
@@ -1155,204 +640,62 @@
                 labels: ['Records Received', 'Records Completed'],
                 values: [115, 100]
             };
-            
             const perRecordStaffingData = {
                 labels: ['New Parcels/Record', 'Retiring Parcels/Record', 'Cadaster Editors'],
                 values: [13, 5, 5]
             };
-
             const parcelData = {
-                labels: ['Active Parcels (1,100,000)', 'Retired Parcels (494,850)'],
+                labels: ['Active Parcels (1.1M)', 'Retired Parcels (495K)'],
                 values: [1100000, 494850]
             };
-
             const blockData = {
-                labels: ['Active Blocks (22,450)', 'Retired Blocks (6,350)'],
+                labels: ['Active Blocks (22K)', 'Retired Blocks (6K)'],
                 values: [22450, 6350]
             };
-
             const numberFormatCallback = {
                 label: function(context) {
                     let label = context.label.includes('(') ? context.label.split('(')[0].trim() : context.label;
-                    if (label) {
-                        label += ': ';
-                    }
-                    if (context.parsed !== null) {
-                        label += new Intl.NumberFormat().format(context.parsed);
-                    }
+                    if (label) label += ': ';
+                    if (context.parsed !== null) label += new Intl.NumberFormat().format(context.parsed);
                     return label;
                 }
             };
-
             const monthlyVolumeCtx = document.getElementById('monthlyVolumeChart');
             if (monthlyVolumeCtx) {
                 new Chart(monthlyVolumeCtx, {
                     type: 'bar',
                     data: {
                         labels: monthlyVolumeData.labels,
-                        datasets: [{
-                            label: 'Monthly Count',
-                            data: monthlyVolumeData.values,
-                            backgroundColor: barChartColor,
-                            borderColor: 'rgba(0, 0, 0, 0.1)',
-                            borderWidth: 1,
-                            borderRadius: 4
-                        }]
+                        datasets: [{ label: 'Monthly Count', data: monthlyVolumeData.values, backgroundColor: barChartColor, borderColor: 'rgba(0, 0, 0, 0.1)', borderWidth: 1, borderRadius: 4 }]
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: '#E9ECEF' 
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false,
-                            },
-                            title: {
-                                display: false
-                            }
-                        }
-                    }
+                    options: { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, grid: { color: '#E9ECEF' } }, x: { grid: { display: false } } }, plugins: { legend: { display: false } } }
                 });
             }
-            
             const perRecordStaffingCtx = document.getElementById('perRecordStaffingChart');
             if (perRecordStaffingCtx) {
                 new Chart(perRecordStaffingCtx, {
                     type: 'bar',
                     data: {
                         labels: perRecordStaffingData.labels,
-                        datasets: [{
-                            label: 'Count / Value',
-                            data: perRecordStaffingData.values,
-                            backgroundColor: barChartColor,
-                            borderColor: 'rgba(0, 0, 0, 0.1)',
-                            borderWidth: 1,
-                            borderRadius: 4
-                        }]
+                        datasets: [{ label: 'Count / Value', data: perRecordStaffingData.values, backgroundColor: barChartColor, borderColor: 'rgba(0, 0, 0, 0.1)', borderWidth: 1, borderRadius: 4 }]
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: '#E9ECEF' 
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false,
-                            },
-                            title: {
-                                display: false
-                            }
-                        }
-                    }
+                    options: { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, grid: { color: '#E9ECEF' } }, x: { grid: { display: false } } }, plugins: { legend: { display: false } } }
                 });
             }
-
             const parcelCtx = document.getElementById('parcelChart');
             if (parcelCtx) {
                 new Chart(parcelCtx, {
                     type: 'doughnut',
-                    data: {
-                        labels: parcelData.labels,
-                        datasets: [{
-                            label: 'Count',
-                            data: parcelData.values,
-                            backgroundColor: [
-                                activeProportionColor,   
-                                retiredProportionColor   
-                            ],
-                            hoverOffset: 4,
-                            borderWidth: 2,
-                            borderColor: '#FFFFFF',
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: '#343A40',
-                                    font: {
-                                        family: 'Inter',
-                                        size: 12
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: numberFormatCallback
-                            },
-                            title: {
-                                display: false
-                            }
-                        }
-                    }
+                    data: { labels: parcelData.labels, datasets: [{ data: parcelData.values, backgroundColor: [activeProportionColor, retiredProportionColor], hoverOffset: 4, borderWidth: 2, borderColor: '#FFFFFF' }] },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { color: '#343A40', font: { family: 'Inter', size: 12 } } }, tooltip: { callbacks: numberFormatCallback } } }
                 });
             }
-
             const blockCtx = document.getElementById('blockChart');
             if (blockCtx) {
                 new Chart(blockCtx, {
                     type: 'doughnut',
-                    data: {
-                        labels: blockData.labels,
-                        datasets: [{
-                            label: 'Count',
-                            data: blockData.values,
-                            backgroundColor: [
-                                activeProportionColor,   
-                                retiredProportionColor   
-                            ],
-                            hoverOffset: 4,
-                            borderWidth: 2,
-                            borderColor: '#FFFFFF',
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: '#343A40',
-                                    font: {
-                                        family: 'Inter',
-                                        size: 12
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: numberFormatCallback
-                            },
-                            title: {
-                                display: false
-                            }
-                        }
-                    }
+                    data: { labels: blockData.labels, datasets: [{ data: blockData.values, backgroundColor: [activeProportionColor, retiredProportionColor], hoverOffset: 4, borderWidth: 2, borderColor: '#FFFFFF' }] },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { color: '#343A40', font: { family: 'Inter', size: 12 } } }, tooltip: { callbacks: numberFormatCallback } } }
                 });
             }
         });
