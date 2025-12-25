@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- 2. FontAwesome for the new Workflow Page -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <!-- 3. Configure Tailwind Object -->
     <script>
@@ -207,7 +207,7 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
         .realm-card:hover {
-            transform: scale(1.05); /* Slightly reduced scale to fit iframe */
+            transform: scale(1.12); /* Increased from 1.05 so the middle card (already 1.05) pops too */
             z-index: 50;
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
         }
@@ -950,7 +950,7 @@
                                             <div class="bg-gradient-to-r from-amber-500 to-orange-600 p-6 text-white relative">
                                                 <div class="flex justify-between items-start">
                                                     <div>
-                                                        <h2 class="text-xl font-bold uppercase tracking-wider">In-Process Data</h2>
+                                                        <h2 class="text-xl font-bold uppercase tracking-wider">In-Process</h2>
                                                         <p class="text-amber-100 text-sm mt-1 opacity-90">Conversion & Staging</p>
                                                     </div>
                                                     <i class="fa-solid fa-person-digging text-3xl opacity-80"></i>
