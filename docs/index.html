@@ -8,7 +8,7 @@
     <!-- 1. Load Tailwind CSS CDN FIRST -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. FontAwesome for the new Workflow Page -->
+    <!-- 2. FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <!-- 3. Configure Tailwind Object -->
@@ -18,20 +18,19 @@
                 theme: {
                     extend: {
                         colors: {
-                            // Placer.ai inspired palette:
-                            'primary-accent': '#593B9F', // Deep Blue-Purple (Headers, CTA)
-                            'secondary-accent': '#45A2FF', // Deep Blue (Links, Main UI)
+                            'primary-accent': '#593B9F', // Deep Blue-Purple
+                            'secondary-accent': '#45A2FF', // Deep Blue
                             
                             // Data Visualization Colors
-                            'app-color': '#15803d', // Dark Green (Applications)
-                            'platform-color': '#007bff', // Dark Neon-Blue (Platforms)
-                            'consumer-color': '#ea580c', // Dark Vivid-Orange (Consumers)
-                            'yellow-border': '#F5E427', // Custom Yellow Border Color
+                            'app-color': '#15803d', // Dark Green
+                            'platform-color': '#007bff', // Dark Neon-Blue
+                            'consumer-color': '#ea580c', // Dark Vivid-Orange
+                            'yellow-border': '#F5E427', // Custom Yellow Border
                             'subtitle-color': '#D6C720', // New subtitle color
 
                             // Base Colors
-                            'bg-light': '#FFFFFF', // Clean White
-                            'text-dark': '#343A40', // Near Black/Dark Gray
+                            'bg-light': '#FFFFFF', 
+                            'text-dark': '#343A40', 
                         }
                     }
                 }
@@ -186,7 +185,6 @@
         }
 
         /* --- STYLES FOR DB ARCHITECTURE DIAGRAM --- */
-        /* Custom Scrollbar for table lists */
         .table-list::-webkit-scrollbar {
             width: 6px;
         }
@@ -202,26 +200,18 @@
             background: #a8a8a8; 
         }
 
-        /* Subtle animations for Architecture Cards */
         .realm-card {
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
         .realm-card:hover {
-            transform: scale(1.12); /* Increased from 1.05 so the middle card (already 1.05) pops too */
+            transform: scale(1.12); 
             z-index: 50;
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
         }
         
-        /* Connection Line Animations */
         @keyframes pulseGlowPath {
-            0%, 100% {
-                opacity: 0.5;
-                stroke-width: 8px;
-            }
-            50% {
-                opacity: 1;
-                stroke-width: 14px;
-            }
+            0%, 100% { opacity: 0.5; stroke-width: 8px; }
+            50% { opacity: 1; stroke-width: 14px; }
         }
 
         .connection-path {
@@ -231,25 +221,69 @@
             animation: pulseGlowPath 2s ease-in-out infinite;
         }
 
-        .glow-amber {
-            stroke: #f59e0b;
-            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
-        }
-        
-        .glow-purple {
-            stroke: #a855f7;
-            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8));
-        }
-        
-        .glow-teal {
-            stroke: #0d9488;
-            filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.8));
-        }
+        .glow-amber { stroke: #f59e0b; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8)); }
+        .glow-purple { stroke: #a855f7; filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8)); }
+        .glow-teal { stroke: #0d9488; filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.8)); }
         
         @media (max-width: 768px) {
-            .db-connection-line {
-                display: none;
+            .db-connection-line { display: none; }
+        }
+
+        /* --- STYLES FROM ETL.CSS (INTEGRATED) --- */
+        /* Background for the ETL diagram wrapper only, to match the original look */
+        .etl-diagram-wrapper {
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 1rem; /* Added radius for better fit */
+        }
+
+        /* 1. Dashed Line Flow */
+        @keyframes dashFlow {
+            from { stroke-dashoffset: 24; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .connection-line {
+            stroke-dasharray: 6 6; 
+            animation: dashFlow 1s linear infinite; 
+        }
+
+        /* 2. Flow Point */
+        @keyframes flowPoint {
+            0% { left: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        .animate-flow-point {
+            animation: flowPoint 3s linear infinite;
+        }
+
+        /* 3. Badge Pulse */
+        @keyframes badgePulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); 
+                border-color: #bfdbfe; 
+                transform: scale(1); 
             }
+            15% { 
+                box-shadow: 0 0 15px 2px rgba(59, 130, 246, 0.6); 
+                border-color: #3b82f6; 
+                transform: scale(1.15); 
+                background-color: #eff6ff; 
+            }
+            30% { 
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); 
+                border-color: #bfdbfe; 
+                transform: scale(1); 
+                background-color: white; 
+            }
+        }
+
+        .animate-badge {
+            animation: badgePulse 3s linear infinite;
         }
     </style>
 
@@ -345,10 +379,10 @@
             <!-- Content Containers (Pages) -->
             <div id="content-container" class="space-y-20">
 
-                <!-- HOME PAGE (Landing Page) -->
+                <!-- HOME PAGE -->
                 <section id="page-home" class="page-content active">
-                    <!-- ... Header Block ... -->
-                    <div class="mb-10 p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-yellow-border">
+                     <!-- ... Header Block ... -->
+                     <div class="mb-10 p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-yellow-border">
                         <h1 class="text-5xl font-extrabold text-primary-accent mb-2 tracking-tight">
                             Towards a Next-Generation Land Parcels Management
                         </h1>
@@ -650,7 +684,7 @@
                     </div>
                 </section>
 
-                <!-- OPERATIONAL WORKFLOW PAGE (FROM UPLOADED FILE) -->
+                <!-- OPERATIONAL WORKFLOW PAGE -->
                 <section id="page-workflow" class="page-content hidden">
                     <div class="relative w-full h-full bg-[#f0f4f8]">
                         <!-- Header -->
@@ -734,7 +768,7 @@
                                             <p class="text-slate-600 mb-3 text-sm">Cyclamen converts the CAD data into GIS format and store it as "In-Process" data across several databases (and not in one location). Notice that up to this station, the official cadastral data hasn't been modified yet.</p>
                                             <div class="border border-slate-200 p-2 rounded bg-slate-50 text-[10px] text-slate-500 flex justify-around items-end h-12 relative overflow-hidden">
                                                 <div class="flex flex-col items-center z-10"><i class="fa-solid fa-server text-orange-500"></i><span class="font-bold text-orange-700">Oracle</span></div>
-                                                <div class="flex flex-col items-center z-10"><i class="fa-solid fa-server text-orange-500"></i><span class="font-bold text-orange-700">ArcStorm</span></div>
+                                                <div class="flex flex-col items-center z-10"><i class="fa-solid fa-server text-orange-500"></i><span class="font-bold text-orange-700">ArcStorM</span></div>
                                                 <div class="flex flex-col items-center z-10"><i class="fa-solid fa-server text-orange-500"></i><span class="font-bold text-orange-700">SDE</span></div>
                                             </div>
                                         </div>
@@ -750,7 +784,7 @@
                                     <div class="w-full md:w-1/2 md:pr-12">
                                         <div class="bg-white p-5 rounded-xl shadow-lg border-t-8 border-emerald-500 card-hover transition-all duration-300 text-left">
                                             <div class="flex flex-row justify-between items-start mb-2"><h3 class="text-lg font-bold text-slate-800">4. Updating Official Cadaster Data</h3></div>
-                                            <p class="text-slate-600 mb-3 text-sm">Once the cadaster reviewer decides to approve the plan, the cadaster editor steps-in and starts updating and modifying the official cadastral data. The editing is done on a custom-developed app that supports ESRI's old Coverage file format; these files are stored in ArcStorm.</p>
+                                            <p class="text-slate-600 mb-3 text-sm">Once the cadaster reviewer decides to approve the plan, the cadaster editor steps-in and starts updating and modifying the official cadastral data. The editing is done on a custom-developed app that supports ESRI's old Coverage file format; these files are stored in ArcStorM.</p>
                                             <div class="flex flex-col gap-2">
                                                 <button class="bg-slate-50 text-emerald-700 py-2 px-4 rounded font-semibold text-xs flex items-center justify-start gap-2 border border-emerald-200"><i class="fa-solid fa-draw-polygon" style="color: #059669;"></i> Official Data Modified</button>
                                             </div>
@@ -843,7 +877,7 @@
                     </div>
                 </section>
 
-                <!-- Defining Schema Page (RESTORED FULL TEXT) -->
+                <!-- Defining Schema Page -->
                 <section id="page-schema" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
@@ -878,7 +912,7 @@
                                         </div>
                                     </li>
                                     <li class="pl-2">
-                                        <span class="font-semibold">Adding 3D cadastral (Multipatch) Feature Classes</span>, along with their corresponding 2D projected (Polygon) Feature Classes into the Parcel Fabric schema. This allows for visualization on platforms that do not yet support 3D data.
+                                        <span class="font-semibold">Adding 3D cadastral (Multipatch) Feature Classes</span>, along with their corresponding 2D projected (Polygon) Feature Classes into the schema. This allows for visualization on platforms that do not yet support 3D data. The 3D Parcels, Substractions and 3D Points classes are "disguised" as a Parcel Fabric Features, having the logic of the "record creating/retiring" fields.
                                     </li>
                                     <li class="pl-2 font-bold">
                                         Set fields properties <span class="font-normal">(Nullables\length\Domains…).</span>
@@ -912,19 +946,14 @@
                                     fields structure) but it’s not being control by the parcel fabric.
                                 </p>
                             </div>
-                            <!-- REPLACED IMAGE WITH DB ARCHITECTURE DIAGRAM -->
+                            
                             <div class="w-full mt-8 p-4 rounded-xl relative overflow-hidden db-grid border border-gray-200" style="min-height: 500px;">
                                 <div class="max-w-7xl w-full mx-auto relative h-full">
                                     
-                                    <!-- Connection Lines SVG (Hidden on Mobile) -->
+                                    <!-- Connection Lines SVG -->
                                     <svg class="absolute top-0 left-0 w-full h-[300px] pointer-events-none hidden md:block z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                        <!-- Path to Left Card (Amber) - Starts from left side (46) -->
                                         <path d="M 46 65 C 46 85, 16.5 85, 16.5 100" class="connection-path glow-amber" />
-                                        
-                                        <!-- Path to Middle Card (Purple) - Starts from center (50) -->
                                         <path d="M 50 65 C 50 85, 50 85, 50 100" class="connection-path glow-purple" />
-                                        
-                                        <!-- Path to Right Card (Teal) - Starts from right side (54) -->
                                         <path d="M 54 65 C 54 85, 83.5 85, 83.5 100" class="connection-path glow-teal" />
                                     </svg>
 
@@ -1112,8 +1141,7 @@
                                                         <span class="font-bold text-slate-800">Substractions</span>
                                                     </li>
                                                     <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
-                                                        <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition shrink-0">
-                                                            <i class="fa-regular fa-square"></i>
+                                                        <span class="w-8 h-8 rounded bg-regular fa-square"></i>
                                                         </span>
                                                         <span class="font-bold text-slate-800">ProjectedSubstractions</span>
                                                     </li>
@@ -1189,12 +1217,11 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            
-                                             <!-- Floating background icon for style -->
-                                             <i class="fa-solid fa-wrench absolute -bottom-6 -right-6 text-9xl text-slate-50 pointer-events-none z-0"></i>
+
+
                                         </div>
-                                        
-                                    </div>
+
+                                 </div>
                                 </div>
                             </div>
 
@@ -1245,7 +1272,7 @@
                     </div>
                 </section>
 
-                <!-- ETL Pipeline Page (RESTORED FULL TEXT) -->
+                <!-- ETL Pipeline Page (WITH INSERTED DIAGRAM) -->
                 <section id="page-etl" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
@@ -1271,13 +1298,212 @@
                                     When the full modernization project completed, we ran the pipeline one final time.
                                 </p>
                             </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/ETL.png" 
-                                         alt="Extract, Transform, and Load Pipeline Diagram" 
-                                         class="w-full h-auto rounded-lg shadow-xl"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=ETL+Image+Failed+to+Load';">
-                                </a>
+
+                            <!-- --- ETL DIAGRAM INSERTED HERE --- -->
+                            <div class="mt-8 etl-diagram-wrapper p-6 rounded-2xl border border-gray-300 shadow-inner">
+                                <div id="diagram-container" class="relative z-10 pt-4">
+
+                                    <!-- CONNECTION SVG LAYER -->
+                                    <svg id="svg-layer" class="block absolute inset-0 pointer-events-none z-50 overflow-visible w-full h-full">
+                                        <defs>
+                                            <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#ef4444" stop-opacity="0.8" />
+                                                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.8" />
+                                            </linearGradient>
+                                            <linearGradient id="connGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.8" />
+                                                <stop offset="100%" stop-color="#10b981" stop-opacity="0.8" />
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- Javascript will inject paths here -->
+                                    </svg>
+
+                                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-4">
+
+                                        <!-- --- ZONE 1: EXTRACTION --- -->
+                                        <div class="lg:col-span-3 flex flex-col gap-4">
+                                            <div class="rounded-t-2xl bg-gradient-to-r from-red-500 to-red-600 p-4 text-white shadow-lg shadow-red-900/10 text-center relative z-10">
+                                                <div class="flex justify-center items-center gap-2">
+                                                    <h2 class="font-bold uppercase tracking-wider text-sm">Extract</h2>
+                                                    <i class="fa-solid fa-download opacity-80 text-xl"></i>
+                                                </div>
+                                                <p class="text-red-100 text-xs mt-1">Older Databases & Sources</p>
+                                            </div>
+
+                                            <div class="bg-white rounded-b-2xl shadow-lg border-x border-b border-red-100 p-4 space-y-3 relative z-10 flex-1">
+                                                <div class="source-card relative group p-3 rounded-lg border border-red-200 bg-red-50 hover:shadow-md transition-all cursor-default flex items-center gap-3">
+                                                    <div class="p-2 rounded-md bg-white/80 border border-red-200 shadow-sm">
+                                                        <i class="fa-solid fa-database w-4 h-4 text-red-800 flex justify-center items-center"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold text-slate-800 text-sm">Oracle</h3>
+                                                        <p class="text-[10px] text-slate-500 font-medium">Tabular | General information</p>
+                                                    </div>
+                                                </div>
+                                                <div class="source-card relative group p-3 rounded-lg border border-red-200 bg-red-50 hover:shadow-md transition-all cursor-default flex items-center gap-3">
+                                                    <div class="p-2 rounded-md bg-white/80 border border-red-200 shadow-sm">
+                                                        <i class="fa-solid fa-map w-4 h-4 text-red-600 flex justify-center items-center"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold text-slate-800 text-sm">ArcStorM</h3>
+                                                        <p class="text-[10px] text-slate-500 font-medium">Geographical | Active Cadaster</p>
+                                                    </div>
+                                                </div>
+                                                <div class="source-card relative group p-3 rounded-lg border border-red-200 bg-red-50 hover:shadow-md transition-all cursor-default flex items-center gap-3">
+                                                    <div class="p-2 rounded-md bg-white/80 border border-red-200 shadow-sm">
+                                                        <i class="fa-solid fa-globe w-4 h-4 text-red-800 flex justify-center items-center"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold text-slate-800 text-sm">CadSDE</h3>
+                                                        <p class="text-[10px] text-slate-500 font-medium">Geographical | In-Process Data</p>
+                                                    </div>
+                                                </div>
+                                                <div class="source-card relative group p-3 rounded-lg border border-rose-200 bg-rose-50 hover:shadow-md transition-all cursor-default flex items-center gap-3">
+                                                    <div class="p-2 rounded-md bg-white/80 border border-rose-200 shadow-sm">
+                                                        <i class="fa-solid fa-file-csv w-4 h-4 text-rose-500 flex justify-center items-center"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold text-slate-800 text-sm">Files/API</h3>
+                                                        <p class="text-[10px] text-slate-500 font-medium">Tabular & Geographical | Misc Sources</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- --- ZONE 2: TRANSFORMATION --- -->
+                                        <div class="lg:col-span-6 flex flex-col gap-4">
+                                            <div class="rounded-t-2xl bg-gradient-to-r from-cyan-500 to-blue-600 p-4 text-white shadow-lg shadow-cyan-900/10 text-center relative z-10">
+                                                <div class="flex justify-center items-center gap-2">
+                                                    <h2 class="font-bold uppercase tracking-wider text-sm">Transform</h2>
+                                                    <i class="fa-solid fa-microchip opacity-80 text-xl"></i>
+                                                </div>
+                                                <p class="text-cyan-50 text-xs mt-1">Convert older data structure to the new schema</p>
+                                            </div>
+
+                                            <div class="flex-1 bg-white rounded-b-2xl shadow-lg border-x border-b border-cyan-200 p-6 relative transition-all duration-500 z-10 hover:shadow-xl hover:ring-2 hover:ring-cyan-100">
+                                                <div class="absolute inset-0 overflow-hidden rounded-b-2xl pointer-events-none z-0">
+                                                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-50 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                                                </div>
+
+                                                <!-- Python Header -->
+                                                <div class="relative z-10 flex flex-col items-center text-center gap-4 mb-8">
+                                                    <div class="bg-cyan-100 text-cyan-700 p-3 rounded-xl border border-cyan-200 mt-1">
+                                                        <!-- Python Icon -->
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo" class="w-7 h-7">
+                                                    </div>
+                                                    <div class="flex-1 w-full">
+                                                        <h3 class="text-lg font-bold text-slate-800">Python Scripts</h3>
+                                                        <div class="flex flex-wrap justify-center gap-2 mt-2" id="libraries-container">
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-slate-100 text-slate-500">Numpy</div>
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-slate-100 text-slate-500">Pandas</div>
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-slate-100 text-slate-500">Polars</div>
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-slate-100 text-slate-500">Geopandas</div>
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-slate-100 text-slate-500">Shapely</div>
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-slate-100 text-slate-500">Dask-Geopandas</div>
+                                                            <div class="group relative text-xs font-mono px-2 py-0.5 rounded cursor-help bg-cyan-100 text-cyan-700 border border-cyan-200">ArcPy</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Flow Badges -->
+                                                <div class="relative z-10 grid grid-cols-4 gap-2 mb-8">
+                                                    
+                                                    <div class="flex flex-col items-center group">
+                                                        <div id="badge-read" class="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center mb-2 relative z-20 bg-white animate-badge" style="animation-delay: 0s;">
+                                                            <i class="fa-solid fa-file-import text-blue-600"></i>
+                                                        </div>
+                                                        <span class="text-xs font-bold text-black tracking-wide">Read</span>
+                                                    </div>
+
+                                                    <div class="flex flex-col items-center group">
+                                                        <div class="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center mb-2 relative z-20 bg-white animate-badge" style="animation-delay: 1s;">
+                                                            <i class="fa-solid fa-broom text-blue-600"></i>
+                                                        </div>
+                                                        <span class="text-xs font-bold text-black tracking-wide">Clean & Filter</span>
+                                                    </div>
+
+                                                    <div class="flex flex-col items-center group">
+                                                        <div class="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center mb-2 relative z-20 bg-white animate-badge" style="animation-delay: 2s;">
+                                                            <i class="fa-solid fa-code-branch text-blue-600 text-sm"></i>
+                                                        </div>
+                                                        <span class="text-xs font-bold text-black tracking-wide">Merge & Join</span>
+                                                    </div>
+
+                                                    <div class="flex flex-col items-center group">
+                                                        <div id="badge-fix" class="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center mb-2 relative z-20 bg-white animate-badge" style="animation-delay: 3s;">
+                                                            <i class="fa-solid fa-bolt text-blue-600 text-sm"></i>
+                                                        </div>
+                                                        <span class="text-xs font-bold text-black tracking-wide">Fix & Enrich</span>
+                                                    </div>
+
+                                                    <!-- Straight Line + Animated Point -->
+                                                    <div class="absolute top-5 left-10 right-10 h-0.5 bg-blue-100 -z-10">
+                                                        <div class="absolute top-1/2 left-0 w-2.5 h-2.5 bg-blue-500 rounded-full transform -translate-y-1/2 -translate-x-1/2 shadow-lg shadow-blue-500/50 animate-flow-point"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- --- ZONE 3: LOAD & MANAGEMENT --- -->
+                                        <div class="lg:col-span-3 flex flex-col gap-4">
+                                            <div class="rounded-t-2xl bg-gradient-to-r from-emerald-600 to-green-700 p-4 text-white shadow-lg shadow-emerald-900/10 text-center relative z-10">
+                                                <div class="flex justify-center items-center gap-2">
+                                                    <h2 class="font-bold uppercase tracking-wider text-sm">Load</h2>
+                                                    <i class="fa-solid fa-upload opacity-80 text-xl"></i>
+                                                </div>
+                                                <p class="text-emerald-100 text-xs mt-1">Lading the transformed data</p>
+                                            </div>
+
+                                            <div class="bg-white rounded-b-2xl shadow-lg border-x border-b border-emerald-100 p-4 flex flex-col gap-3 relative z-10 flex-1">
+                                                
+                                                <div id="file-gdb-card" class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg flex items-center gap-3">
+                                                    <div class="bg-white p-2 rounded text-emerald-600 shadow-sm">
+                                                        <i class="fa-solid fa-database w-4 h-4 flex justify-center items-center"></i>
+                                                    </div>
+                                                    <div>
+                                                        <div class="font-bold text-slate-700 text-sm">File GDB</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex justify-center -my-1">
+                                                    <i class="fa-solid fa-arrow-down w-6 h-6 text-emerald-700 animate-bounce stroke-[3]"></i>
+                                                </div>
+
+                                                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg flex items-center gap-3">
+                                                    <div class="bg-white p-2 rounded text-emerald-600 shadow-sm">
+                                                        <img src="https://img.icons8.com/?size=100&id=laYYF3dV0Iew&format=png&color=000000" alt="SQL Server" class="w-5 h-5">
+                                                    </div>
+                                                    <div>
+                                                        <div class="font-bold text-slate-700 text-sm">Enterprise GDB on SQL Server (on-premise)</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2 pt-3 border-t border-slate-100">
+                                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Finishing Actions</h4>
+                                                    <div class="space-y-2">
+                                                        <div class="flex items-center gap-2 text-xs text-slate-600">
+                                                            <i class="fa-solid fa-square-check text-emerald-500"></i>
+                                                            <span>Assign Attribute Rules</span>
+                                                        </div>
+                                                        <div class="flex items-center gap-2 text-xs text-slate-600">
+                                                            <i class="fa-solid fa-square-check text-emerald-500"></i>
+                                                            <span>Add necessary indexes</span>
+                                                        </div>
+                                                        <div class="flex items-center gap-2 text-xs text-slate-600">
+                                                            <i class="fa-solid fa-square-check text-emerald-500"></i>
+                                                            <span>Recalculate Feature Clasess extents</span>
+                                                        </div>
+                                                        <div class="flex items-center gap-2 text-xs text-slate-600">
+                                                            <i class="fa-solid fa-square-check text-emerald-500"></i>
+                                                            <span>Set dataset content to be versioned</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="flex justify-end mt-10">
@@ -1291,7 +1517,7 @@
                     </div>
                 </section>
 
-                <!-- Editing with Parcel Fabric Page (RESTORED FULL TEXT) -->
+                <!-- Editing with Parcel Fabric Page -->
                 <section id="page-tasks" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
@@ -1494,7 +1720,7 @@
                     </div>
                 </section>
 
-                <!-- Challenges Page (RESTORED FULL TEXT) -->
+                <!-- Challenges Page -->
                 <section id="page-challenges" class="page-content hidden">
                     <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                         <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
@@ -1541,7 +1767,7 @@
                                      alt="Challenges Theme Image" 
                                      class="w-full h-auto rounded-lg shadow-xl"
                                      onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Theme+Image';">
-                            </a>
+                                </a>
                         </div>
                         <div class="flex justify-end mt-10">
                             <a href="#" data-page="next" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
@@ -1554,7 +1780,7 @@
                     </div>
                 </section>
 
-                <!-- What's Next Page (RESTORED FULL TEXT) -->
+                <!-- What's Next Page -->
                 <section id="page-next" class="page-content hidden">
                     <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                         <h2 class="text-4xl font-extrabold text-primary-accent mb-4">What's Next?</h2>
@@ -1626,7 +1852,93 @@
     </div>
 
     <script>
-        // --- FUNCTION FROM OPERATIONAL WORKFLOW.HTML ---
+        // --- ETL DIAGRAM LOGIC (MERGED) ---
+        function updateETLPaths() {
+            // Main containers
+            const container = document.getElementById('diagram-container');
+            const svgLayer = document.getElementById('svg-layer');
+            
+            // Elements to connect
+            const sourceCards = document.querySelectorAll('.source-card'); // The 4 source boxes
+            const readBadge = document.getElementById('badge-read');       // The target in Transform
+            const fixEnrichBadge = document.getElementById('badge-fix');   // The source in Transform
+            const fileGdbCard = document.getElementById('file-gdb-card');  // The target in Load
+
+            // Only run if elements exist and are visible (container has width)
+            if (!container || !readBadge || !svgLayer) return;
+            // if (container.offsetParent === null) return; // Hidden
+
+            const containerRect = container.getBoundingClientRect();
+            
+            // --- PREPARE SVG DEFS & GRADIENTS ---
+            let svgContent = `
+                <defs>
+                    <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.8" />
+                    </linearGradient>
+                    <linearGradient id="connGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.8" />
+                    </linearGradient>
+                </defs>
+            `;
+
+            // --- 1. Draw paths from Sources (Left) to Read Badge (Center) ---
+            const readRect = readBadge.getBoundingClientRect();
+            // Point: Left edge, vertically centered
+            const endX = readRect.left - containerRect.left;
+            const endY = readRect.top - containerRect.top + (readRect.height / 2);
+
+            sourceCards.forEach(card => {
+                const sourceRect = card.getBoundingClientRect();
+                // Start Point: Right edge, vertically centered
+                const startX = sourceRect.right - containerRect.left;
+                const startY = sourceRect.top - containerRect.top + (sourceRect.height / 2);
+
+                // Bezier Control Points for smooth S-curve
+                const cp1X = startX + 60; // Pull right from start
+                const cp1Y = startY;
+                const cp2X = endX - 60;   // Pull left from end
+                const cp2Y = endY;
+
+                // Generate Path String
+                const d = `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+                
+                // Append path string to SVG content with dash animation class
+                svgContent += `<path d="${d}" fill="none" stroke="url(#connGradient)" stroke-width="2.5" class="connection-line" />`;
+            });
+
+            // --- 2. Draw path from Fix & Enrich (Center) to File GDB (Right) ---
+            if (fixEnrichBadge && fileGdbCard) {
+                const fixRect = fixEnrichBadge.getBoundingClientRect();
+                const fileGdbRect = fileGdbCard.getBoundingClientRect();
+
+                // Start: Right edge of 'Fix' badge
+                const startX2 = fixRect.right - containerRect.left;
+                const startY2 = fixRect.top - containerRect.top + (fixRect.height / 2);
+
+                // End: Left edge of 'File GDB' card
+                const endX2 = fileGdbRect.left - containerRect.left;
+                const endY2 = fileGdbRect.top - containerRect.top + (fileGdbRect.height / 2);
+
+                // Control points
+                const cp1X2 = startX2 + 60;
+                const cp1Y2 = startY2;
+                const cp2X2 = endX2 - 60;
+                const cp2Y2 = endY2;
+
+                const d2 = `M ${startX2} ${startY2} C ${cp1X2} ${cp1Y2}, ${cp2X2} ${cp2Y2}, ${endX2} ${endY2}`;
+
+                svgContent += `<path d="${d2}" fill="none" stroke="url(#connGradient2)" stroke-width="2.5" class="connection-line" />`;
+            }
+
+            // Apply updated content to SVG
+            svgLayer.innerHTML = svgContent;
+        }
+
+
+        // --- FUNCTION FROM OPERATIONAL WORKFLOW ---
         function switchMode(mode) {
             const contentOld = document.getElementById('content-old');
             const contentNew = document.getElementById('content-new');
@@ -1635,31 +1947,16 @@
             const pageTitle = document.getElementById('page-title');
 
             if (mode === 'old') {
-                // Content Visibility
                 contentOld.classList.remove('hidden');
                 contentNew.classList.add('hidden');
-                
-                // Title
                 pageTitle.textContent = "The Old Cadastral Plan Lifecycle";
-                
-                // Button Styling (Active)
                 btnOld.className = "bg-white text-slate-900 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 ring-2 ring-white";
-                
-                // Button Styling (Inactive)
                 btnNew.className = "bg-slate-800 text-slate-400 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 hover:bg-slate-700 border border-slate-700";
-            
             } else {
-                // Content Visibility
                 contentOld.classList.add('hidden');
                 contentNew.classList.remove('hidden');
-
-                // Title
                 pageTitle.textContent = "The New Cadastral Plan Lifecycle";
-
-                // Button Styling (Active)
                 btnNew.className = "bg-white text-slate-900 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 ring-2 ring-white";
-
-                // Button Styling (Inactive)
                 btnOld.className = "bg-slate-800 text-slate-400 px-6 py-2 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 hover:bg-slate-700 border border-slate-700";
             }
         }
@@ -1730,6 +2027,13 @@
             if (toggleBtn) {
                 toggleBtn.addEventListener('click', () => {
                     isExpanded ? collapseSidebar() : expandSidebar();
+                    // If we resize the sidebar while on ETL page, we need to redraw lines
+                    setTimeout(() => {
+                        const etlPage = document.getElementById('page-etl');
+                        if (etlPage && etlPage.classList.contains('active')) {
+                            updateETLPaths();
+                        }
+                    }, 350); // Wait for transition
                 });
             }
 
@@ -1748,6 +2052,12 @@
                 if (targetPage) {
                     targetPage.classList.remove('hidden');
                     targetPage.classList.add('active');
+                    
+                    // Trigger ETL Diagram Update if we switched to ETL page
+                    if (pageId === 'etl') {
+                        // Small timeout to allow the browser to render the layout (width/height) before calculation
+                        setTimeout(updateETLPaths, 50);
+                    }
                 }
                 navLinks.forEach(link => {
                     link.classList.remove('bg-secondary-accent/10', 'text-white', 'shadow-md', 'border-secondary-accent');
@@ -1779,7 +2089,11 @@
                 });
             });
 
+            // Initial load
             switchPage('home'); 
+            
+            // Add resize listener for ETL diagram
+            window.addEventListener('resize', updateETLPaths);
 
             // Initialize Charts
             const activeProportionColor = '#9333ea'; 
