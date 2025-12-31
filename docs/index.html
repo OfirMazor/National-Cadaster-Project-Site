@@ -1282,20 +1282,16 @@
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">Extract, Transform and Load</h3>
                             <div class="space-y-4 text-text-dark leading-relaxed">
                                 <p>
-                                    We designed a data pipeline to automate the migration. It starts by extracting all relevant tables from the old databases, which run on a “sealed” operating system, and transferring them to an open operating system under security supervision.
+                                    We designed and implemented a robust data pipeline to automate the migration process end to end. The pipeline begins by extracting all relevant tables from the legacy databases, which operate on a “sealed” operating system. These datasets are then securely transferred to an open operating system under strict security supervision to ensure data integrity and compliance.
                                 </p>
                                 <p>
-                                    Once transferred, many data manipulation scripts handled the data transformation by cleaning values, fixing values, filling missing data and aligning the structure to match the new schema.
+                                    Once the data is available in the new "open" environment, a series of data manipulation scripts perform the transformation phase. This includes filtering out unnecessary or obsolete information, consolidating multiple source tables into unified datasets, and reshaping the data to align precisely with the new target schema. Wherever possible, we enriched the data by completing missing values and records, and by correcting misleading or inconsistent entries identified.
                                 </p>
                                 <p>
-                                    The resulting transformed data is stored in a File GDB.
+                                    Each transformed table is initially stored in a File Geodatabase (File GDB), which serves as a controlled staging area for further quality checks. From there, the data is loaded into a clean enterprise Geodatabase, where we enable branch versioning, added performance-optimizing indexes, and publish feature services for downstream applications.
                                 </p>
                                 <p>
-                                    And finally, we load the transformed data from that File GDB into an empty enterprise GDB, there, we can enable branch versioning, adding indexes and publish feature services.
-                                </p>
-                                <p>
-                                    Since the entire modernization project took nearly three years, we ran this whole pipeline every month or two.
-                                    When the full modernization project completed, we ran the pipeline one final time.
+                                    Since the overall modernization effort spanned nearly three years, this pipeline was executed on a recurring basis—approximately every one to two months—allowing development and testing to be performed on up-to-date data throughout the project lifecycle. Upon completion of the full modernization initiative, the pipeline was executed one final time to produce the authoritative production database.
                                 </p>
                             </div>
 
