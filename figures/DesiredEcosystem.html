@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Cadaster Ecosystem</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Animations */
+        @keyframes flow {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes flow-reverse {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 100; }
+        }
+        
+        @keyframes spin-slow {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .animate-flow {
+            animation: flow 3s linear infinite;
+        }
+
+        .animate-flow-reverse {
+            animation: flow-reverse 3s linear infinite;
+        }
+
+        .animate-spin-slow {
+            animation: spin-slow 10s linear infinite;
+            transform-origin: center center;
+        }
+
+        /* Hover States */
+        .dimmed {
+            opacity: 0.1 !important;
+            transition: opacity 0.3s ease;
+        }
+        
+        .path-highlight {
+            stroke-width: 3px !important;
+            stroke-opacity: 1 !important;
+            opacity: 1 !important;
+            filter: url(#glow-line);
+        }
+
+        .path-dim {
+            stroke-opacity: 0.05 !important;
+            opacity: 0.1 !important;
+        }
+
+        .node-dim {
+            opacity: 0.2 !important;
+        }
+        
+        .node-highlight {
+            opacity: 1 !important;
+            z-index: 50;
+            transform: translate(-50%, -50%) scale(1.1) !important;
+        }
+
+        /* Grid Background Pattern */
+        .bg-grid {
+            background-image: linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 overflow-hidden m-0 p-0 font-sans select-none h-screen w-screen text-slate-800">
+
+    <div id="app" class="relative w-full h-full" style="background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);">
+        
+        <!-- Background Grid -->
+        <div class="absolute inset-0 opacity-40 pointer-events-none bg-grid"></div>
+
+        <!-- SVG Layer for Connections -->
+        <svg id="connections-layer" class="absolute inset-0 w-full h-full pointer-events-none z-0">
+            <defs>
+                <filter id="glow-line" filterUnits="userSpaceOnUse" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+            </defs>
+            <!-- Paths injected via JS -->
+        </svg>
+
+        <!-- Central Database Node -->
+        <div id="center-node" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center group cursor-pointer hover:scale-105 transition-transform duration-300">
+            <div class="absolute w-40 h-40 border-2 border-blue-400 rounded-full animate-ping opacity-30"></div>
+            <!-- Spinning circle removed -->
+            <div class="relative z-10 w-24 h-24 bg-white rounded-full border-4 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)] flex items-center justify-center">
+                <i class="fa-solid fa-database text-blue-600 text-4xl"></i>
+            </div>
+        </div>
+
+        <!-- Nodes Container -->
+        <div id="nodes-container" class="absolute inset-0 pointer-events-none">
+            <!-- Nodes injected via JS -->
+        </div>
+
+        <!-- Legend -->
+        <div id="legend-container" class="absolute bottom-6 right-6 flex flex-col gap-1 bg-white/95 p-3 rounded-lg border border-slate-200 shadow-xl backdrop-blur-md z-30 pointer-events-auto min-w-[140px]">
+            <!-- Legend items injected via JS -->
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const colors = {
+            readers: '#eab308',     // Vivid Yellow
+            modifiers: '#ea580c',   // Orange
+            platforms: '#9333ea',   // Purple
+            applications: '#059669', // Emerald
+            db: '#2563eb'           // Blue
+        };
+
+        const config = {
+            // Increased radii to spread items out and prevent text overlap
+            innerRadiusRatio: 0.32, 
+            outerRadiusRatio: 0.58
+        };
+
+        // --- Nodes Definition ---
+        const nodes = [
+            // --- READ SIDE (Right Hemisphere) ---
+            
+            // Platforms (Inner) - Reordered Topocad to first
+            { id: 'topocad', label: 'Topocad', type: 'platforms', icon: 'fa-solid fa-map-location-dot', layer: 'inner', side: 'right', isFontAwesome: true },
+            { id: 'govmap', label: 'GovMap', type: 'platforms', icon: 'fa-solid fa-layer-group', layer: 'inner', side: 'right', isFontAwesome: true },
+            { id: 'datagov', label: 'Datagov', type: 'platforms', icon: 'fa-solid fa-cloud-arrow-down', layer: 'inner', side: 'right', isFontAwesome: true },
+
+            // Readers (Outer) - Reordered Surveyors to first
+            { id: 'surveyors', label: 'Land Surveyors', type: 'readers', icon: 'fa-solid fa-helmet-safety', layer: 'outer', side: 'right', isFontAwesome: true },
+            { id: 'gov_min', label: 'Gov Ministries & Municipalities', type: 'readers', icon: 'building-2', layer: 'outer', side: 'right' },
+            { id: 'planning', label: 'Private Planning Agencies', type: 'readers', icon: 'fa-solid fa-briefcase', layer: 'outer', side: 'right', isFontAwesome: true },
+            { id: 'public', label: 'Public Citizens', type: 'readers', icon: 'users', layer: 'outer', side: 'right' },
+
+            // --- WRITE SIDE (Left Hemisphere) ---
+
+            // Applications (Inner)
+            { id: 'cyclamen', label: 'Cyclamen', type: 'applications', icon: 'https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Cyclamen.png', layer: 'inner', side: 'left', isImage: true },
+            { id: 'palm', label: 'Palm', type: 'applications', icon: 'https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Palm.png', layer: 'inner', side: 'left', isImage: true },
+            { id: 'cms', label: 'CMS', type: 'applications', icon: 'fa-solid fa-people-arrows', layer: 'inner', side: 'left', isFontAwesome: true },
+            { id: 'arcgis', label: 'ArcGIS Pro Tasks', type: 'applications', icon: 'https://www.esriuk.com/content/dam/esrisites/en-us/common/icons/product-logos/ArcGIS-Pro.png', layer: 'inner', side: 'left', isImage: true },
+
+            // Modifiers (Outer)
+            { id: 'editors', label: 'Cadastral Editors', type: 'modifiers', icon: 'fa-solid fa-pen-ruler', layer: 'outer', side: 'left', isFontAwesome: true },
+            { id: 'reviewers', label: 'Cadastral Reviewers', type: 'modifiers', icon: 'fa-solid fa-magnifying-glass-location', layer: 'outer', side: 'left', isFontAwesome: true },
+        ];
+
+        // --- Connections Definition ---
+        const rawLinks = [
+            { source: 'center', target: 'govmap' },
+            { source: 'center', target: 'topocad' },
+            { source: 'center', target: 'datagov' },
+            { source: 'center', target: 'cyclamen' },
+            { source: 'center', target: 'palm' },
+            { source: 'center', target: 'arcgis' },
+            { source: 'center', target: 'cms' },
+
+            // Readers -> Platforms
+            { source: 'govmap', target: 'gov_min' }, { source: 'datagov', target: 'gov_min' },
+            
+            // Surveyors -> Topocad Only
+            { source: 'topocad', target: 'surveyors' }, 
+            
+            // Removed Topocad connection for Planning & Public
+            { source: 'govmap', target: 'planning' }, { source: 'datagov', target: 'planning' },
+            { source: 'govmap', target: 'public' }, { source: 'datagov', target: 'public' },
+
+            // Modifiers -> Applications
+            { source: 'cms', target: 'editors' },
+            { source: 'arcgis', target: 'editors' },
+            
+            { source: 'cms', target: 'reviewers' },
+            { source: 'cyclamen', target: 'reviewers' },
+            { source: 'palm', target: 'reviewers' }
+        ];
+
+        // --- State ---
+        let state = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            hoveredNode: null,
+            nodePositions: {}
+        };
+
+        // --- DOM Elements ---
+        const svgContainer = document.getElementById('connections-layer');
+        const nodesContainer = document.getElementById('nodes-container');
+        const legendContainer = document.getElementById('legend-container');
+
+        // --- Layout Logic ---
+        function calculatePositions() {
+            const centerX = state.width / 2;
+            const centerY = state.height / 2;
+            const minDim = Math.min(state.width, state.height);
+            const innerR = minDim * config.innerRadiusRatio;
+            const outerR = minDim * config.outerRadiusRatio;
+
+            const groups = {
+                rightInner: nodes.filter(n => n.side === 'right' && n.layer === 'inner'),
+                rightOuter: nodes.filter(n => n.side === 'right' && n.layer === 'outer'),
+                leftInner: nodes.filter(n => n.side === 'left' && n.layer === 'inner'),
+                leftOuter: nodes.filter(n => n.side === 'left' && n.layer === 'outer'),
+            };
+
+            const distribute = (group, startAngle, endAngle, radius) => {
+                const total = group.length;
+                const span = endAngle - startAngle;
+                const step = total > 1 ? span / (total - 1) : 0;
+                
+                group.forEach((node, i) => {
+                    const angleDeg = total === 1 ? (startAngle + endAngle)/2 : startAngle + (step * i);
+                    const angleRad = (angleDeg * Math.PI) / 180;
+                    
+                    state.nodePositions[node.id] = {
+                        x: centerX + radius * Math.cos(angleRad),
+                        y: centerY + radius * Math.sin(angleRad),
+                        angle: angleDeg
+                    };
+                });
+            };
+
+            // --- Layout Strategy for Readability ---
+            // 1. Right Side (East):
+            // Spread Inner nodes (Platforms) comfortably: -60 to 60.
+            // Cluster Outer nodes (Readers) tightly around 0 (pure right) to place them "behind".
+            distribute(groups.rightInner, -60, 60, innerR);
+            distribute(groups.rightOuter, -45, 45, outerR); 
+
+            // 2. Left Side (West): 
+            // Spread Inner widely: 100 to 260 degrees.
+            // Place Outer nodes strategically to minimize line crossing and overlap.
+            // Editors (index 0) connects to CMS/ArcGIS (Top/Left). 
+            // Reviewers (index 1) connects to Cyc/Palm/CMS (Bottom/Left).
+            // We cluster them closer to 180 (pure left) to place them "behind" the apps.
+            distribute(groups.leftInner, 100, 260, innerR);
+            distribute(groups.leftOuter, 215, 145, outerR); // Reviewers moved lower (165 -> 145)
+
+            state.nodePositions['center'] = { x: centerX, y: centerY };
+        }
+
+        function createSVGElement(type, attributes) {
+            const el = document.createElementNS("http://www.w3.org/2000/svg", type);
+            for (let key in attributes) el.setAttribute(key, attributes[key]);
+            return el;
+        }
+
+        // --- Render ---
+        function render() {
+            calculatePositions();
+            
+            svgContainer.innerHTML = `
+                <defs>
+                    <filter id="glow-line" filterUnits="userSpaceOnUse" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="1.5" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+            `;
+            nodesContainer.innerHTML = '';
+            legendContainer.innerHTML = '';
+
+            // 1. Draw Links
+            rawLinks.forEach(link => {
+                // Clone the positions so we can modify 'start' locally without affecting other links
+                let start = { ...state.nodePositions[link.source] };
+                let end = { ...state.nodePositions[link.target] };
+
+                if (!start.x || !end.x) return;
+
+                // --- FIX: Adjust start point for Center node to be on the border ---
+                if (link.source === 'center') {
+                    const dx = end.x - start.x;
+                    const dy = end.y - start.y;
+                    const angle = Math.atan2(dy, dx);
+                    // Radius of central node is w-24 (96px) / 2 = 48px. 
+                    // Add a bit for border/glow (4px) -> ~52px.
+                    const radius = 52; 
+                    
+                    start.x += Math.cos(angle) * radius;
+                    start.y += Math.sin(angle) * radius;
+                }
+                // ------------------------------------------------------------------
+
+                const cx = state.width / 2;
+                const cy = state.height / 2;
+                
+                const midX = (start.x + end.x) / 2;
+                const midY = (start.y + end.y) / 2;
+                const k = 0.25; 
+                const controlX = midX + (cx - midX) * k;
+                const controlY = midY + (cy - midY) * k;
+
+                const targetNode = nodes.find(n => n.id === link.target);
+                const color = targetNode ? colors[targetNode.type] : colors.db;
+
+                // Logic: If the target is on the LEFT (Modifiers/Apps), flow towards Center (Reverse).
+                // If on RIGHT (Readers/Platforms), flow Outwards (Default).
+                const isLeft = targetNode && targetNode.side === 'left';
+                const flowClass = isLeft ? 'animate-flow-reverse' : 'animate-flow';
+                
+                const pathString = `M ${start.x} ${start.y} Q ${controlX} ${controlY} ${end.x} ${end.y}`;
+                
+                const group = createSVGElement('g', {
+                    'class': 'link-group transition-opacity duration-300',
+                    'data-source': link.source,
+                    'data-target': link.target
+                });
+
+                group.appendChild(createSVGElement('path', {
+                    d: pathString,
+                    fill: 'none',
+                    stroke: color,
+                    'stroke-width': '1',
+                    'stroke-opacity': '0.3'
+                }));
+
+                group.appendChild(createSVGElement('path', {
+                    d: pathString,
+                    fill: 'none',
+                    stroke: color,
+                    'stroke-width': '2',
+                    'stroke-linecap': 'round',
+                    'stroke-dasharray': '8, 8',
+                    'class': `${flowClass} link-path transition-all duration-300`
+                }));
+
+                svgContainer.appendChild(group);
+            });
+
+            // 2. Draw Nodes
+            nodes.forEach(node => {
+                const pos = state.nodePositions[node.id];
+                const color = colors[node.type];
+                
+                const el = document.createElement('div');
+                el.className = "absolute z-10 group pointer-events-auto cursor-pointer flex items-center justify-center transition-all duration-300 node-item";
+                el.style.width = '56px';
+                el.style.height = '56px';
+                el.style.left = `${pos.x}px`;
+                el.style.top = `${pos.y}px`;
+                el.style.transform = 'translate(-50%, -50%)';
+                el.dataset.id = node.id;
+                el.dataset.type = node.type;
+
+                // Dynamic Label Positioning
+                let labelPosClass = "";
+                
+                if (node.id === 'govmap' || node.id === 'arcgis' || node.id === 'topocad') {
+                    // Specific rule: Above icon
+                    labelPosClass = "bottom-full mb-2 left-1/2 -translate-x-1/2 text-center origin-bottom";
+                } else if (node.id === 'datagov' || node.id === 'cyclamen') {
+                    // Specific rule: Below icon
+                    labelPosClass = "top-full mt-2 left-1/2 -translate-x-1/2 text-center origin-top";
+                } else {
+                    // Default: Side positioning based on hemisphere
+                    const isRight = node.side === 'right';
+                    labelPosClass = isRight 
+                        ? "left-full ml-4 top-1/2 -translate-y-1/2 text-left origin-left" 
+                        : "right-full mr-4 top-1/2 -translate-y-1/2 text-right origin-right";
+                }
+
+                // Determine Icon HTML based on library
+                let iconHtml = '';
+                if (node.isImage) {
+                    iconHtml = `<img src="${node.icon}" alt="${node.label}" class="w-6 h-6 object-contain">`;
+                } else if (node.isFontAwesome) {
+                    iconHtml = `<i class="${node.icon}" style="font-size: 20px;"></i>`;
+                } else {
+                    iconHtml = `<i data-lucide="${node.icon}" width="20" height="20"></i>`;
+                }
+
+                el.innerHTML = `
+                    <div class="w-12 h-12 rounded-full bg-white border-2 flex items-center justify-center shadow-md transition-all duration-300 node-icon z-20 relative overflow-hidden" 
+                            style="border-color: ${color}; color: ${color};">
+                        ${iconHtml}
+                    </div>
+                    <div class="absolute z-10 w-max max-w-[150px] ${labelPosClass}">
+                            <span class="text-[11px] font-bold tracking-wide block px-2 py-1 rounded-md shadow-sm text-white backdrop-blur-sm transition-transform duration-200 leading-tight"
+                                  style="background-color: ${color}; box-shadow: 0 2px 5px ${color}60;">
+                            ${node.label}
+                            </span>
+                    </div>
+                `;
+
+                el.addEventListener('mouseenter', () => handleHover(node.id));
+                el.addEventListener('mouseleave', () => handleHover(null));
+
+                nodesContainer.appendChild(el);
+            });
+
+            // 3. Render Legend
+            const legendItems = [
+                { id: 'readers', label: 'Readers' },
+                { id: 'platforms', label: 'Platforms' },
+                { id: 'applications', label: 'Applications' },
+                { id: 'modifiers', label: 'Modifiers' },
+            ];
+
+            legendItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-3 p-1.5 rounded hover:bg-slate-100 cursor-pointer transition-colors";
+                div.innerHTML = `
+                    <div class="w-2.5 h-2.5 rounded-full shadow-[0_0_4px_currentColor]" style="background-color: ${colors[item.id]}; color: ${colors[item.id]}"></div>
+                    <span class="text-slate-700 text-xs font-bold tracking-wider">${item.label}</span>
+                `;
+                div.addEventListener('mouseenter', () => {
+                   document.querySelectorAll('.node-item').forEach(n => {
+                       if(n.dataset.type !== item.id) n.classList.add('node-dim');
+                   });
+                });
+                div.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.node-item').forEach(n => n.classList.remove('node-dim'));
+                });
+                legendContainer.appendChild(div);
+            });
+
+            lucide.createIcons();
+        }
+
+        // --- Interaction ---
+        
+        function handleHover(nodeId) {
+            const allNodes = document.querySelectorAll('.node-item');
+            const allLinks = document.querySelectorAll('.link-group');
+            
+            if (!nodeId) {
+                allNodes.forEach(n => {
+                    n.classList.remove('node-dim', 'node-highlight');
+                    n.querySelector('.node-icon').style.boxShadow = '';
+                    n.querySelector('.node-icon').style.transform = '';
+                });
+                allLinks.forEach(l => {
+                    l.classList.remove('path-dim');
+                    l.querySelector('.link-path').classList.remove('path-highlight');
+                });
+                return;
+            }
+
+            const connectedIds = new Set([nodeId]);
+            const highlightedLinks = new Set();
+
+            // 1. Direct links
+            rawLinks.forEach((link, idx) => {
+                if (link.source === nodeId || link.target === nodeId) {
+                    connectedIds.add(link.source);
+                    connectedIds.add(link.target);
+                    highlightedLinks.add(idx);
+                }
+            });
+
+            // 2. Secondary links
+            rawLinks.forEach((link, idx) => {
+                if (connectedIds.has(link.source) && connectedIds.has(link.target)) {
+                    highlightedLinks.add(idx);
+                }
+            });
+
+            connectedIds.add('center');
+
+            allNodes.forEach(n => {
+                if (connectedIds.has(n.dataset.id) || n.id === 'center-node') {
+                    n.classList.remove('node-dim');
+                    if (n.dataset.id === nodeId) {
+                        n.classList.add('node-highlight');
+                        const color = colors[n.dataset.type];
+                        n.querySelector('.node-icon').style.boxShadow = `0 0 20px ${color}60`;
+                    }
+                } else {
+                    n.classList.add('node-dim');
+                }
+            });
+
+            allLinks.forEach((l, idx) => {
+                if (highlightedLinks.has(idx)) {
+                    l.querySelector('.link-path').classList.add('path-highlight');
+                } else {
+                    l.classList.add('path-dim');
+                }
+            });
+        }
+
+        // --- Init ---
+        window.addEventListener('resize', () => {
+            state.width = window.innerWidth;
+            state.height = window.innerHeight;
+            render();
+        });
+
+        render();
+
+    </script>
+</body>
+</html>
