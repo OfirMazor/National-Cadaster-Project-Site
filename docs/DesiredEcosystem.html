@@ -68,7 +68,7 @@
         
         .node-highlight {
             opacity: 1 !important;
-            z-index: 50;
+            z-index: 100 !important; /* Raised to 100 to stay above everything */
             transform: translate(-50%, -50%) scale(1.1) !important;
         }
 
@@ -98,7 +98,7 @@
         </svg>
 
         <!-- Central Database Node -->
-        <div id="center-node" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center group cursor-pointer hover:scale-105 transition-transform duration-300">
+        <div id="center-node" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center group cursor-pointer hover:scale-105 transition-all duration-300">
             <div class="absolute w-40 h-40 border-2 border-blue-400 rounded-full animate-ping opacity-30"></div>
             <!-- Spinning circle removed -->
             <div class="relative z-10 w-24 h-24 bg-white rounded-full border-4 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)] flex items-center justify-center">
@@ -137,28 +137,143 @@
         const nodes = [
             // --- READ SIDE (Right Hemisphere) ---
             
-            // Platforms (Inner) - Reordered Topocad to first
-            { id: 'topocad', label: 'Topocad', type: 'platforms', icon: 'fa-solid fa-map-location-dot', layer: 'inner', side: 'right', isFontAwesome: true },
-            { id: 'govmap', label: 'GovMap', type: 'platforms', icon: 'fa-solid fa-layer-group', layer: 'inner', side: 'right', isFontAwesome: true },
-            { id: 'datagov', label: 'Datagov', type: 'platforms', icon: 'fa-solid fa-cloud-arrow-down', layer: 'inner', side: 'right', isFontAwesome: true },
+            // Platforms (Inner)
+            { 
+                id: 'topocad', 
+                label: 'Topocad', 
+                type: 'platforms', 
+                icon: 'fa-solid fa-map-location-dot', 
+                layer: 'inner', 
+                side: 'right', 
+                isFontAwesome: true,
+                description: "Comprehensive CAD system for topographical surveying and mapping calculations."
+            },
+            { 
+                id: 'govmap', 
+                label: 'GovMap', 
+                type: 'platforms', 
+                icon: 'fa-solid fa-layer-group', 
+                layer: 'inner', 
+                side: 'right', 
+                isFontAwesome: true,
+                description: "Official government mapping portal providing public access to geospatial data."
+            },
+            { 
+                id: 'datagov', 
+                label: 'Datagov', 
+                type: 'platforms', 
+                icon: 'fa-solid fa-cloud-arrow-down', 
+                layer: 'inner', 
+                side: 'right', 
+                isFontAwesome: true,
+                description: "Open government data portal for accessing raw cadastral datasets."
+            },
 
-            // Readers (Outer) - Reordered Surveyors to first
-            { id: 'surveyors', label: 'Land Surveyors', type: 'readers', icon: 'fa-solid fa-helmet-safety', layer: 'outer', side: 'right', isFontAwesome: true },
-            { id: 'gov_min', label: 'Gov Ministries & Municipalities', type: 'readers', icon: 'building-2', layer: 'outer', side: 'right' },
-            { id: 'planning', label: 'Private Planning Agencies', type: 'readers', icon: 'fa-solid fa-briefcase', layer: 'outer', side: 'right', isFontAwesome: true },
-            { id: 'public', label: 'Public Citizens', type: 'readers', icon: 'users', layer: 'outer', side: 'right' },
+            // Readers (Outer)
+            { 
+                id: 'surveyors', 
+                label: 'Land Surveyors', 
+                type: 'readers', 
+                icon: 'fa-solid fa-helmet-safety', 
+                layer: 'outer', 
+                side: 'right', 
+                isFontAwesome: true,
+                description: "Licensed professionals measuring and mapping land boundaries."
+            },
+            { 
+                id: 'gov_min', 
+                label: 'Gov Ministries & Municipalities', 
+                type: 'readers', 
+                icon: 'building-2', 
+                layer: 'outer', 
+                side: 'right',
+                description: "Government bodies utilizing cadastral data for urban planning and development."
+            },
+            { 
+                id: 'planning', 
+                label: 'Private Planning Agencies', 
+                type: 'readers', 
+                icon: 'fa-solid fa-briefcase', 
+                layer: 'outer', 
+                side: 'right', 
+                isFontAwesome: true,
+                description: "Private firms conducting architectural and regional planning projects."
+            },
+            { 
+                id: 'public', 
+                label: 'Public Citizens', 
+                type: 'readers', 
+                icon: 'users', 
+                layer: 'outer', 
+                side: 'right',
+                description: "General public accessing land ownership and boundary information."
+            },
 
             // --- WRITE SIDE (Left Hemisphere) ---
 
             // Applications (Inner)
-            { id: 'cyclamen', label: 'Cyclamen', type: 'applications', icon: 'https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Cyclamen.png', layer: 'inner', side: 'left', isImage: true },
-            { id: 'palm', label: 'Palm', type: 'applications', icon: 'https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Palm.png', layer: 'inner', side: 'left', isImage: true },
-            { id: 'cms', label: 'CMS', type: 'applications', icon: 'fa-solid fa-people-arrows', layer: 'inner', side: 'left', isFontAwesome: true },
-            { id: 'arcgis', label: 'ArcGIS Pro Tasks', type: 'applications', icon: 'https://www.esriuk.com/content/dam/esrisites/en-us/common/icons/product-logos/ArcGIS-Pro.png', layer: 'inner', side: 'left', isImage: true },
+            { 
+                id: 'cyclamen', 
+                label: 'Cyclamen', 
+                type: 'applications', 
+                icon: 'https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Cyclamen.png', 
+                layer: 'inner', 
+                side: 'left', 
+                isImage: true,
+                description: "Internal tool for processing and validating advanced field measurements."
+            },
+            { 
+                id: 'palm', 
+                label: 'Palm', 
+                type: 'applications', 
+                icon: 'https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Palm.png', 
+                layer: 'inner', 
+                side: 'left', 
+                isImage: true,
+                description: "Legacy system for managing land parcel history and mutations."
+            },
+            { 
+                id: 'cms', 
+                label: 'CMS', 
+                type: 'applications', 
+                icon: 'fa-solid fa-people-arrows', 
+                layer: 'inner', 
+                side: 'left', 
+                isFontAwesome: true,
+                description: "Content Management System for cadastral workflow tracking."
+            },
+            { 
+                id: 'arcgis', 
+                label: 'ArcGIS Pro Tasks', 
+                type: 'applications', 
+                icon: 'https://www.esriuk.com/content/dam/esrisites/en-us/common/icons/product-logos/ArcGIS-Pro.png', 
+                layer: 'inner', 
+                side: 'left', 
+                isImage: true,
+                description: "Advanced GIS toolkit for spatial analysis and map editing tasks."
+            },
 
             // Modifiers (Outer)
-            { id: 'editors', label: 'Cadastral Editors', type: 'modifiers', icon: 'fa-solid fa-pen-ruler', layer: 'outer', side: 'left', isFontAwesome: true },
-            { id: 'reviewers', label: 'Cadastral Reviewers', type: 'modifiers', icon: 'fa-solid fa-magnifying-glass-location', layer: 'outer', side: 'left', isFontAwesome: true },
+            { 
+                id: 'editors', 
+                label: 'Cadastral Editors', 
+                type: 'modifiers', 
+                icon: 'fa-solid fa-pen-ruler', 
+                layer: 'outer', 
+                side: 'left', 
+                isFontAwesome: true,
+                description: "Technicians responsible for updating and correcting digital map data."
+            },
+            { 
+                id: 'reviewers', 
+                label: 'Cadastral Reviewers', 
+                type: 'modifiers', 
+                icon: 'fa-solid fa-magnifying-glass-location', 
+                layer: 'outer', 
+                side: 'left', 
+                isFontAwesome: true,
+                description: "Senior officials who approve or reject proposed changes to the cadaster."
+            },
         ];
 
         // --- Connections Definition ---
@@ -237,19 +352,12 @@
 
             // --- Layout Strategy for Readability ---
             // 1. Right Side (East):
-            // Spread Inner nodes (Platforms) comfortably: -60 to 60.
-            // Cluster Outer nodes (Readers) tightly around 0 (pure right) to place them "behind".
             distribute(groups.rightInner, -60, 60, innerR);
             distribute(groups.rightOuter, -45, 45, outerR); 
 
             // 2. Left Side (West): 
-            // Spread Inner widely: 100 to 260 degrees.
-            // Place Outer nodes strategically to minimize line crossing and overlap.
-            // Editors (index 0) connects to CMS/ArcGIS (Top/Left). 
-            // Reviewers (index 1) connects to Cyc/Palm/CMS (Bottom/Left).
-            // We cluster them closer to 180 (pure left) to place them "behind" the apps.
             distribute(groups.leftInner, 100, 260, innerR);
-            distribute(groups.leftOuter, 215, 145, outerR); // Reviewers moved lower (165 -> 145)
+            distribute(groups.leftOuter, 215, 145, outerR); 
 
             state.nodePositions['center'] = { x: centerX, y: centerY };
         }
@@ -277,25 +385,20 @@
 
             // 1. Draw Links
             rawLinks.forEach(link => {
-                // Clone the positions so we can modify 'start' locally without affecting other links
                 let start = { ...state.nodePositions[link.source] };
                 let end = { ...state.nodePositions[link.target] };
 
                 if (!start.x || !end.x) return;
 
-                // --- FIX: Adjust start point for Center node to be on the border ---
                 if (link.source === 'center') {
                     const dx = end.x - start.x;
                     const dy = end.y - start.y;
                     const angle = Math.atan2(dy, dx);
-                    // Radius of central node is w-24 (96px) / 2 = 48px. 
-                    // Add a bit for border/glow (4px) -> ~52px.
                     const radius = 52; 
                     
                     start.x += Math.cos(angle) * radius;
                     start.y += Math.sin(angle) * radius;
                 }
-                // ------------------------------------------------------------------
 
                 const cx = state.width / 2;
                 const cy = state.height / 2;
@@ -309,8 +412,6 @@
                 const targetNode = nodes.find(n => n.id === link.target);
                 const color = targetNode ? colors[targetNode.type] : colors.db;
 
-                // Logic: If the target is on the LEFT (Modifiers/Apps), flow towards Center (Reverse).
-                // If on RIGHT (Readers/Platforms), flow Outwards (Default).
                 const isLeft = targetNode && targetNode.side === 'left';
                 const flowClass = isLeft ? 'animate-flow-reverse' : 'animate-flow';
                 
@@ -360,19 +461,29 @@
 
                 // Dynamic Label Positioning
                 let labelPosClass = "";
+                let tooltipPosClass = ""; // New variable for tooltip positioning
                 
                 if (node.id === 'govmap' || node.id === 'arcgis' || node.id === 'topocad') {
-                    // Specific rule: Above icon
+                    // Label Above -> Tooltip Below
                     labelPosClass = "bottom-full mb-2 left-1/2 -translate-x-1/2 text-center origin-bottom";
+                    tooltipPosClass = "top-full mt-3 left-1/2 -translate-x-1/2 origin-top";
                 } else if (node.id === 'datagov' || node.id === 'cyclamen') {
-                    // Specific rule: Below icon
+                    // Label Below -> Tooltip Above
                     labelPosClass = "top-full mt-2 left-1/2 -translate-x-1/2 text-center origin-top";
+                    tooltipPosClass = "bottom-full mb-3 left-1/2 -translate-x-1/2 origin-bottom";
                 } else {
-                    // Default: Side positioning based on hemisphere
+                    // Side Labels -> Tooltip Below (generally safe)
                     const isRight = node.side === 'right';
                     labelPosClass = isRight 
                         ? "left-full ml-4 top-1/2 -translate-y-1/2 text-left origin-left" 
                         : "right-full mr-4 top-1/2 -translate-y-1/2 text-right origin-right";
+                    
+                    // Specific override for Reviewers and Public Citizens to show tooltip above
+                    if (node.id === 'reviewers' || node.id === 'public') {
+                        tooltipPosClass = "bottom-full mb-3 left-1/2 -translate-x-1/2 origin-bottom";
+                    } else {
+                        tooltipPosClass = "top-full mt-3 left-1/2 -translate-x-1/2 origin-top";
+                    }
                 }
 
                 // Determine Icon HTML based on library
@@ -390,11 +501,19 @@
                             style="border-color: ${color}; color: ${color};">
                         ${iconHtml}
                     </div>
+                    
+                    <!-- Label -->
                     <div class="absolute z-10 w-max max-w-[150px] ${labelPosClass}">
-                            <span class="text-[11px] font-bold tracking-wide block px-2 py-1 rounded-md shadow-sm text-white backdrop-blur-sm transition-transform duration-200 leading-tight"
-                                  style="background-color: ${color}; box-shadow: 0 2px 5px ${color}60;">
-                            ${node.label}
-                            </span>
+                        <span class="text-[11px] font-bold tracking-wide block px-2 py-1 rounded-md shadow-sm text-white backdrop-blur-sm transition-transform duration-200 leading-tight"
+                              style="background-color: ${color}; box-shadow: 0 2px 5px ${color}60;">
+                        ${node.label}
+                        </span>
+                    </div>
+
+                    <!-- Tooltip -->
+                    <div class="absolute z-50 w-48 p-3 bg-white/95 backdrop-blur rounded-lg shadow-xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none ${tooltipPosClass}">
+                        <h5 class="font-bold text-slate-800 text-[11px] mb-1 border-b border-slate-100 pb-1">${node.label}</h5>
+                        <p class="text-slate-500 text-[10px] leading-relaxed">${node.description}</p>
                     </div>
                 `;
 
