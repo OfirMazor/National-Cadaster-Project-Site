@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoDatabase Structure Infogram</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Custom Scrollbar for table lists */
+        .table-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .table-list::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        .table-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 4px;
+        }
+        .table-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
+        /* Subtle animations */
+        .realm-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+        .realm-card:hover {
+            transform: scale(1.12);
+            z-index: 50;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Connection Line Animations */
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.5;
+                stroke-width: 8px;
+            }
+            50% {
+                opacity: 1;
+                stroke-width: 14px;
+            }
+        }
+
+        .connection-path {
+            vector-effect: non-scaling-stroke; /* Ensures line thickness is consistent */
+            stroke-linecap: round;
+            fill: none;
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        /* Glowing Effects */
+        .glow-amber {
+            stroke: #f59e0b;
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
+        }
+        
+        .glow-purple {
+            stroke: #a855f7;
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8));
+        }
+        
+        .glow-teal {
+            stroke: #0d9488;
+            filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.8));
+        }
+        
+        @media (max-width: 768px) {
+            .db-connection-line {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 p-4 md:p-8 flex flex-col items-center justify-center">
+
+    <!-- Main Container -->
+    <div class="max-w-7xl w-full mx-auto relative">
+        
+        <!-- Connection Lines SVG (Hidden on Mobile) -->
+        <svg class="absolute top-0 left-0 w-full h-[300px] pointer-events-none hidden md:block z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- Path to Left Card (Amber) - Starts from left side (46) -->
+            <path d="M 46 65 C 46 85, 16.5 85, 16.5 100" class="connection-path glow-amber" />
+            
+            <!-- Path to Middle Card (Purple) - Starts from center (50) -->
+            <path d="M 50 65 C 50 85, 50 85, 50 100" class="connection-path glow-purple" />
+            
+            <!-- Path to Right Card (Teal) - Starts from right side (54) -->
+            <path d="M 54 65 C 54 85, 83.5 85, 83.5 100" class="connection-path glow-teal" />
+        </svg>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16 relative z-10">
+            <h1 class="text-4xl font-bold text-slate-900 mb-2 tracking-tight bg-f3f4f6 bg-opacity-50 inline-block px-4 rounded-lg backdrop-blur-sm">National Cadaster Database Architecture</h1>
+            <p class="text-slate-500 text-lg max-w-2xl mx-auto mb-8">
+                A unified spatial database categorized into three "realms"
+            </p>
+            <div class="inline-flex items-center justify-center p-6 bg-white rounded-full shadow-md text-blue-600 ring-4 ring-slate-100 relative z-20">
+                <i class="fa-solid fa-database text-6xl"></i>
+            </div>
+        </div>
+
+        <!-- The Three Realms Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+            
+            <!-- REALM 1: IN-PROCESS DATA -->
+            <div class="realm-card bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden flex flex-col relative z-10">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-amber-500 to-orange-600 p-6 text-white relative">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-xl font-bold uppercase tracking-wider">In-Process Data</h2>
+                            <p class="text-amber-100 text-sm mt-1 opacity-90">Conversion & Staging</p>
+                        </div>
+                        <i class="fa-solid fa-person-digging text-3xl opacity-80"></i>
+                    </div>
+                </div>
+                
+                <!-- Description -->
+                <div class="px-6 py-4 bg-amber-50 border-b border-amber-100">
+                    <p class="text-xs text-amber-800 font-semibold">
+                        <i class="fa-solid fa-info-circle mr-1"></i>
+                        Contains the conversion of the cadastral plan features. Used to update the Parcel Fabric data once the plan is approved.
+                    </p>
+                </div>
+
+                <!-- Table List -->
+                <div class="p-6 flex-grow">
+                    <ul class="space-y-2 text-sm table-list max-h-[500px] overflow-y-auto pr-2">
+                        <!-- Item -->
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-draw-polygon"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">CadasterProcessBorders</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-draw-polygon"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessParcels2D</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessBorderPoints</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-bezier-curve"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessFronts</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-cube"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessParcels3D</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-regular fa-square"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessProjectedParcels3D</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-scissors"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessSubstractions</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-regular fa-square"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessProjectedSubstractions</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">InProcessBorderPoints3D</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Connector Arrow for Desktop -->
+                <div class="hidden md:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-20 text-slate-400">
+                    <i class="fa-solid fa-circle-chevron-right text-2xl bg-white rounded-full"></i>
+                </div>
+            </div>
+
+            <!-- REALM 2: PARCEL FABRIC DATASET -->
+            <div class="realm-card bg-white rounded-2xl shadow-lg border-2 border-purple-500 overflow-hidden flex flex-col relative z-10 transform md:scale-105">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-purple-600 to-indigo-700 p-6 text-white">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-xl font-bold uppercase tracking-wider">Parcel Fabric</h2>
+                            <p class="text-purple-100 text-sm mt-1 opacity-90">Official Cadaster Data</p>
+                        </div>
+                        <!-- Logo with fallback to icon -->
+                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/e1eb152f66e2998c8c09762922739a1fe84deeca/figures/Parcel%20Fabric%20Logo.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" alt="PF Logo" class="h-12 w-auto object-contain drop-shadow-md">
+                        <i class="fa-solid fa-layer-group text-3xl opacity-80 hidden"></i>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="px-6 py-4 bg-purple-50 border-b border-purple-100">
+                    <p class="text-xs text-purple-800 font-semibold">
+                        <i class="fa-solid fa-check-circle mr-1"></i>
+                        The core authoritative dataset. Updates are promoted here mostly by In-Process data under branch versioning.
+                    </p>
+                </div>
+
+                <!-- Table List -->
+                <div class="p-6 flex-grow">
+                    <ul class="space-y-2 text-sm table-list max-h-[500px] overflow-y-auto pr-2">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-draw-polygon"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">CadasterRecordsBorders</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-draw-polygon"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">Blocks</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-bezier-curve"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">BlocksFronts</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-draw-polygon"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">Parcels2D</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-bezier-curve"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">Parcels2DFronts</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-share-nodes"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">ConnectionLines</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-cube"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">Parcels3D</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-regular fa-square"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">ProjectedParcels3D</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-scissors"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">Substractions</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-regular fa-square"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">ProjectedSubstractions</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">BorderPoints</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">BorderPoints3D</span>
+                        </li>
+                         <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-circle-nodes"></i>
+                            </span>
+                            <span class="font-bold text-slate-800">Topology</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- REALM 3: MANAGEMENT TABLES -->
+            <div class="realm-card bg-white rounded-2xl shadow-lg border border-teal-200 overflow-hidden flex flex-col relative z-10">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-teal-600 to-cyan-700 p-6 text-white">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-xl font-bold uppercase tracking-wider">Management</h2>
+                            <p class="text-teal-100 text-sm mt-1 opacity-90">Validation & Logs</p>
+                        </div>
+                        <i class="fa-solid fa-lightbulb text-3xl opacity-80"></i>
+                    </div>
+                </div>
+
+                 <!-- Description -->
+                 <div class="px-6 py-4 bg-teal-50 border-b border-teal-100">
+                    <p class="text-xs text-teal-800 font-semibold">
+                        <i class="fa-solid fa-shield-halved mr-1"></i>
+                        Used for maintenance, validation, and history tracking.
+                    </p>
+                </div>
+
+                <!-- Table List -->
+                <div class="p-6 flex-grow">
+                    <ul class="space-y-2 text-sm table-list">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">TasksHistory</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">CPBStatusAndDates</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-list-check"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">Attribute Rules Validations</span>
+                        </li>
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                            <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-arrow-down-1-9"></i>
+                            </span>
+                            <span class="font-medium text-slate-700">SequenceActions</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                 <!-- Floating background icon for style -->
+                 <i class="fa-solid fa-wrench absolute -bottom-6 -right-6 text-9xl text-slate-50 pointer-events-none z-0"></i>
+            </div>
+            
+        </div>
+
+    </div>
+
+</body>
+</html>
