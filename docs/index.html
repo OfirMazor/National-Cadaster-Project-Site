@@ -514,7 +514,7 @@
                 <span class="ml-3 whitespace-nowrap sidebar-text hidden md:inline">ETL Pipeline & Integration</span>
             </a>
 
-            <!-- 5. Editing with Parcel Fabric -->
+            <!-- 5. Official Data Editing -->
             <a href="#" data-page="tasks"
                 class="nav-link flex items-center p-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition duration-200 border-l-4 border-transparent hover:border-secondary-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24"
@@ -522,7 +522,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
-                <span class="ml-3 whitespace-nowrap sidebar-text hidden md:inline">Editing with Parcel Fabric</span>
+                <span class="ml-3 whitespace-nowrap sidebar-text hidden md:inline">Official Data Editing</span>
             </a>
 
             <!-- 6. Challenges -->
@@ -2093,7 +2093,7 @@
                         <div class="flex justify-end mt-10">
                             <a href="#" data-page="tasks"
                                 class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
-                                Next: Editing with Parcel Fabric
+                                Next: Official Data Editing
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -2103,11 +2103,11 @@
                     </div>
                 </section>
 
-                <!-- Editing with Parcel Fabric Page -->
+                <!-- Official Data Editing Page -->
                 <section id="page-tasks" class="page-content hidden">
                     <div class="space-y-10">
                         <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
-                            <h2 class="text-4xl font-extrabold text-primary-accent">Editing with Parcel Fabric</h2>
+                            <h2 class="text-4xl font-extrabold text-primary-accent">Official Data Editing</h2>
                         </div>
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">
@@ -2144,17 +2144,14 @@
                         <!-- Designing Editing Workflow with Tasks -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">
-                                Designing Editing Workflow with Tasks</h3>
+                                Designing Editing Workflow with ArcGIS Tasks</h3>
                             <div class="text-text-dark leading-relaxed space-y-4">
                                 <p>
-                                    In the Israeli cadaster there are about 15 different types of cadastral plans (or
-                                    record types) so instead of creating a unique task for each one, we grouped them
-                                    into 5 general tasks.
+                                    In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
                                 </p>
                                 <p class="font-bold text-lg mt-4">How we did it?</p>
                                 <p>
-                                    We treated the term “record” as a combination of inputs and outputs (like an
-                                    equation).
+                                    We treated the term “record” as a combination of inputs and outputs (like an equation).
                                 </p>
                                 <p class="font-semibold mt-2">For example:</p>
                                 <ul class="list-disc list-outside ml-6 space-y-2">
@@ -2186,15 +2183,9 @@
                                         correcting overlaps, closing gaps and so on...
                                     </li>
                                 </ul>
-                            </div>
-                            <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png"
-                                    target="_blank" rel="noopener noreferrer">
-                                    <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks1.png"
-                                        alt="Designing Editing Workflow with Tasks Diagram"
-                                        class="w-full h-auto rounded-lg shadow-xl"
-                                        onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
-                                </a>
+                                <iframe src="RecordDrivenTask.html" style="width:100%; height:700px; border:none;"
+                                loading="lazy">
+                            </iframe>
                             </div>
                             <div class="mt-8 text-text-dark leading-relaxed space-y-6">
                                 <p>
@@ -2240,9 +2231,13 @@
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 2: Import or Modify
                                         Points</p>
-                                    <p class="mb-2">
-                                        In the second step, we use a costume version of the Import Parcel Fabric Points
-                                        (IPFP) GP tool.
+                                    <p class="mb-2">In the second step, we use a costume version of the
+                                        <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/parcel/import-parcel-points.htm"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           style="color: blue; text-decoration: underline;">
+                                            Import Parcel Fabric Points (IPFP) </a>
+                                        GP tool.
                                     </p>
                                     <p class="mb-2">
                                         The IPFP tool is abuilt in Parcel Fabric tool that aligns the active points
