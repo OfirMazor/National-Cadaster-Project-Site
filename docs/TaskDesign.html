@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Management Workflow</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Smooth transitions for all interactive elements */
+        .transition-all-300 {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        p.subtitle {
+            color: #64748b;
+            margin-bottom: 40px;
+            text-align: center;
+            margin-top: 20px; /* Added margin top since H1 is gone */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen font-sans text-slate-800 p-8 md:p-16 overflow-x-hidden">
+
+    <!-- Navigation Controls -->
+    <!-- Changed max-w-[110rem] to max-w-[140rem] for wider cards -->
+    <p class="subtitle">
+            The diagram below illustrates the design of the tasks and their operations at each step.
+            <br>While the code executed in each task type is similar, there are slight variations between them.</br>
+    </p>
+    <div class="max-w-[140rem] mx-auto mt-8 mb-6 flex justify-center gap-4">
+        <button id="btn-back" class="px-6 py-2 rounded-full bg-orange-300 text-orange-900 font-semibold hover:bg-orange-400 shadow-md hover:shadow-lg transition-all-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Back
+        </button>
+        <button id="btn-next" class="px-6 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 shadow-md hover:shadow-lg transition-all-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+            Next <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+    </div>
+
+    <!-- Main Diagram Container -->
+    <!-- Changed max-w-[110rem] to max-w-[140rem] for wider cards -->
+    <div class="max-w-[140rem] mx-auto relative p-4 md:p-8">
+        
+        <!-- Desktop Connecting Line (Horizontal) -->
+        <div class="hidden lg:block absolute top-20 left-4 right-4 h-1 bg-slate-200 -z-0 rounded-full"></div>
+        
+        <!-- Mobile Connecting Line (Vertical) -->
+        <div class="lg:hidden absolute top-8 left-12 w-1 h-[calc(100%-4rem)] bg-slate-200 -z-0 rounded-full"></div>
+
+        <!-- Steps Grid -->
+        <div id="steps-container" class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-4 relative z-10">
+            <!-- Steps will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Data Structure for the Workflow Steps
+        const steps = [
+            {
+                id: 1,
+                title: "Start Record Editing",
+                iconClass: "fa-solid fa-flag-checkered", // Requested Icon
+                color: "blue",
+                description: "Initialization & Branching",
+                details: ["Early validations",
+                          "Transfer Parcel Fabric layers to new branch version",
+                          "Filter layers by the Area of Interest (AOI)",
+                          "Load and activate the record",
+                          "Retire existing parcels & load new ones (Depends on the task type)",
+                          "Conflicts reports [optional]"]
+            },
+            {
+                id: 2,
+                title: "Import or Modify Points",
+                iconClass: "fa-solid fa-arrows-turn-to-dots",
+                color: "cyan",
+                description: "Spatial Data Entry",
+                details: ["Import new active points",
+                          "Move & update existing active points",
+                          "Retire unnecessary active points"]
+            },
+            {
+                id: 3,
+                title: "Update Attributes",
+                iconClass: "fa-regular fa-copy",
+                color: "indigo",
+                description: "Data Enrichment",
+                details: ["Transfer alphanumeric attributes from the in-process features to the active features",
+                          "Build Active command [optional]"]
+            },
+            {
+                id: 4,
+                title: "Evaluations",
+                iconClass: "fa-solid fa-shield-halved",
+                color: "rose",
+                description: "Quality Control & Validation",
+                isQualityGate: true,
+                details: ["Validation rules",
+                          "Topology rules",
+                          "Gaps & Overlaps",
+                          "Adjacent active points",
+                          "Disconnected active points",
+                          "Volumetric overlaps",
+                          "Deviated parcels areas"]
+            },
+            {
+                id: 5,
+                title: "Completion",
+                iconClass: "fa-solid fa-circle-check",
+                color: "emerald",
+                description: "Finalize & Post",
+                details: ["Document changes in the version",
+                          "Reconcile & post edits",
+                          "Feedback to CMS"]
+            }
+        ];
+
+        // State for active step navigation
+        let currentStepIndex = 0;
+
+        // Helper function to map logical color names to Tailwind CSS classes
+        function getColorClasses(color, isQualityGate) {
+            const baseColors = {
+                blue: "bg-blue-100 border-blue-200 text-blue-700 group-hover:border-blue-400",
+                cyan: "bg-cyan-50 border-cyan-200 text-cyan-700 group-hover:border-cyan-400",
+                indigo: "bg-indigo-50 border-indigo-200 text-indigo-700 group-hover:border-indigo-400",
+                rose: "bg-rose-50 border-rose-200 text-rose-800 group-hover:border-rose-400",
+                emerald: "bg-emerald-50 border-emerald-200 text-emerald-700 group-hover:border-emerald-400",
+            };
+            
+            const iconColors = {
+                blue: "bg-blue-500",
+                cyan: "bg-cyan-500",
+                indigo: "bg-indigo-500",
+                rose: "bg-rose-600",
+                emerald: "bg-emerald-500",
+            };
+
+            return {
+                card: baseColors[color],
+                iconBg: iconColors[color],
+                border: "border"
+            };
+        }
+
+        function updateButtons() {
+            const btnBack = document.getElementById('btn-back');
+            const btnNext = document.getElementById('btn-next');
+            
+            // Enable/Disable based on index
+            btnBack.disabled = currentStepIndex === 0;
+            btnNext.disabled = currentStepIndex === steps.length - 1;
+        }
+
+        function handleNavigation(direction) {
+            if (direction === 'next' && currentStepIndex < steps.length - 1) {
+                currentStepIndex++;
+            } else if (direction === 'back' && currentStepIndex > 0) {
+                currentStepIndex--;
+            }
+            renderSteps();
+            updateButtons();
+        }
+
+        // Render function
+        function renderSteps() {
+            const container = document.getElementById('steps-container');
+            let htmlContent = '';
+            
+            // Focus Mode logic: If any step is selected (> -1), navigation has started.
+            const isFocusMode = currentStepIndex > -1;
+
+            steps.forEach((step, index) => {
+                const isActive = index === currentStepIndex;
+                const isLast = index === steps.length - 1;
+                
+                // Determine if this specific step should show color.
+                // It shows color if:
+                // 1. No steps are selected yet (initial view) OR
+                // 2. This step is the currently active one.
+                const showColor = !isFocusMode || isActive;
+
+                let styles;
+                if (showColor) {
+                    styles = getColorClasses(step.color, step.isQualityGate);
+                } else {
+                    // "Grey-white" inactive styles
+                    styles = {
+                        card: "bg-white border-slate-200 text-slate-400",
+                        iconBg: "bg-slate-200", 
+                        border: "border"
+                    };
+                }
+                
+                // Text color for the icon needs to handle contrast
+                const iconTextColor = showColor ? 'text-white' : 'text-slate-400';
+
+                // Bullet points generation
+                const detailsHtml = step.details.map(detail => `
+                    <li class="flex items-start text-sm">
+                        <span class="mt-1 mr-2 flex-shrink-0 ${showColor ? (step.isQualityGate ? 'text-rose-500' : 'text-slate-400') : 'text-slate-300'}">
+                            <div class="w-1.5 h-1.5 rounded-full bg-current"></div>
+                        </span>
+                        <span class="leading-snug ${showColor ? 'opacity-90' : 'opacity-70'}">${detail}</span>
+                    </li>
+                `).join('');
+
+                // Dynamic Classes based on Active State
+                const cardActiveClasses = isActive 
+                    ? 'shadow-xl -translate-y-1 lg:-translate-y-2 ring-2 ring-offset-2 ' + (step.isQualityGate ? 'ring-rose-200' : 'ring-blue-100')
+                    : (showColor ? 'hover:shadow-xl hover:-translate-y-1 lg:hover:-translate-y-2 lg:group-hover:-translate-y-2' : '');
+
+                const iconActiveClasses = isActive 
+                    ? 'scale-110 ring-4 ring-opacity-50 ' + (step.isQualityGate ? 'ring-rose-200' : 'ring-blue-200') 
+                    : (showColor ? 'transform group-hover:scale-110' : '');
+
+                // Main card HTML
+                htmlContent += `
+                    <div class="group relative flex flex-row lg:flex-col items-start lg:items-center transition-all-300">
+                        
+                        <!-- Connector Arrow (Desktop) -->
+                        ${!isLast ? `
+                        <div class="hidden lg:block absolute top-12 -right-1/2 w-full flex justify-center z-0 pointer-events-none transition-all-300 ${showColor ? 'opacity-40' : 'opacity-10'}">
+                            <i class="fa-solid fa-arrow-right text-slate-400 text-xl"></i>
+                        </div>
+                        ` : ''}
+
+                        <!-- Step Icon Bubble -->
+                        <div class="
+                            flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center 
+                            ${iconTextColor} shadow-lg transition-all-300 
+                            ${styles.iconBg} ${step.isQualityGate && showColor ? 'ring-4 ring-rose-100' : ''}
+                            ${iconActiveClasses}
+                            z-20 relative
+                        ">
+                            <i class="${step.iconClass} text-2xl"></i>
+                        </div>
+
+                        <!-- Content Card -->
+                        <div class="
+                            ml-6 lg:ml-0 lg:mt-6 w-full lg:w-full flex-grow
+                            rounded-xl shadow-sm transition-all-300
+                            ${styles.card} ${styles.border}
+                            ${cardActiveClasses}
+                        ">
+                            <!-- Card Header -->
+                            <div class="p-5 border-b border-black/5 text-center">
+                                <div class="flex items-center justify-center mb-2">
+                                    <span class="text-xs font-bold uppercase tracking-wider opacity-70">
+                                        Step 0${step.id}
+                                    </span>
+                                </div>
+                                <h3 class="font-bold text-lg leading-tight mb-1">
+                                    ${step.title}
+                                </h3>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-5 pt-3">
+                                <ul class="space-y-2">
+                                    ${detailsHtml}
+                                </ul>
+                            </div>
+
+                            <!-- Mobile Down Arrow -->
+                            ${!isLast ? `
+                            <div class="lg:hidden absolute -bottom-6 left-[-1.5rem] w-16 flex justify-center ${showColor ? 'text-slate-300' : 'text-slate-100'}">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = htmlContent;
+        }
+
+        // Run render on load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSteps();
+            updateButtons();
+            
+            document.getElementById('btn-back').addEventListener('click', () => handleNavigation('back'));
+            document.getElementById('btn-next').addEventListener('click', () => handleNavigation('next'));
+        });
+
+    </script>
+</body>
+</html>

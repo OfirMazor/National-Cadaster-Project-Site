@@ -2145,14 +2145,22 @@
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">
                                 Designing Editing Workflow with ArcGIS Tasks</h3>
-                            <div class="text-text-dark leading-relaxed space-y-4">
+                            <p>ArcGIS Tasks are a wizardy workflow within ArcGIS Pro. It helps users do their work in a step-by-step session.
+                               Why we found Tasks to fit our needs?</p>
+                            <ul class="list-disc list-outside ml-6 space-y-2">
                                 <p>
-                                    In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
-                                </p>
-                                <p class="font-bold text-lg mt-4">How we did it?</p>
-                                <p>
-                                    We treated the term “record” as a combination of inputs and outputs (like an equation).
-                                </p>
+                                    <li>Split the edit workflow into small parts.</li>
+                                    <li>Controlled order: Users follow steps in the right order, so they don’t miss anything.</li>
+                                    <li>Simple inputs: Only ask for a little info at a time, so it’s not confusing.</li>
+                                    <li>User friendly: have “Next”, “Previous”, “Skip” and “Finish” buttons.</li>
+                                    <li>Best practice for begginers.</li>
+                                    <li>Flexible: Users are not restricted to the current step’s designated tool, they have the freedom to select any tool that meets their specific needs.</li>
+                                </p><br></br></ul>
+                             
+                            <p>In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
+                                </br>How we did it? We treated the term “record” as a combination of inputs and outputs (like an equation)</br>
+                            </p>
+
                                 <p class="font-semibold mt-2">For example:</p>
                                 <ul class="list-disc list-outside ml-6 space-y-2">
                                     <li>
@@ -2166,11 +2174,9 @@
                                             Cadaster”</span> task.
                                     </li>
                                 </ul>
-                                <p class="mt-2">
-                                    These first two tasks are the most common ones that we will use. There’s also a
-                                    version of the <span class="font-semibold">“Retire & Create Cadaster”</span> task
-                                    for 3D plans.
-                                </p>
+                                <p class="mt-2 text-sm italic text-gray-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">
+                                        <span class="font-regular">These first two tasks are the most common ones that we will use. There’s also a version of the “Retire & Create Cadaster” task for 3D plans.</span>
+                                    </p>
                                 <ul class="list-disc list-outside ml-6 space-y-2 mt-2">
                                     <li>
                                         Moreover, some plans don’t have any input parcels and simply create new ones
@@ -2183,16 +2189,14 @@
                                         correcting overlaps, closing gaps and so on...
                                     </li>
                                 </ul>
-                                <iframe src="RecordDrivenTask.html" style="width:100%; height:700px; border:none;"
+                                <iframe src="RecordDrivenTask.html" style="width:100%; height:725px; border:none;"
                                 loading="lazy">
                             </iframe>
                             </div>
                             <div class="mt-8 text-text-dark leading-relaxed space-y-6">
                                 <p>
-                                    Overall, all of the tasks (except the Free Edit task) follow a similar structure of
-                                    steps but has differences in their tools.
-                                    Most of the steps rely on Python scripting tools that combine Parcel Fabric tools or
-                                    other ArcGIS geoprocessing tools.
+                                    Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.
+                                    Each step rely on Python scripting tool that combine Parcel Fabric tools or other ArcGIS geoprocessing tools.
                                     Here is a detailed overview of a typical task:
                                 </p>
                                 <!-- Step 1 -->
@@ -2253,7 +2257,7 @@
                                         efficiency by implementing the following enhancements:</p>
                                     <div class="space-y-4 ml-1">
                                         <div>
-                                            <p class="font-semibold text-gray-800">b. Automated parameter handling</p>
+                                            <p class="font-semibold text-gray-800">a. Automated parameter handling</p>
                                             <p class="mt-1">Tool parameter values are filled automatically and hidden
                                                 from the user interface. For example:</p>
                                             <ul class="list-disc list-outside ml-6 mt-1 space-y-1 text-text-dark">
@@ -2283,15 +2287,12 @@
                                 </div>
                                 <!-- Step 3 -->
                                 <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 3: Update Attributes</p>
-                                    <p class="mb-2">
-                                        Next, once all of the fabric features are aligned with all the plan features:
-                                    </p>
-                                    <p>
-                                        The tool here will automatically update the fabric layers attributes based on
+                                    <p class="font-bold text-lg text-primary-accent mb-1">Step 3: Update Attributes</p>
+                                    <br class="mb-1">Next, once all of the fabric features are aligned with all the plan features:
+                                        <br>The tool here will automatically update the fabric layers attributes based on
                                         the plan data. For instance, the old land designation of a parcel is replaced
                                         with the newer land designation. This step will also run the Build Active
-                                        command if the editor set this parameter on.
+                                        command if the editor set this parameter on.</br>
                                     </p>
                                 </div>
                                 <!-- Step 4 -->
@@ -2331,23 +2332,14 @@
                                         Finally, once all the errors are cleared, step number 5 will:
                                     </p>
                                     <ul class="list-disc list-outside ml-6 space-y-1">
-                                        <li>Document the changes applied in the branch version (using the Version
-                                            Manager service).</li>
-                                        <li>Perform reconcile & post to the edit version towards the default version.
-                                        </li>
-                                        <li>Send feedback to the Cadaster Management System to confirm that the task is
-                                            completed.</li>
+                                        <li>Document the changes applied in the branch version (using the Version Manager service).</li>
+                                        <li>Perform reconcile & post to the edit version towards the default version.</li>
+                                        <li>Send feedback to the Cadaster Management System to confirm that the task is completed.</li>
                                     </ul>
                                 </div>
-                                <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                                    <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png"
-                                        target="_blank" rel="noopener noreferrer">
-                                        <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/DesigningTasks2.png"
-                                            alt="Designing Editing Workflow with Tasks Diagram 2"
-                                            class="w-full h-auto rounded-lg shadow-xl"
-                                            onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Image+Failed+to+Load';">
-                                    </a>
-                                </div>
+                                <iframe src="TaskDesign.html" style="width:100%; height:825px; border:none;"
+                                loading="lazy">
+                            </iframe>
                                 <div class="mt-6 pt-4 border-t border-gray-200">
                                     <p class="font-bold text-lg text-primary-accent mb-2">Summary</p>
                                     <p class="mb-4">
