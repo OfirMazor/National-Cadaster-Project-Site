@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record-Driven Task Workflow</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #0f172a;
+            --panel-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            
+            /* State Colors - Adjusted for contrast on white */
+            --color-in-process: #d97706; /* Amber-600 */
+            --color-task: #3b82f6;       /* Blue-500 */
+            --color-official: #9333ea;   /* Purple-600 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        p.subtitle {
+            color: #64748b;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        /* Main Container */
+        .workflow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            position: relative;
+            gap: 20px;
+        }
+
+        /* Zones */
+        .zone {
+            flex: 1;
+            height: 100%;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .zone-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            /* text-transform: uppercase; Removed to allow normal casing */
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Specific Zone Styling */
+        .zone.left { 
+            border-top: 4px solid var(--color-in-process); 
+            flex: 0.65; /* Made narrower */
+        }
+        .zone.center { 
+            flex: 1.5; /* Made wider */
+            border-top: 4px solid #60a5fa; /* Lighter Blue for dark theme */
+            border: 1px solid #334155; /* Dark border */
+            align-items: center;
+            justify-content: flex-start; /* Changed from center to flex-start for top alignment */
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); /* Dark Slate Gradient */
+            z-index: 10;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+        }
+        .zone.right { 
+            border-top: 4px solid var(--color-official); 
+            flex: 0.65; /* Made narrower */
+        }
+
+        /* Content Containers within Zones */
+        .stack-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px; /* Reduced gap from 10px to 4px for compactness */
+            overflow-y: auto; /* Changed to auto to allow scrolling */
+            position: relative;
+            padding-right: 5px; /* Prevent scrollbar overlapping content */
+        }
+
+        /* Custom Scrollbar for better aesthetics */
+        .stack-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .stack-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .stack-container::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 3px;
+        }
+
+        /* The Data Packet (Animated Element) */
+        .packet {
+            width: 60px; /* Reduced from 80px for multiple flows */
+            height: 60px;
+            background: var(--panel-bg);
+            border: 2px solid var(--color-in-process);
+            border-radius: 8px; /* Starts slightly square */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--color-in-process);
+            position: absolute; /* Controlled by JS */
+            z-index: 50;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+            transition: background-color 0.3s, border-color 0.3s, border-radius 0.5s, transform 0.3s;
+        }
+
+        .packet.processing {
+            border-color: var(--color-task);
+            color: var(--color-task);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .packet.official {
+            border-color: var(--color-official);
+            background: rgba(147, 51, 234, 0.1);
+            color: var(--color-official);
+            border-radius: 50%; /* Fully reshaped */
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.2);
+        }
+
+        /* Static Placeholders in the lists */
+        .placeholder-item {
+            height: 34px; /* Reduced from 50px */
+            width: 100%;
+            min-height: 34px; /* Reduced from 50px */
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px; /* Reduced padding */
+            font-size: 0.75rem; /* Reduced font size */
+            box-sizing: border-box; /* Ensure padding is included in width */
+            transition: background-color 0.3s, border-left-color 0.3s;
+        }
+
+        .placeholder-item.in-process {
+            border-left: 3px solid var(--color-in-process);
+            background: rgba(217, 119, 6, 0.1);
+            color: #000000;
+        }
+
+        .placeholder-item.official {
+            border-left: 3px solid var(--color-official);
+            background: rgba(147, 51, 234, 0.1);
+            color: #475569;
+        }
+
+        /* Specific Conditional Styles for Official Items */
+        .placeholder-item.official.is-active {
+            border-left-color: #22c55e; /* Vivid Green */
+            background: rgba(34, 197, 94, 0.15);
+            color: #14532d; /* Dark Green Text */
+        }
+
+        .placeholder-item.official.is-historic {
+            border-left-color: #b91c1c; /* Dark Red */
+            background: rgba(185, 28, 28, 0.15); 
+            color: #7f1d1d; /* Dark Red Text */
+        }
+
+        /* The Central Mechanism */
+        .mechanism {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 2px dashed var(--border-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 10s linear infinite;
+        }
+
+        /* Wrapper to keep mechanism centered while text moves to top */
+        .mechanism-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            z-index: 5;
+            pointer-events: none; /* Let clicks pass through to background/dropdown if needed */
+        }
+
+        .mechanism-core {
+            width: 100px;
+            height: 100px;
+            background: rgba(96, 165, 250, 0.15); /* Adjusted for dark bg */
+            border: 2px solid #60a5fa; /* Lighter blue */
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+            z-index: 5;
+        }
+
+        .mechanism-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #93c5fd; /* Light blue text */
+            font-weight: bold;
+            width: 240px;
+            z-index: 20;
+            background: transparent;
+            padding: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Algorithm Icons Animation */
+        .algo-container {
+            position: absolute;
+            bottom: 40px; /* Positioned at bottom of card */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+            pointer-events: none;
+        }
+
+        .algo-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+            color: #60a5fa; 
+            animation: geo-spin-float 3s infinite ease-in-out;
+        }
+
+        .algo-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+            display: block;
+        }
+        
+        .algo-icon:nth-child(2) { animation-delay: 0.5s; color: #93c5fd; }
+        .algo-icon:nth-child(3) { animation-delay: 1.0s; color: #3b82f6; }
+        .algo-icon:nth-child(4) { animation-delay: 1.5s; color: #60a5fa; }
+
+        @keyframes geo-spin-float {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-12px) rotate(180deg) scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6)); }
+            100% { transform: translateY(0) rotate(360deg) scale(1); opacity: 0.5; }
+        }
+
+        .gear-tooth {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #475569; /* Darker grey for teeth on dark bg */
+            top: -10px;
+            left: 65px;
+        }
+
+        /* Connector Lines */
+        .connector {
+            position: absolute;
+            top: 50%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+        .connector.left-to-center {
+            left: 20%; /* Adjusted for new widths */
+            width: 15%;
+        }
+        .connector.center-to-right {
+            right: 20%; /* Adjusted for new widths */
+            width: 15%;
+        }
+        
+        /* Arrows */
+        .arrow-head {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0; 
+            height: 0; 
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid var(--border-color);
+        }
+        .arrow-head.left { left: 26%; } /* Adjusted position */
+        .arrow-head.right { right: 26%; } /* Adjusted position */
+
+        /* Animation Keyframes */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse-task {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+
+        .active-process {
+            animation: pulse-task 1s infinite;
+        }
+
+        /* Dropdown Styling */
+        .task-select {
+            width: 85%;
+            padding: 8px 12px;
+            margin-bottom: 15px; /* Space before mechanism */
+            border: 1px solid #475569;
+            border-radius: 6px;
+            background-color: #334155; /* Dark background for dropdown */
+            color: #f1f5f9; /* Light text */
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            position: relative;
+            z-index: 30; /* Ensure it stays above the mechanism container */
+        }
+
+        .task-select:focus {
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+            border-color: #60a5fa;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .workflow-container {
+                flex-direction: column;
+                height: auto;
+                min-height: 800px;
+            }
+            .zone { width: 90%; margin-bottom: 20px; }
+            .connector { display: none; } /* Hide static lines on mobile for simplicity */
+            .arrow-head { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Record-Driven Task Workflow</h1>
+    <p class="subtitle">
+            Visualizing how a task type queries relevant in-process data and applies changes to official features (both active and retired).<br>
+            The type of the task depends on the record type and its status.
+    </p>
+
+    <div class="workflow-container" id="container">
+        
+        <!-- Lines connecting the zones -->
+        <div class="connector left-to-center"></div>
+        <div class="arrow-head left"></div>
+        <div class="connector center-to-right"></div>
+        <div class="arrow-head right"></div>
+
+        <!-- LEFT ZONE: In-Process -->
+        <div class="zone left" id="zone-left">
+            <div class="zone-header" style="color: var(--color-in-process)">In-Process Features</div>
+            <div class="stack-container" id="stack-left">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+
+        <!-- CENTER ZONE: Task -->
+        <div class="zone center" id="zone-center">
+            <div class="zone-header" style="color: #60a5fa; border-bottom: 1px solid #334155; margin-bottom: 5px;">Record-Driven Task</div>
+            <div style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 15px;">Select a task type from the drop-down list to see how they differ.</div>
+            
+            <!-- Added Dropdown -->
+            <select id="task-type-select" class="task-select">
+                <option value="improve">Improve Current Cadaster</option>
+                <option value="retire-create">Retire and Create Cadaster</option>
+                <option value="retire-create-3d">Retire and Create 3D Cadaster</option>
+                <option value="create-new">Create New Cadaster</option>
+                <option value="free-edit">Free Edit</option>
+            </select>
+
+            <!-- Mechanism wrapped in absolute centered container -->
+            <div class="mechanism-container">
+                <div class="mechanism" id="mechanism" style="border-color: #475569;">
+                    <!-- Decorative Gear Teeth -->
+                    <div class="gear-tooth" style="transform: rotate(0deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(45deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(90deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(135deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(180deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(225deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(270deg) translate(0, -60px)"></div>
+                    <div class="gear-tooth" style="transform: rotate(315deg) translate(0, -60px)"></div>
+
+                    <div class="mechanism-core" id="core"></div>
+                </div>
+                <div class="mechanism-label" id="status-label">Start Record Editing</div>
+            </div>
+
+            <!-- Algorithm Visualization Icons -->
+            <div class="algo-container">
+                <!-- Triangle -->
+                <div class="algo-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z"/></svg>
+                </div>
+                <!-- Circle -->
+                <div class="algo-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                </div>
+                <!-- Square -->
+                <div class="algo-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/></svg>
+                </div>
+                <!-- Hexagon -->
+                <div class="algo-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l8.7 5v10L12 22l-8.7-5V7L12 2z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT ZONE: Official -->
+        <div class="zone right" id="zone-right">
+            <div class="zone-header" style="color: var(--color-official)">Parcel Fabric Features</div>
+            <div class="stack-container" id="stack-right">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const stackLeft = document.getElementById('stack-left');
+        const stackRight = document.getElementById('stack-right');
+        const core = document.getElementById('core');
+        const mechanism = document.getElementById('mechanism');
+        const taskSelect = document.getElementById('task-type-select');
+        const statusLabel = document.getElementById('status-label');
+
+        let packetCount = 100;
+        let activeProcessCount = 0; // Track how many items are currently in the center
+        let isCompletionPhase = false; // Track if we are in completion phase
+
+        // Initialize with some static items
+        function init() {
+            // Set up Dropdown Listener
+            taskSelect.addEventListener('change', (e) => updateInProcessContent(e.target.value));
+
+            // Trigger initial content (Handles both sides now)
+            updateInProcessContent(taskSelect.value);
+            
+            // Start the simulation loop - Batches
+            // Trigger a batch every 5 seconds
+            setInterval(triggerBatch, 5000);
+            
+            // Run one batch immediately
+            setTimeout(triggerBatch, 1000);
+
+            // Start Status Text Rotation
+            startStatusCycle();
+        }
+
+        // Helper to get a random label for the official side based on selection
+        function getOfficialLabel(selection, idOverride) {
+            const types = {
+                'improve': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic Points', 'Historic Fronts'],
+                'retire-create': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic 2D Parcels', 'Historic Blocks','Historic Points', 'Historic Fronts'],
+                'retire-create-3d': ['Active 3D Parcels', 'Active Substractions', 'Active 3D Points', 'Historic 3D Parcels', 'Historic Substractions','Historic 3D Points', '3D Parcels Projections', 'Substractions Projections'],
+                'create-new': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic 2D Parcels', 'Historic Blocks','Historic Points', 'Historic Fronts'],
+                'free-edit': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic 2D Parcels', 'Historic Blocks','Historic Points', 'Historic Fronts', 'Active 3D Parcels', 'Active Substractions', 'Active 3D Points', 'Historic 3D Parcels', 'Historic Substractions','Historic 3D Points', '3D Parcels Projections', 'Substractions Projections']
+            };
+            const options = types[selection] || ['Record'];
+            const randomOption = options[Math.floor(Math.random() * options.length)];
+            // Removing ID generation as requested
+            return `${randomOption}`;
+        }
+
+        // Function to update In-Process card based on dropdown selection
+        function updateInProcessContent(selection) {
+            // 1. Update In-Process (Left Side)
+            stackLeft.innerHTML = '';
+            
+            let items = [];
+
+            switch(selection) {
+                case 'improve':
+                    items = ['4 current parcels to update',
+                             '7 new fronts to create',
+                             '2 current points to retire', '4 new points to import'];
+                    break;
+                case 'retire-create':
+                    items = ['2 current parcels to retire', '7 new parcels to create',
+                             '13 current fronts to retire', '24 new fronts to create',
+                             '10 current points to retire', '32 new points to import',
+                             '0 current blocks to retire', '0 current blocks to create'];
+                    break;
+                case 'retire-create-3d':
+                    items = ['1 current 3D parcels to retire', '3 new 3D parcels to create',
+                             '2 current Substractions to retire', '3 new Substractions to create',
+                             '23 current 3D points to retire', '66 new 3D points to import',
+                             '3 new projected 3D parcel to create',
+                             '3 new projected Substractions to create'];
+                    break;
+                case 'create-new':
+                    items = ['23 new parcels to create',
+                             '1 new block to create',
+                             '52 new fronts to create',
+                             '74 new points to import'];
+                    break;
+                case 'free-edit':
+                    items = ['Typo in Land Designation value', 'Fix topology error', 'Create missing point'];
+                    break;
+                default:
+                    items = ['Pending Change 1', 'Pending Change 2'];
+            }
+
+            // Add new items with LIMIT=0 (No limit)
+            items.forEach(text => {
+                addStaticItem(stackLeft, 'in-process', text, 0);
+            });
+
+            // 2. Update Official Content (Right Side)
+            // Clear and add all historical context items relevant to the selection
+            stackRight.innerHTML = '';
+            
+            const officialTypes = {
+                'improve': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic Points', 'Historic Fronts'],
+                'retire-create': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic 2D Parcels', 'Historic Blocks','Historic Points', 'Historic Fronts'],
+                'retire-create-3d': ['Active 3D Parcels', 'Active Substractions', 'Active 3D Points', 'Historic 3D Parcels', 'Historic Substractions','Historic 3D Points', '3D Parcels Projections', 'Substractions Projections'],
+                'create-new': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic 2D Parcels', 'Historic Blocks','Historic Points', 'Historic Fronts'],
+                'free-edit': ['Active 2D Parcels', 'Active Blocks', 'Active Points', 'Active Fronts', 'Historic 2D Parcels', 'Historic Blocks','Historic Points', 'Historic Fronts', 'Active 3D Parcels', 'Active Substractions', 'Active 3D Points', 'Historic 3D Parcels', 'Historic Substractions','Historic 3D Points', '3D Parcels Projections', 'Substractions Projections']
+            };
+            
+            const officialItems = officialTypes[selection] || ['Record'];
+            
+            officialItems.forEach(text => {
+                 addStaticItem(stackRight, 'official', text, 0); // Limit 0 means display all
+            });
+        }
+
+        function startStatusCycle() {
+            const texts = [
+                "Start Record Editing", 
+                "Import or Modify Points", 
+                "Update Attributes", 
+                "Evaluation", 
+                "Completion"
+            ];
+            let index = 0;
+            
+            setInterval(() => {
+                if(!statusLabel) return;
+                
+                // Fade out
+                statusLabel.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // Update text and fade in
+                    index = (index + 1) % texts.length;
+                    const newText = texts[index];
+                    statusLabel.innerText = newText;
+                    statusLabel.style.opacity = '1';
+
+                    // Check for Completion Phase
+                    if (newText === "Completion") {
+                        isCompletionPhase = true;
+                        // Dispatch event for waiting packets
+                        window.dispatchEvent(new Event('status-completion'));
+                    } else {
+                        isCompletionPhase = false;
+                    }
+
+                }, 300); // Wait for fade out transition (0.3s)
+            }, 1500); // Change every 1.5 seconds (Faster cycle)
+        }
+
+        function triggerBatch() {
+             // Random number of packets between 2 and 4 to simulate high traffic
+             const count = Math.floor(Math.random() * 3) + 2;
+             
+             for (let i = 0; i < count; i++) {
+                 // Stagger them slightly so they aren't a single merged blob
+                 setTimeout(spawnPacket, i * 600); 
+             }
+        }
+
+        // Updated Function with Limit parameter (default 5)
+        function addStaticItem(container, type, text, limit = 5) {
+            const el = document.createElement('div');
+            
+            // Logic to determine conditional classes for Official items
+            let additionalClass = '';
+            if (type === 'official') {
+                if (text.startsWith('Active')) {
+                    additionalClass = ' is-active';
+                } else if (text.startsWith('Historic')) {
+                    additionalClass = ' is-historic';
+                }
+            }
+
+            el.className = `placeholder-item ${type}${additionalClass}`;
+            el.innerText = text;
+            
+            // CHANGED: Use appendChild instead of prepend to maintain array order (top-to-bottom)
+            container.appendChild(el); 
+            
+            // Keep lists clean if limit is > 0. If 0, no limit.
+            // Since we append to bottom, if we needed to remove, we'd remove from top (firstElementChild)
+            if (limit > 0 && container.children.length > limit) {
+                container.firstElementChild.remove(); 
+            }
+        }
+
+        function spawnPacket() {
+            // 1. Create a "Packet" representing data
+            const packet = document.createElement('div');
+            packet.className = 'packet';
+            packet.innerHTML = `<span>Feature${packetCount}</span>`;
+            packetCount++;
+            container.appendChild(packet);
+
+            // Get Coordinates for animation waypoints
+            const startRect = stackLeft.getBoundingClientRect();
+            const centerRect = core.getBoundingClientRect();
+            const endRect = stackRight.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Initial Position (Start at top of Left Stack)
+            const startX = startRect.left + (startRect.width / 2) - 30 - containerRect.left; // 30 is half of 60px width
+            const startY = startRect.top + 20 - containerRect.top;
+
+            // Center Position
+            const centerX = centerRect.left + (centerRect.width / 2) - 30 - containerRect.left;
+            const centerY = centerRect.top + (centerRect.height / 2) - 30 - containerRect.top;
+
+            // End Position (Top of Right Stack)
+            const endX = endRect.left + (endRect.width / 2) - 30 - containerRect.left;
+            const endY = endRect.top + 20 - containerRect.top;
+
+            // Set Initial CSS
+            packet.style.left = `${startX}px`;
+            packet.style.top = `${startY}px`;
+
+            // Define Animation Sequence
+            const animationSequence = async () => {
+                
+                // STEP 1: Move to Center
+                const moveTime = 1000;
+                
+                const animToCenter = packet.animate([
+                    { transform: `translate(0, 0)` },
+                    { transform: `translate(${centerX - startX}px, ${centerY - startY}px)` }
+                ], {
+                    duration: moveTime,
+                    easing: 'ease-in-out',
+                    fill: 'forwards'
+                });
+
+                await animToCenter.finished;
+
+                // STEP 2: Process & Wait for "Completion"
+                packet.classList.add('processing');
+                packet.innerHTML = '<span>⚙️</span>'; // Change content to gear
+                
+                // Increment process count and enable visual
+                activeProcessCount++;
+                core.classList.add('active-process');
+
+                // Start Infinite Spin
+                const spinAnim = packet.animate([
+                    { transform: `translate(${centerX - startX}px, ${centerY - startY}px) rotate(0deg)` },
+                    { transform: `translate(${centerX - startX}px, ${centerY - startY}px) rotate(360deg)` }
+                ], {
+                    duration: 1000,
+                    iterations: Infinity,
+                    easing: 'linear'
+                });
+
+                // WAIT LOGIC: If not completion phase, wait for event
+                if (!isCompletionPhase) {
+                    await new Promise(resolve => {
+                        window.addEventListener('status-completion', () => resolve(), { once: true });
+                    });
+                } else {
+                    // If already in completion, maybe wait a tiny bit so it doesn't fly through instantly
+                    await new Promise(r => setTimeout(r, 500));
+                }
+
+                // Stop Spinning
+                spinAnim.cancel();
+
+                // Quick visual "Success" pop before leaving
+                const popAnim = packet.animate([
+                     { transform: `translate(${centerX - startX}px, ${centerY - startY}px) scale(1)` },
+                     { transform: `translate(${centerX - startX}px, ${centerY - startY}px) scale(1.2)` },
+                     { transform: `translate(${centerX - startX}px, ${centerY - startY}px) scale(1)` }
+                ], {
+                    duration: 300
+                });
+                await popAnim.finished;
+                
+                // Decrement process count
+                activeProcessCount--;
+                if (activeProcessCount === 0) {
+                    core.classList.remove('active-process');
+                }
+
+                // STEP 3: Move to Right (Official)
+                packet.classList.remove('processing');
+                packet.classList.add('official');
+                packet.innerHTML = '<span>✓</span>'; // Checkmark
+
+                const animToRight = packet.animate([
+                    { transform: `translate(${centerX - startX}px, ${centerY - startY}px)` },
+                    { transform: `translate(${endX - startX}px, ${endY - startY}px)` }
+                ], {
+                    duration: 800, /* Faster exit */
+                    easing: 'ease-in',
+                    fill: 'forwards'
+                });
+
+                await animToRight.finished;
+
+                // STEP 4: Deposit and Disappear
+                // Packet simply disappears without modifying the list
+                
+                // Fade out flying packet
+                const animFade = packet.animate([
+                    { opacity: 1, transform: `translate(${endX - startX}px, ${endY - startY}px) scale(1)` },
+                    { opacity: 0, transform: `translate(${endX - startX}px, ${endY - startY + 20}px) scale(0.8)` }
+                ], {
+                    duration: 300,
+                    fill: 'forwards'
+                });
+
+                await animFade.finished;
+                packet.remove();
+            };
+
+            animationSequence();
+        }
+
+        // Start
+        window.onload = init;
+
+    </script>
+</body>
+</html>
