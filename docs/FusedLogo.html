@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Fusion Diagram</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* The objects being animated */
+        .obj {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .obj img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            display: block;
+        }
+
+        /* Fallback for broken images */
+        .fallback {
+            width: 100%;
+            height: 100%;
+            background: #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 12px;
+            color: #475569;
+            font-weight: bold;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 2px dashed #cbd5e1;
+            display: none;
+        }
+
+        /* Initial Positions */
+        #python-logo {
+            left: 50px;
+            z-index: 10;
+        }
+
+        #parcel-logo {
+            right: 50px;
+            z-index: 10;
+        }
+
+        #fused-logo {
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            opacity: 0;
+            z-index: 20;
+            width: 350px; /* Larger result */
+            height: 350px;
+        }
+
+        /* Mathematical Symbols */
+        .symbol {
+            position: absolute;
+            font-size: 120px;
+            font-weight: 900;
+            color: #3b82f6;
+            opacity: 0;
+            /* SLOWER: Increased transition time */
+            transition: opacity 2.5s;
+            z-index: 5; /* Ensure it's behind the logos when they merge */
+        }
+
+        #plus-sign { left: 50%; transform: translateX(-50%) translateY(-10px); }
+        
+        /* Particle Effects */
+        .particles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            z-index: 30; /* On top of everything */
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Symbols -->
+        <div class="symbol" id="plus-sign">+</div>
+
+        <!-- Images -->
+        <div class="obj" id="python-logo">
+            <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/PythonLogo.png" onerror="handleImageError(this)" alt="Python">
+            <div class="fallback">Python Logo<br>(Missing)</div>
+        </div>
+
+        <div class="obj" id="parcel-logo">
+            <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/ParcelFabricLogo.png" onerror="handleImageError(this)" alt="Parcel Fabric">
+            <div class="fallback">Parcel Fabric<br>Logo</div>
+        </div>
+
+        <div class="obj" id="fused-logo">
+            <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/refs/heads/main/figures/FusedLogo.png" onerror="handleImageError(this)" alt="Fused">
+            <div class="fallback">Fused<br>Result</div>
+        </div>
+
+        <!-- Particle Container -->
+        <div class="particles" id="particles"></div>
+        
+    </div>
+
+    <script>
+        const pythonContainer = document.getElementById('python-logo');
+        const parcelContainer = document.getElementById('parcel-logo');
+        const fusedContainer = document.getElementById('fused-logo');
+        
+        const plusSign = document.getElementById('plus-sign');
+
+        function handleImageError(img) {
+            img.style.display = 'none';
+            img.nextElementSibling.style.display = 'flex';
+        }
+
+        function restoreImage(img) {
+            img.style.display = 'block';
+            img.nextElementSibling.style.display = 'none';
+        }
+
+        function resetPositions() {
+            // Reset to initial state
+            pythonContainer.style.transform = 'translateX(0) scale(1) rotate(0deg)';
+            pythonContainer.style.left = '50px';
+            pythonContainer.style.opacity = '1';
+
+            parcelContainer.style.transform = 'translateX(0) scale(1) rotate(0deg)';
+            parcelContainer.style.right = '50px';
+            parcelContainer.style.left = 'auto'; 
+            parcelContainer.style.opacity = '1';
+
+            fusedContainer.style.transform = 'translateX(-50%) scale(0) rotate(-10deg)';
+            fusedContainer.style.opacity = '0';
+
+            plusSign.style.opacity = '1';
+        }
+
+        function createFirework(offsetX, offsetY) {
+            const container = document.getElementById('particles');
+            // Changed colors to Blue, Yellow, and White palette
+            const colors = ['#3b82f6', '#2563eb', '#facc15', '#fde047', '#ffffff', '#f8fafc'];
+            
+            // Increased particle count from 30 to 60 for a fuller explosion
+            for(let i=0; i<60; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                
+                // Randomize properties
+                // Bigger particles: 5px to 15px (was 3-9px)
+                const size = Math.random() * 10 + 5;
+                const angle = Math.random() * Math.PI * 2;
+                // Higher velocity: 100 to 350 radius (was 40-160) - Much bigger explosion radius
+                const velocity = Math.random() * 250 + 100;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.backgroundColor = color;
+                p.style.left = offsetX + 'px';
+                p.style.top = offsetY + 'px';
+                
+                // Firework physics
+                const endX = Math.cos(angle) * velocity;
+                const endY = Math.sin(angle) * velocity + 100; // Increased gravity effect
+                
+                const anim = p.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 800, // Longer duration for bigger travel
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+                });
+                
+                container.appendChild(p);
+                
+                // Cleanup
+                anim.onfinish = () => p.remove();
+            }
+        }
+
+        function playAnimation() {
+            resetPositions();
+
+            // Sequence
+            setTimeout(() => {
+                // Step 1: Move to center
+                plusSign.style.opacity = '0';
+
+                pythonContainer.style.left = '50%';
+                pythonContainer.style.transform = 'translateX(-50%) scale(0.8)';
+                
+                parcelContainer.style.right = 'auto';
+                parcelContainer.style.left = '50%';
+                parcelContainer.style.transform = 'translateX(-50%) scale(0.8)';
+                
+                // Step 2: Merge Impact
+                setTimeout(() => {
+                    // Firework Celebration!
+                    // Center burst
+                    createFirework(0, 0);
+                    // Accents slightly delayed
+                    setTimeout(() => createFirework(-60, -40), 100);
+                    setTimeout(() => createFirework(60, -50), 200);
+                    setTimeout(() => createFirework(-30, 50), 300);
+                    setTimeout(() => createFirework(40, 40), 400);
+
+                    // Hide inputs
+                    pythonContainer.style.opacity = '0';
+                    pythonContainer.style.transform = 'translateX(-50%) scale(0.1)';
+                    parcelContainer.style.opacity = '0';
+                    parcelContainer.style.transform = 'translateX(-50%) scale(0.1)';
+
+                    // Show output
+                    fusedContainer.style.transform = 'translateX(-50%) scale(1) rotate(0deg)';
+                    fusedContainer.style.opacity = '1';
+
+                    // Loop: Wait and restart
+                    setTimeout(() => {
+                        playAnimation();
+                    }, 5000); // 5 seconds wait to enjoy the result
+
+                }, 2600); // 2.5s transition + 0.1s buffer
+
+            }, 1000); // Slower initial start
+        }
+
+        // Initialize
+        window.onload = () => {
+            resetPositions();
+            setTimeout(playAnimation, 1000);
+        };
+
+    </script>
+</body>
+</html>
