@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Rope Walk Diagram</title>
+    <style>
+        :root {
+            /* Stormy Sky Palette */
+            --sky-top: #263238; /* Dark Blue Grey */
+            --sky-bot: #607D8B; /* Stormy Grey */
+            
+            --mount-left: #5D4037;
+            --mount-right: #4E342E;
+            --rope-color: #8D6E63;
+            --box-bg: #FFFFFF;
+            --accent: #FF5722;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bot));
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            /* Smooth transition for sky color change */
+            transition: background 2s ease-in-out;
+        }
+
+        /* Sunny Sky Mode */
+        body.sunny-mode {
+            background: linear-gradient(to bottom, #29B6F6, #E1F5FE); /* Bright Blue to Pale */
+        }
+
+        /* Hide clouds when sunny */
+        body.sunny-mode #cloudsLayer {
+            opacity: 0;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .controls {
+            position: relative;
+            top: auto;
+            margin-top: 30px;
+            margin-bottom: 0px;
+            /* Stylish Gradient Background */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(236, 240, 241, 0.9));
+            padding: 20px 40px;
+            /* Modern borders and shadow */
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2);
+            border-top: 1px solid #CFD8DC;
+            border-bottom: 4px solid #455A64; /* Thicker bottom for depth */
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            min-width: 300px;
+        }
+
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+            color: #263238;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 1px 0 rgba(255,255,255,1);
+            white-space: nowrap;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+            color: #FF5722;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        /* Container for the SVG */
+        .diagram-container {
+            width: 100%;
+            height: auto;
+            flex: 1;
+            max-width: 1200px;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            user-select: none; 
+        }
+
+        /* Interactive Elements Styles */
+        .milestone-box {
+            cursor: pointer;
+            filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.2));
+        }
+
+        .milestone-box rect {
+            fill: var(--box-bg);
+            stroke: #ccc;
+            stroke-width: 1;
+            rx: 8; 
+            transition: stroke 0.2s, stroke-width 0.2s, fill 0.2s;
+        }
+
+        .milestone-box:hover rect {
+            stroke: var(--accent);
+            stroke-width: 2;
+            fill: #FFF3E0;
+        }
+
+        .milestone-box.active rect {
+            stroke: var(--accent);
+            stroke-width: 3;
+            fill: #FFFFFF;
+        }
+
+        .milestone-box text {
+            font-size: 11px;
+            font-weight: 600;
+            fill: #333;
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        /* Make the flag clickable */
+        #flagStation {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #flagStation:hover {
+            transform: translate(850px, 250px) scale(1.1); /* Scale relative to its translation */
+        }
+        /* Override standard transform for the hover logic in JS if needed, but CSS is simpler here if we handle origin */
+        #flagStation {
+            transform-box: fill-box;
+            transform-origin: center bottom;
+        }
+
+        .rope-path {
+            fill: none;
+            stroke: var(--rope-color);
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+
+        .person-group {
+            transition: opacity 0.3s;
+        }
+        
+        @keyframes walk {
+            0% { transform: rotate(-15deg); }
+            100% { transform: rotate(15deg); }
+        }
+        
+        .leg {
+            transform-origin: 0px -25px; 
+        }
+        
+        .is-walking .leg-left {
+            animation: walk 0.3s infinite alternate ease-in-out;
+        }
+        .is-walking .leg-right {
+            animation: walk 0.3s infinite alternate-reverse ease-in-out;
+        }
+
+        /* Cloud Animation */
+        .cloud {
+            opacity: 0.5;
+            filter: blur(1px);
+            transition: opacity 2s ease; /* Transition for fading out */
+        }
+
+        @keyframes moveClouds {
+            from { transform: translateX(1200px); }
+            to { transform: translateX(-300px); }
+        }
+
+        /* Realistic Flag Animation */
+        .flag-pole {
+            stroke: #3E2723;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        
+        .flag-cloth {
+            transform-origin: 0 -60px;
+            animation: wind-flap 2.5s infinite ease-in-out alternate;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+        }
+
+        @keyframes wind-flap {
+            0% { transform: rotate(0deg) skewY(0deg) scaleX(1); }
+            33% { transform: rotate(-1deg) skewY(2deg) scaleX(0.97); }
+            66% { transform: rotate(1deg) skewY(-4deg) scaleX(0.94); }
+            100% { transform: rotate(0deg) skewY(3deg) scaleX(0.98); }
+        }
+
+        /* Fireworks */
+        .firework-particle {
+            opacity: 0;
+            transform-origin: center;
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.1);
+                opacity: 0;
+            }
+        }
+
+        /* Bottom Info Panel */
+        .info-panel {
+            position: absolute;
+            bottom: 30px;
+            width: 90%; /* Increased from 80% to be wider */
+            max-width: 900px; /* Increased from 700px to be wider */
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.3);
+            border-left: 6px solid var(--accent);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 100;
+        }
+
+        .info-panel.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .info-panel h2 {
+            margin: 0 0 10px 0;
+            color: #37474F;
+            font-size: 1.4rem;
+            font-family: 'Georgia', serif;
+        }
+
+        .info-panel p {
+            margin: 0;
+            color: #455A64;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #90A4AE;
+            transition: color 0.2s;
+        }
+        .close-btn:hover {
+            color: #FF5722;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <h1>Main Challenges in the Project</h1>
+        <p>Click on a challenge to discover how we solved it. Click the flag for the finale!</p>
+    </div>
+
+    <div class="diagram-container" id="container">
+        <!-- Overlay Info Panel -->
+        <div id="infoPanel" class="info-panel">
+            <span class="close-btn" id="closeInfo">&times;</span>
+            <h2 id="infoTitle">Challenge Title</h2>
+            <p id="infoDesc">Challenge description will appear here.</p>
+        </div>
+
+        <!-- SVG content -->
+        <svg id="mainSvg" viewBox="0 150 1000 450" preserveAspectRatio="xMidYMin meet">
+            <defs>
+                <linearGradient id="mtnLeftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#3e2723;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#5d4037;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#4e342e;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="mtnRightGrad" x1="100%" y1="0%" x2="0%" y2="0%">
+                    <stop offset="0%" style="stop-color:#261a15;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#4e342e;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+                </linearGradient>
+                
+                <filter id="rockTexture" x="0%" y="0%" width="100%" height="100%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" />
+                    <feDiffuseLighting in="noise" lighting-color="#ffffff" surfaceScale="1" result="diffLight">
+                        <feDistantLight azimuth="45" elevation="30" />
+                    </feDiffuseLighting>
+                    <feComposite operator="in" in="diffLight" in2="SourceGraphic" result="textured" />
+                    <feBlend in="textured" in2="SourceGraphic" mode="multiply" />
+                </filter>
+
+                <linearGradient id="flagGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                     <stop offset="0%" stop-color="#b71c1c" />
+                     <stop offset="25%" stop-color="#ef5350" />
+                     <stop offset="50%" stop-color="#c62828" />
+                     <stop offset="75%" stop-color="#e53935" />
+                     <stop offset="100%" stop-color="#b71c1c" />
+                </linearGradient>
+
+                <symbol id="cloudAsset" viewBox="0 0 100 60">
+                     <path d="M10,45 Q10,25 30,25 Q30,10 50,10 Q70,10 70,25 Q90,25 90,45 L10,45 Z" fill="#ECEFF1"/>
+                </symbol>
+            </defs>
+
+            <g id="cloudsLayer">
+                <use href="#cloudAsset" x="0" y="180" width="200" height="120" class="cloud" style="animation: moveClouds 45s linear infinite; animation-delay: -10s;" />
+                <use href="#cloudAsset" x="0" y="250" width="150" height="90" class="cloud" style="animation: moveClouds 35s linear infinite; animation-delay: -5s;" />
+                <use href="#cloudAsset" x="0" y="150" width="180" height="108" class="cloud" style="animation: moveClouds 55s linear infinite;" />
+            </g>
+
+            <path d="M 0 600 L 100 450 L 250 600 Z" fill="#4E342E" opacity="0.6" />
+            <path d="M 800 600 L 950 480 L 1100 600 Z" fill="#4E342E" opacity="0.6" />
+
+            <g filter="url(#rockTexture)">
+                <path d="M -80 600 L 20 500 L 60 530 L 100 400 L 130 350 L 150 250 L 170 300 L 200 280 L 240 450 L 280 480 L 350 600 Z" fill="url(#mtnLeftGrad)" />
+            </g>
+
+            <g filter="url(#rockTexture)">
+                <path d="M 650 600 L 720 500 L 760 520 L 800 400 L 820 350 L 850 250 L 880 320 L 920 350 L 960 500 L 1000 550 L 1080 600 Z" fill="url(#mtnRightGrad)" />
+            </g>
+
+            <!-- Flag Station (Final) -->
+            <g id="flagStation" transform="translate(850, 250)">
+                <line x1="0" y1="0" x2="0" y2="-65" class="flag-pole"/>
+                <circle cx="0" cy="-66" r="3" fill="#FFD700" stroke="#F57F17" stroke-width="1"/>
+                <path class="flag-cloth" 
+                      d="M 0 -62 
+                         C 15 -68, 35 -52, 55 -60 
+                         L 55 -35 
+                         C 35 -27, 15 -43, 0 -37 
+                         Z" 
+                      fill="url(#flagGradient)" stroke="#f22727" stroke-width="0.5"/>
+            </g>
+
+            <path id="rope" class="rope-path" d="M 150 250 Q 500 500 850 250" />
+
+            <g id="milestonesLayer"></g>
+            
+            <!-- Fireworks Layer -->
+            <g id="fireworksLayer"></g>
+
+            <g id="walker" class="person-group" style="transform-box: fill-box; transform-origin: center bottom;">
+                <rect x="-50" y="-35" width="100" height="3" rx="1.5" fill="#f0d959" />
+                <g class="leg leg-left">
+                    <path d="M 0 -25 L -3 -10 L -2 0" fill="none" stroke="#e68e00" stroke-width="6" stroke-linecap="round" />
+                </g>
+                <g class="body">
+                    <path d="M 0 -25 L 0 -50" stroke="#e6004d" stroke-width="12" stroke-linecap="butt" />
+                    <path d="M -5 -45 L -25 -35" stroke="#f7578c" stroke-width="4" stroke-linecap="round" />
+                    <path d="M 5 -45 L 25 -35" stroke="#f7578c" stroke-width="4" stroke-linecap="round" />
+                    <circle cx="0" cy="-60" r="7" fill="white" />
+                </g>
+                <g class="leg leg-right">
+                    <path d="M 0 -25 L 3 -10 L 2 0" fill="none" stroke="#e68e00" stroke-width="6" stroke-linecap="round" />
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const milestonesLayer = document.getElementById('milestonesLayer');
+            const walker = document.getElementById('walker');
+            const infoPanel = document.getElementById('infoPanel');
+            const infoTitle = document.getElementById('infoTitle');
+            const infoDesc = document.getElementById('infoDesc');
+            const closeInfo = document.getElementById('closeInfo');
+            const flagStation = document.getElementById('flagStation');
+            const fireworksLayer = document.getElementById('fireworksLayer');
+            
+            // Configuration with descriptions
+            const challenges = [
+                {
+                    title: "Project Kickoff",
+                    desc: "The challanges begins here at the summit of the first mountain. Some of the challenges were understood and known in advance before the project started, while others were discovered as the work progressed."
+                },
+                { 
+                    title: "Performance", 
+                    desc: "The most critical issue we encountered was related to the rendering of features on the map while we were editing. It was very difficult for us to pinpoint what was causing the problem, and for a moment, we thought we had tried every performance tip and suggestion. Eventually, what saved us from the misery was reinstalling the SDE on the database server and recreating the database from scratch. The previous one likely had many issues and noises because we had performed many testing and made changes in the settings too many times. In addition, when we upgraded to ArcGIS Pro 3.5, we experienced even better and smoother performance." 
+                },
+                { 
+                    title: "Learn & apply", 
+                    desc: "Since Parcel Fabric was new to us, it took us time to understand its logic, discover and experiment with the tools, and automate them. We later teach the editors how to use the tools and wrote a short user guide." 
+                },
+                { 
+                    title: "3D Editing", 
+                    desc: "Currently, 3D editing is limited in ArcGIS Pro and is not fully supported in the Parcel Fabric product. Hence we needed to find workarounds for adding or modifying 3D data." 
+                },
+                { 
+                    title: "Bugs", 
+                    desc: "Along the way we have reported 11 bugs in ArcGIS Pro" 
+                },
+                { 
+                    title: "National Security", 
+                    desc: "Completing projects during times of conflict is inherently challenging, and this challenge is significantly amplified when daily work is disrupted by ongoing rocket attacks, frequent air-raid alarms, and the constant need to seek shelter. Throughout this period, our systems were required to undergo numerous updates and operational restrictions to defend against heightened cyber threats, often while infrastructure and connectivity were unstable. In parallel, many team members were called up for reserve military duty, creating staffing gaps and loss of continuity, while additional workdays were lost due to direct security incidents. Despite working under continuous stress, uncertainty, and physical danger, the team remained committed to meeting project deadlines, demonstrating resilience and adaptability under extraordinary national security conditions." 
+                }
+            ];
+
+            const finalChallenge = {title: "Mission Accomplished!",
+                                    desc: "We have successfully navigated most of the challenges and reached the summit. The project is delivered and the system is stable."
+            };
+            
+            const startPt = { x: 150, y: 250 };
+            const controlPt = { x: 500, y: 500 };
+            const endPt = { x: 850, y: 250 };
+
+            let currentT = 0; 
+            let targetT = 0;
+            let isAnimating = false;
+            let hasFiredVictory = false; // Prevent fireworks loop
+            const speed = 0.005;
+
+            function getBezierPoint(t, p0, p1, p2) {
+                const x = Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x;
+                const y = Math.pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + Math.pow(t, 2) * p2.y;
+                return { x, y };
+            }
+
+            function createMilestones() {
+                // Distribute from t=0 (Peak) to t=0.85
+                const step = 0.85 / (challenges.length - 1);
+                
+                challenges.forEach((challenge, i) => {
+                    // Start distribution directly from t=0
+                    const t = i * step;
+                    const pos = getBezierPoint(t, startPt, controlPt, endPt);
+                    
+                    const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                    group.setAttribute("class", "milestone-box");
+                    group.setAttribute("data-t", t);
+                    group.setAttribute("transform", `translate(${pos.x}, ${pos.y + 30})`);
+                    
+                    // Only render visible box for stations after the first one (i > 0)
+                    if (i > 0) {
+                        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        line.setAttribute("x1", 0);
+                        line.setAttribute("y1", -30);
+                        line.setAttribute("x2", 0);
+                        line.setAttribute("y2", 0);
+                        line.setAttribute("stroke", "#8D6E63");
+                        line.setAttribute("stroke-width", "2");
+                        
+                        // Dynamic width calculation
+                        const charWidth = 7; 
+                        const minWidth = 60;
+                        const calculatedWidth = Math.max(minWidth, (challenge.title.length * charWidth) + 20);
+                        const halfWidth = calculatedWidth / 2;
+
+                        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                        rect.setAttribute("x", -halfWidth);
+                        rect.setAttribute("y", 0);
+                        rect.setAttribute("width", calculatedWidth);
+                        rect.setAttribute("height", 40); 
+
+                        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                        text.setAttribute("x", 0);
+                        text.setAttribute("y", 20);
+                        text.textContent = challenge.title;
+
+                        group.appendChild(line);
+                        group.appendChild(rect);
+                        group.appendChild(text);
+                    } else {
+                        // For the first station (Kickoff), add an invisible hit target
+                        // This allows clicking the start point to return there, without showing a box.
+                        const hitTarget = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                        hitTarget.setAttribute("r", 20);
+                        hitTarget.setAttribute("cy", -30); // Align with rope
+                        hitTarget.setAttribute("fill", "transparent");
+                        hitTarget.style.cursor = "pointer";
+                        group.appendChild(hitTarget);
+                    }
+                    
+                    milestonesLayer.appendChild(group);
+
+                    group.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        // Reset flag state if clicking a normal station
+                        // Logic is now also reinforced in animate() for robustness
+                        
+                        document.querySelectorAll('.milestone-box').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        group.classList.add('active');
+
+                        infoTitle.textContent = challenge.title;
+                        infoDesc.textContent = challenge.desc;
+                        infoPanel.classList.add('visible');
+                        
+                        const destT = parseFloat(group.getAttribute('data-t'));
+                        startWalking(destT);
+                    });
+                });
+            }
+
+            // --- Flag Interaction ---
+            flagStation.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                document.querySelectorAll('.milestone-box').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                infoTitle.textContent = finalChallenge.title;
+                infoDesc.textContent = finalChallenge.desc;
+                infoPanel.classList.add('visible');
+
+                // Walk to the very end of the rope
+                startWalking(1.0);
+            });
+
+            // --- Fireworks Logic ---
+            function launchFireworks() {
+                const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'];
+                const count = 30;
+                const centerX = 850;
+                const centerY = 200; // Above flag
+
+                for (let i = 0; i < count; i++) {
+                    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    circle.setAttribute("cx", centerX);
+                    circle.setAttribute("cy", centerY);
+                    circle.setAttribute("r", Math.random() * 3 + 2);
+                    circle.setAttribute("fill", colors[Math.floor(Math.random() * colors.length)]);
+                    circle.setAttribute("class", "firework-particle");
+                    
+                    // Random explosion direction
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 150 + 50;
+                    const tx = Math.cos(angle) * distance + "px";
+                    const ty = Math.sin(angle) * distance + "px";
+                    
+                    circle.style.setProperty('--tx', tx);
+                    circle.style.setProperty('--ty', ty);
+                    
+                    fireworksLayer.appendChild(circle);
+                    
+                    // Cleanup
+                    setTimeout(() => {
+                        if(circle.parentNode) circle.parentNode.removeChild(circle);
+                    }, 1500);
+                }
+            }
+
+            // Close button handler
+            closeInfo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                infoPanel.classList.remove('visible');
+                document.querySelectorAll('.milestone-box').forEach(b => b.classList.remove('active'));
+            });
+
+            function updateWalkerPosition(t) {
+                const pos = getBezierPoint(t, startPt, controlPt, endPt);
+                const tx = 2 * (1 - t) * (controlPt.x - startPt.x) + 2 * t * (endPt.x - controlPt.x);
+                const ty = 2 * (1 - t) * (controlPt.y - startPt.y) + 2 * t * (endPt.y - controlPt.y);
+                const angle = Math.atan2(ty, tx) * (180 / Math.PI);
+
+                walker.setAttribute("transform", `translate(${pos.x}, ${pos.y}) rotate(${angle})`);
+            }
+
+            function startWalking(destT) {
+                targetT = destT;
+                if (!isAnimating) {
+                    isAnimating = true;
+                    walker.classList.add('is-walking');
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            function animate() {
+                const direction = targetT > currentT ? 1 : -1;
+                
+                // STATE MACHINE based on position
+                // Zone: Summit (Victory)
+                if (currentT >= 0.98) {
+                     if (!hasFiredVictory) {
+                         document.body.classList.add('sunny-mode');
+                         launchFireworks();
+                         hasFiredVictory = true; 
+                         setTimeout(launchFireworks, 400);
+                         setTimeout(launchFireworks, 800);
+                     }
+                } 
+                // Zone: Slope (Stormy)
+                else {
+                    // If we have left the summit zone, force revert
+                    if (hasFiredVictory || document.body.classList.contains('sunny-mode')) {
+                        document.body.classList.remove('sunny-mode');
+                        hasFiredVictory = false; 
+                    }
+                }
+
+                if (Math.abs(targetT - currentT) < speed) {
+                    currentT = targetT;
+                    isAnimating = false;
+                    walker.classList.remove('is-walking');
+                } else {
+                    currentT += speed * direction;
+                    requestAnimationFrame(animate);
+                }
+                
+                updateWalkerPosition(currentT);
+            }
+
+            document.getElementById('container').addEventListener('click', (e) => {
+                 if(e.target.closest('.milestone-box') || e.target.closest('#flagStation')) return;
+                 infoPanel.classList.remove('visible');
+                 document.querySelectorAll('.milestone-box').forEach(b => b.classList.remove('active'));
+            });
+
+            createMilestones();
+            
+            // Set initial walker position to the first milestone (t=0)
+            const firstMilestone = document.querySelector('.milestone-box');
+            if(firstMilestone) {
+                firstMilestone.classList.add('active');
+                currentT = parseFloat(firstMilestone.getAttribute('data-t'));
+                updateWalkerPosition(currentT);
+            }
+        });
+    </script>
+</body>
+</html>

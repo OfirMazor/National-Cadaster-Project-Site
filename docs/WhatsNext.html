@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What next? - Interactive Diagram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at center, #f8fafc 0%, #cbd5e1 100%);
+            overflow-x: hidden;
+            color: #334155;
+        }
+
+        .orbit-container {
+            position: relative;
+            /* Reduced height to pull the diagram center upwards closer to the title */
+            height: 600px; 
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .center-node {
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .item-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            color: #2563eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-node:hover {
+            transform: scale(1.15);
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+            color: #2563eb;
+        }
+
+        .item-node.active {
+            background: #2563eb;
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+            transform: scale(1.3);
+            color: white;
+        }
+
+        .connector-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.6), transparent);
+            transform-origin: left center;
+            z-index: 5;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+
+        .content-card {
+            position: absolute;
+            /* Positioned relative to the vertical center + radius offset */
+            top: calc(50% + 310px); 
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            width: 90%;
+            max-width: 1000px;
+            z-index: 50;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .content-card.visible {
+            opacity: 1;
+            /* Slide up into final position */
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.05); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .glow-ring {
+            position: absolute;
+            border: 1px solid rgba(51, 65, 85, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .orbit-container { height: 500px; } 
+            .center-node { width: 140px; height: 140px; }
+            .item-node { width: 60px; height: 60px; }
+            
+            .content-card {
+                /* Adjusted for tighter mobile radius */
+                top: calc(50% + 240px);
+            }
+        }
+    </style>
+</head>
+<!-- Added pb-64 to ensure space for the card at the bottom, reduced py-12 to py-6 -->
+<body class="min-h-screen flex flex-col items-center py-6 pb-64 px-4">
+
+    <!-- Reduced mb-8 to mb-2 to tighten gap to diagram -->
+    <header class="text-center mb-2">
+        <p class="text-slate-600 text-lg max-w-4xl mx-auto"> Click on a pillar to read about the future plans.</p>
+    </header>
+
+    <div class="orbit-container" id="diagram-container">
+        <!-- Center Piece -->
+        <div class="center-node transition-opacity duration-300">
+            <div id="center-text" class="text-center transition-opacity duration-300">
+                <span class="block text-blue-600 font-bold text-xl uppercase tracking-widest">From Here Forward</span>
+            </div>
+        </div>
+
+        <!-- Glow Rings - Scaled Responsively to match node radius -->
+        <div class="glow-ring w-[280px] h-[280px] md:w-[350px] md:h-[350px]"></div>
+        <div class="glow-ring w-[400px] h-[400px] md:w-[500px] md:h-[500px]" style="animation-delay: 1s;"></div>
+        
+        <!-- Content Card -->
+        <div id="content-card" class="content-card bg-white/90 border border-white/60 p-6 rounded-2xl backdrop-blur-xl shadow-2xl ring-1 ring-slate-900/5">
+            <!-- Close Button -->
+            <button onclick="closeCard()" class="absolute top-4 right-4 p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all" aria-label="Close details">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <h2 id="card-title" class="text-2xl font-bold text-blue-600 mb-2 pr-8"></h2>
+            <div id="card-body" class="text-slate-600 text-sm md:text-base leading-relaxed max-h-[400px] overflow-y-auto pr-2 custom-scrollbar"></div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                id: 1,
+                title: "Relocate to Cloud",
+                body: "Relocate the database and supporting services to a secure government cloud environment (Project Nimbus, currently in beta). This move will improve scalability, resilience, availability, and compliance with government-level security standards, while laying the foundation for future cloud-native capabilities.",
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>`
+            },
+            {
+                id: 2,
+                title: "Improving Data Quality & Completeness",
+                body: "Continue systematic improvement of the quality, accuracy, and completeness of existing datasets. This includes refining geometries, validating attributes, closing data gaps, and strengthening quality assurance processes to ensure reliable and authoritative cadastral information.",
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+            },
+            {
+                id: 3,
+                title: "Tasks and Tool Optimization",
+                body: "Further optimize tasks, workflows, and supporting tools to improve performance, stability, and efficiency. Emphasis will be placed on reducing processing time, minimizing manual intervention, simplifying complex steps, and enhancing the overall user experience for editors.",
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`
+            },
+            {
+                id: 4,
+                title: "Multilingual Support",
+                body: "Develop fully translated versions of tasks and interfaces in additional languages (Arabic and Russian). This will increase accessibility, reduce misunderstandings, and support a more diverse group of editors.",
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.19 15.378 5.326 18"></path></svg>`
+            },
+            {
+                id: 5,
+                title: "3D Parcel Fabric",
+                body: "Collaborating with Esri’s Parcel Fabric and Attribute Rules teams to enhance ArcGIS functionality for 3D cadastre storage, maintenance, and editing.",
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>`
+            },
+            {
+                id: 6,
+                title: "Contribute to the Community",
+                body: `Learning from peers around the world is essential to continuous innovation. The Esri Community platform enables ideas and requests to surface, be discussed, and drive meaningful change. We are always committed to contributing new ideas for the benefit of the broader community. Below are several ideas we have proposed, if they resonate with you, we encourage you to show your support with a kudos:
+                <ul class="text-left list-disc pl-6 mt-4 space-y-2">
+                    <li><a href="https://community.esri.com/t5/arcgis-parcel-fabric-ideas/option-to-retire-set-as-historic-points-in-the/idi-p/1676617" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Option to Retire (Set as Historic) Points in the "Merge Parcel Points" Tool.</a></li>
+                    <li><a href="https://community.esri.com/t5/arcgis-parcel-fabric-ideas/arcpy-support-for-parcel-lineage-chart/idi-p/1676613" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Arcpy Support for Parcel Lineage Chart.</a></li>
+                    <li><a href="https://community.esri.com/t5/arcgis-pro-ideas/evaluate-rules-gp-tool-adding-version-name/idi-p/1659537" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Evaluate Rules GP Tool: Adding Version Name Parameter.</a></li>
+                    <li><a href="https://community.esri.com/t5/arcgis-parcel-fabric-ideas/field-mapping-option-in-the-import-parcel-fabric/idi-p/1374274" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Field mapping option in the Import Parcel Fabric Points geoprocessing tool.</a></li>
+                </ul>`,
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`
+            },
+            {
+                id: 7,
+                title: "Analytics",
+                body: `Establish systematic monitoring and analysis of task logs to support data-driven improvements.<br>
+                       Key questions to be addressed include:<br><br>
+                <ul class="text-left list-disc pl-6 mt-2 space-y-1">
+                    <li>Which task steps are the most time-consuming or error-prone?</li>
+                    <li>What is the average and variance of task completion times based on historical data?</li>
+                    <li>Are there recurring bottlenecks associated with specific tools or workflow steps?</li>
+                    <li>Do certain editors consistently encounter difficulties that indicate a need for training, workflow refinement, or tool enhancement?</li>
+                </ul>`,
+                icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>`
+            }
+        ];
+
+        const container = document.getElementById('diagram-container');
+        const card = document.getElementById('content-card');
+        const cardTitle = document.getElementById('card-title');
+        const cardBody = document.getElementById('card-body');
+        
+        const nodes = [];
+
+        function updateLayout() {
+            // Determine dimensions based on viewport
+            const isMobile = window.innerWidth < 768;
+            
+            // Radii configurations to align with rings
+            // Mobile: Outer ring is 400px (r=200). Center node is 140px (r=70).
+            // Desktop: Outer ring is 500px (r=250). Center node is 180px (r=90).
+            
+            const radius = isMobile ? 200 : 250;
+            const centerRadius = isMobile ? 70 : 90;
+            const nodeRadius = isMobile ? 30 : 40; // Half of width (60 or 80)
+            
+            const itemNodes = document.querySelectorAll('.item-node');
+            const lines = document.querySelectorAll('.connector-line');
+
+            if (itemNodes.length === 0) return; // First run, do nothing
+
+            itemNodes.forEach((node, index) => {
+                const angle = (index * (360 / data.length)) * (Math.PI / 180);
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                
+                node.style.left = `calc(50% + ${x}px - ${nodeRadius}px)`;
+                node.style.top = `calc(50% + ${y}px - ${nodeRadius}px)`;
+            });
+
+            lines.forEach((line, index) => {
+                // Line starts at the edge of the center circle
+                // And extends to the center of the item node
+                const lineWidth = radius - centerRadius; 
+                
+                line.style.width = `${lineWidth}px`;
+                line.style.left = '50%';
+                line.style.top = '50%';
+                // TranslateX moves the start of the line to the edge of the center circle
+                line.style.transform = `translate(0, -50%) rotate(${index * (360 / data.length)}deg) translateX(${centerRadius}px)`;
+            });
+        }
+
+        function init() {
+            // Initial dimensions
+            const isMobile = window.innerWidth < 768;
+            const nodeRadius = isMobile ? 30 : 40;
+            
+            data.forEach((item, index) => {
+                // Create Node
+                const node = document.createElement('div');
+                node.className = 'item-node';
+                node.innerHTML = item.icon;
+                
+                // Create Line
+                const line = document.createElement('div');
+                line.className = 'connector-line';
+
+                node.addEventListener('click', () => selectNode(index, node));
+                
+                container.appendChild(line);
+                container.appendChild(node);
+                nodes.push(node);
+            });
+
+            updateLayout();
+        }
+
+        function selectNode(index, element) {
+            // Reset nodes
+            nodes.forEach(n => n.classList.remove('active'));
+            
+            // Activate selected
+            element.classList.add('active');
+            
+            // Show content
+            const item = data[index];
+            
+            card.classList.remove('visible');
+            
+            // Quick update
+            cardTitle.innerText = item.title;
+            cardBody.innerHTML = item.body;
+            
+            // Animate in
+            setTimeout(() => {
+                card.classList.remove('hidden'); // Ensure it's display block if previously hidden
+                card.offsetHeight; // Force reflow
+                card.classList.add('visible');
+            }, 50);
+
+            // Animate center piece border
+            const centerNode = document.querySelector('.center-node');
+            centerNode.style.borderColor = '#2563eb';
+            centerNode.style.boxShadow = '0 0 50px rgba(37, 99, 235, 0.2)';
+        }
+
+        window.addEventListener('resize', updateLayout);
+        window.onload = init;
+
+        function closeCard() {
+            card.classList.remove('visible');
+            nodes.forEach(n => n.classList.remove('active'));
+
+            const centerNode = document.querySelector('.center-node');
+            centerNode.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+            centerNode.style.boxShadow = '0 10px 30px rgba(59, 130, 246, 0.15)';
+        }
+    </script>
+</body>
+</html>

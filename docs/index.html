@@ -828,9 +828,7 @@
                             </p>
 
                             </p>
-                            <iframe src="DesiredEcosystem.html" style="width:100%; height:600px; border:none;"
-                                loading="lazy">
-                            </iframe>
+                            <iframe src="DesiredEcosystem.html" style="width:100%; height:600px; border:none;" loading="lazy"></iframe>
                         </div>
 
                         <!-- Statistics (Charts) -->
@@ -2113,10 +2111,8 @@
                             <h3 class="text-2xl font-bold text-primary-accent mb-6 border-b border-gray-300 pb-2">
                                 Preparing Editing Environment with ArcGIS Pro</h3>
                             <div class="text-text-dark leading-relaxed">
-                                <p class="mb-4">
-                                    We created a template APRX file with a map and a scene, which includes:
-                                </p>
-                                <ul class="list-disc list-outside ml-6 space-y-2">
+                                <p class="mb-4 space-y-1">We created a template APRX file with a map and a scene, which includes:</p>
+                                <ul class="list-disc list-outside ml-6 space-y-1">
                                     <li>Default definition queries for the layers.</li>
                                     <li>Symbology & labels</li>
                                     <li>Pop-ups configurations</li>
@@ -2150,15 +2146,17 @@
                             <ul class="list-disc list-outside ml-6 space-y-2">
                                 <p>
                                     <li>Split the edit workflow into small parts.</li>
-                                    <li>Controlled order: Users follow steps in the right order, so they don’t miss anything.</li>
+                                    <li>Controlled order: e follow steps in the right order, so they don’t miss anything.</li>
                                     <li>Simple inputs: Only ask for a little info at a time, so it’s not confusing.</li>
                                     <li>User friendly: have “Next”, “Previous”, “Skip” and “Finish” buttons.</li>
                                     <li>Best practice for begginers.</li>
                                     <li>Flexible: Users are not restricted to the current step’s designated tool, they have the freedom to select any tool that meets their specific needs.</li>
-                                </p><br></br></ul>
+                                </p><br></ul>
                              
-                            <p>In the Israeli cadaster there are about 15 different types of cadastral plans (or record types) so instead of creating a unique task for each one, we grouped them into 5 general tasks.
-                                </br>How we did it? We treated the term “record” as a combination of inputs and outputs (like an equation)</br>
+                            <p>In the Israeli cadaster, there are about 15 different types of cadastral plans (record types). Instead of creating a separate task for each type, we grouped them into five general tasks..</br>
+                               How we did it? We treated the term “record” as a combination of inputs and outputs (like an equation).</br>
+                               The inputs include features from the in-process data and the types of actions performed on the land by the cadastral plan.</br>
+                               The outputs are the updated cadastral features, including both active and retired features.
                             </p>
 
                                 <p class="font-semibold mt-2">For example:</p>
@@ -2189,139 +2187,123 @@
                                         correcting overlaps, closing gaps and so on...
                                     </li>
                                 </ul>
-                                <iframe src="RecordDrivenTask.html" style="width:100%; height:725px; border:none;"
-                                loading="lazy">
-                            </iframe>
+                                <iframe src="RecordDrivenTask.html" style="width:100%; height:725px; border:none;" loading="lazy"></iframe>
                             </div>
                             <div class="mt-8 text-text-dark leading-relaxed space-y-6">
-                                <p>
-                                    Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.
-                                    Each step rely on Python scripting tool that combine Parcel Fabric tools or other ArcGIS geoprocessing tools.
-                                    Here is a detailed overview of a typical task:
+                                <p class="leading-snug space-y-1">
+                                    Overall, all of the tasks (except the Free Edit task) follow a similar structure of steps but has differences in their tools.<br>
+                                    Each step relies on a Python (ArcPy) script that integrates Parcel Fabric tools and commands with other ArcGIS geoprocessing tools.<br>
+                                    These scripts orchestrate the required operations behind the scenes, allowing multiple tools to work together in a single, automated workflow.<br>
+                                    The Python code enables these scripts to be executed as customized geoprocessing tools, which can later be exposed and reused as individual steps within an ArcGIS Task.<br>
+                                    By combining Parcel Fabric–specific functionality with general geoprocessing capabilities, each step ensures consistent execution, reduces manual effort, and maintains data integrity throughout the process.
+                                    <iframe src="FusedLogo.html" style="width:100%; height:450px; border:none;" loading="lazy"></iframe>
+                                    Here is a detailed overview of a typical task and the steps actions:
                                 </p>
+
                                 <!-- Step 1 -->
                                 <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 1: Start Record Editing
-                                    </p>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 1: Start Record Editing</p>
                                     <p class="mb-2">
-                                        The first step is fully automated and it prepares the data and the map for
-                                        editing:
+                                        The first step is fully automated, it requeries the name of the record as a parameter and then it prepares the data and the map for editing:
                                     </p>
                                     <ul class="list-disc list-outside ml-6 space-y-1">
-                                        <li>It begins with an early and quick validations to ensure the editor doesn’t
-                                            start working with incorrect data. For example, verify that the user is
-                                            signed-in to the Portal and that the cadastral plan status is approved by
-                                            the reviewer.</li>
-                                        <li>It then creates a new branch version and transfers the Parcel Fabric layers
-                                            to it.</li>
-                                        <li>Later, the map layers are filtered to the area of the plan by using
-                                            definition queries.</li>
-                                        <li>The plan’s boundary is added to the Records layer and that new record is
-                                            activated.</li>
-                                        <li>Finally, this step compute a report of any conflicts between the plan points
-                                            (source points) and the active fabric points. The conflict report is
-                                            intended to assist the editor in the next step by suggesting an optimal
-                                            distance to use in the second step, helping to avoid conflicts. This action
-                                            is optional.</li>
+                                        <li>It begins with an early and quick validations to ensure the editor doesn’t start working with incorrect data.<br>
+                                            For example, verify that the editor is signed-in to the organization portal and that the cadastral plan status is approved by the reviewer.</li>
+                                        <li>It then creates a new branch version and transfers the Parcel Fabric layers to it.</li>
+                                        <li>Later, the layers of the map are filtered to the area  of interest (the are of the plan and it's surrounded features) by assigning definition queries.</li>
+                                        <li>The plan’s boundary is added to the Records layer and that new record is activated.</li>
+                                        <li><p class="mt-2 text-sm italic text-orange-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">In "Retire And Create" task type this step will also automatic retire the input parcels and lines and add the new parcels and lines from the plan data.</p></li>
+                                        <li>Finally, this step compute a report of any conflicts between the plan points (source points) and the active fabric points.<br>
+                                            The conflict report is intended to assist the editor in the next step by suggesting an optimal distance to use in the second step, helping to avoid conflicts.<br>
+                                            This action is optional.</li>
                                     </ul>
-                                    <p
-                                        class="mt-2 text-sm italic text-gray-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">
-                                        <span class="font-bold">Note:</span> In "Retire And Create" task type this step
-                                        will also automatic retire the input parcels and lines and add the new parcels
-                                        and lines from the plan data.
-                                    </p>
                                 </div>
                                 <!-- Step 2 -->
                                 <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 2: Import or Modify
-                                        Points</p>
-                                    <p class="mb-2">In the second step, we use a costume version of the
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 2: Import or Modify Points</p>
+                                    <p class="mb-2 space-y-1">
+                                        In the second step, we use a costume version of the
                                         <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/parcel/import-parcel-points.htm"
-                                           target="_blank"
-                                           rel="noopener noreferrer"
+                                           target="_blank" rel="noopener noreferrer"
                                            style="color: blue; text-decoration: underline;">
-                                            Import Parcel Fabric Points (IPFP) </a>
-                                        GP tool.
+                                            Import Parcel Fabric Points (IPFP)
+                                        </a>
+                                        GP tool.<br>
+                                        The IPFP tool is a built in Parcel Fabric tool that aligns the active points according to the points from the plan (aka source points) by moving them to the correct locations (like a magnet does).<br>
+                                        If it necessary, new points can be created (imported) to match the points from the plan.<br>
+                                        As the points move, the related parcel, blocks and lines move accordingly.In other words, the points are the "glue" that keeps the cadastral features connected.<br>
                                     </p>
-                                    <p class="mb-2">
-                                        The IPFP tool is abuilt in Parcel Fabric tool that aligns the active points
-                                        according to the points from the plan (aka source points) by moving them to the
-                                        correct locations (like a magnet does).
-                                    </p>
-                                    <p class="mb-4">
-                                        And if it necessary, new points can be created to match the points from the
-                                        plan. And as the points move, the related parcel, blocks and lines move
-                                        accordingly.
-                                    </p>
-                                    <p class="mb-2 font-bold text-gray-800">We customized this tool to improve
-                                        efficiency by implementing the following enhancements:</p>
+
+                                    <p class="mb-2 font-bold text-gray-800">We customized this tool to improve efficiency by implementing the following enhancements:</p>
+
                                     <div class="space-y-4 ml-1">
-                                        <div>
+
+                                        <!-- a -->
+                                        <div class="ml-4">
                                             <p class="font-semibold text-gray-800">a. Automated parameter handling</p>
-                                            <p class="mt-1">Tool parameter values are filled automatically and hidden
-                                                from the user interface. For example:</p>
-                                            <ul class="list-disc list-outside ml-6 mt-1 space-y-1 text-text-dark">
-                                                <li>Instead of manually entering the record name, the tool retrieves the
-                                                    currently active record name using CIM.</li>
-                                                <li>The Proximity Matching method is set as a fixed (constant) option.
-                                                </li>
-                                                <li>The command is restricted to run only on active points by applying a
-                                                    constant query.</li>
+                                            <p class="mt-1 pl-4 leading-none">
+                                                Tool parameter values are filled automatically and hidden from the user interface. For example:
+                                            </p>
+                                            <ul class="list-disc list-outside ml-10 mt-1 leading-none space-y-0 text-text-dark">
+                                                <li>Instead of manually entering the record name, the tool retrieves the currently active record name using CIM.</li>
+                                                <li>The Proximity Matching method is set as a fixed (constant) option.</li>
+                                                <li>The command is restricted to run only on active points by applying a constant query.</li>
                                             </ul>
                                         </div>
-                                        <div>
-                                            <p class="font-semibold text-gray-800">b. Visual conflict representation</p>
-                                            <p class="mt-1">When conflicts are detected, the tool automatically
-                                                generates red ring-shaped polygons on the map, rather than outputting
-                                                the results to a database table. The polygon radius is defined by the
-                                                tool’s search distance parameter, allowing editors to quickly and
-                                                visually identify conflict locations.</p>
+
+                                        <!-- b -->
+                                        <div class="ml-4">
+                                            <p class="font-semibold text-gray-800">b. Visual conflicts representation</p>
+                                            <p class="mt-1 pl-4 leading-none">
+                                                When conflicts are detected, the tool automatically generates red ring-shaped polygons on the map,
+                                                rather than outputting the results to a database table.<br>
+                                                The polygon radius is defined by the tool’s search distance parameter, allowing editors to quickly and visually identify conflict locations.
+                                            </p>
                                         </div>
-                                        <div>
+
+                                        <!-- c -->
+                                        <div class="ml-4">
                                             <p class="font-semibold text-gray-800">c. Structured logging output</p>
-                                            <p class="mt-1">The tool’s log messages were customized to be displayed in a
-                                                tabular format, making the results easier to read and interpret for
-                                                editors.</p>
+                                            <p class="mt-1 pl-4 leading-none">
+                                                The tool’s log messages were customized to be displayed in a tabular format,
+                                                making the results easier to read and interpret for editors.
+                                            </p>
                                         </div>
+
                                     </div>
                                 </div>
+
                                 <!-- Step 3 -->
                                 <div>
-                                    <p class="font-bold text-lg text-primary-accent mb-1">Step 3: Update Attributes</p>
-                                    <br class="mb-1">Next, once all of the fabric features are aligned with all the plan features:
-                                        <br>The tool here will automatically update the fabric layers attributes based on
-                                        the plan data. For instance, the old land designation of a parcel is replaced
-                                        with the newer land designation. This step will also run the Build Active
-                                        command if the editor set this parameter on.</br>
+                                    <p class="font-bold text-lg text-primary-accent mb-2">Step 3: Update Attributes</p>
+                                    <p class="mb-2 space-y-1">
+                                        Next, once all of the active features are aligned with all the plan features:<br>
+                                        The tool here will automatically update the active layers attributes based on the plan data.<br>
+                                        This action is very similiar to the <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/parcel/import-parcel-points.htm"target="_blank" rel="noopener noreferrer"style="color: blue; text-decoration: underline;">Transfer Attributes editing tool</a> but as automatic method.<br>
+                                        For instance, the old land designation of a parcel is replaced with the newer land designation.</br>
+                                        This step will also run the Build Active command if the editor set this parameter on.
                                     </p>
                                 </div>
                                 <!-- Step 4 -->
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2">Step 4: Evaluation</p>
-                                    <p>
-                                        Step number 4 provide a set of post-edit evaluation tests on the edited area.
-                                        The editor can choose to run all tests or only specific ones. Additionally, the
-                                        editor can choose whether the selected evaluations run on the entire Area of
-                                        Interest (AOI), the record extent, or the current visible camera extent. This
-                                        flexible option is especially useful for handling large, complex records or
-                                        areas with a high density of errors.
-                                    </p>
-                                    <p class="mt-2">
-                                        The goal here is to ensure there are no errors within the edited area. The
-                                        editor can run these evaluations as many times as needed before proceeding to
-                                        the final step.
-                                    </p>
+                                     <p class="mb-2 space-y-1">
+                                        This crucial step provide a set of post-edit evaluation tests on the features in the map.<br>
+                                        The editor can choose to run all tests or only specific ones.<br>
+                                        Additionally, the editor can choose whether the selected evaluations run on the entire area of interest, the record extent, or the current visible camera extent.<br>
+                                        This flexible option is especially useful for handling large, complex records or areas with a high density of errors.<br>
+                                        The goal here is to ensure there are no errors within the edited area.<br>
+                                        Theeditor can rerun these evaluations as many times as needed before proceeding to the final step.
                                     <p class="mt-4 font-semibold text-gray-800">
-                                        The evaluation step can be considered as a collection of (mostly built-in) tools
-                                        that evaluate or track:
+                                        The evaluation step can be considered as a collection of (mostly built-in) tools that evaluate or track:
                                     </p>
-                                    <ul class="list-disc list-outside ml-6 mt-2 space-y-1 text-text-dark">
+                                    <ul class="list-disc list-outside ml-6 mt-2 space-y-1 text-text-dark pl-4 leading-none">
                                         <li>Validation attribute rules</li>
                                         <li>Topology rules</li>
                                         <li>Adjacent active points</li>
                                         <li>Disconnected active points</li>
-                                        <li>Gaps and overlaps</li>
-                                        <li>Stated versus calculated area bias</li>
+                                        <li>Gaps & Overlaps</li>
+                                        <li>Stated vs. calculated area bias</li>
                                         <li>Volumetric overlaps (for 3D parcels and their subtractions).</li>
                                     </ul>
                                 </div>
@@ -2337,23 +2319,19 @@
                                         <li>Send feedback to the Cadaster Management System to confirm that the task is completed.</li>
                                     </ul>
                                 </div>
-                                <iframe src="TaskDesign.html" style="width:100%; height:825px; border:none;"
-                                loading="lazy">
-                            </iframe>
+
+                                <!--Task Design diagram-->
+                                <iframe src="TaskDesign.html" style="width:100%; height:825px; border:none;"loading="lazy"></iframe>
+
                                 <div class="mt-6 pt-4 border-t border-gray-200">
                                     <p class="font-bold text-lg text-primary-accent mb-2">Summary</p>
-                                    <p class="mb-4">
-                                        This task structure supports an almost fully automated workflow, where most of
-                                        the hands-on editing occurs in the second step. In this step, active points need
-                                        to be aligned with the source points. The time required to complete this step
-                                        mainly depends on the editor’s experience, the number of points to update, and
-                                        their density within the area.
-                                    </p>
-                                    <p>
-                                        Another time-consuming part of the process is the Evaluation step. The duration
-                                        of this step depends on the editor’s experience, the number of errors found
-                                        during editing, and any existing errors present before the current record
-                                        editing.
+                                    <p class="mb-2 space-y-1">
+                                        This task structure supports an almost fully automated workflow, where most of the hands-on editing occurs in the second step.<br>
+                                        In this step, active points need to be aligned with the source points.<br>
+                                        The time required to complete this step mainly depends on the editor’s experience, the number of points to update, and their density within the area.<br>
+                                        Another time-consuming part of the process is the Evaluation step.<br>
+                                        The duration of this step depends on the editor’s experience, the number of errors found during editing, and any existing errors present before the current record editing.<br>
+                                        The code and files for these tasks are available to download via the <a href="https://ofirmazor.github.io/National-Cadaster-Tasks/" target="_blank" rel="noopener noreferrer"style="color: blue; text-decoration: underline;"> tasks project page </a> or via <a href="https://github.com/OfirMazor/National-Cadaster-Tasks" target="_blank" rel="noopener noreferrer"style="color: blue; text-decoration: underline;"> Github </a>.
                                     </p>
                                 </div>
                             </div>
@@ -2377,74 +2355,13 @@
                         <h2 class="text-4xl font-extrabold text-primary-accent">Challenges</h2>
                     </div>
                     <div class="space-y-6 mt-10">
-                        <!-- Challenge 1 -->
                         <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Performance Issues (Map Rendering)
-                            </h3>
-                            <p class="text-text-dark leading-relaxed">
-                                The most critical issue we encountered was related to the rendering of features on the
-                                map while we were editing. It was very difficult for us to pinpoint what was causing the
-                                problem, and for a moment, we thought we had tried every performance tip and suggestion.
-                                Eventually, what saved us from the misery was reinstalling the SDE on the database
-                                server and recreating the database from scratch. The previous one likely had many issues
-                                and noises because we had performed many testing and made changes in the settings too
-                                many times. In addition, when we upgraded to ArcGIS Pro 3.5, we experienced even better
-                                and smoother performance.
-                            </p>
+                            <iframe src="Challanges.html" style="width:100%; height:800px; border:none;" loading="lazy"></iframe>
                         </div>
-                        <!-- Challenge 2 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Learning & Adopting New Technology
-                            </h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Since Parcel Fabric was new to us, it took us time to understand its logic, discover and
-                                experiment with the tools, and automate them. We later teach the editors how to use the
-                                tools and wrote a short user guide.
-                            </p>
-                        </div>
-                        <!-- Challenge 3 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Editing 3D Data</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Currently, 3D editing is limited in ArcGIS Pro and is not fully supported in the Parcel
-                                Fabric product. Hence we needed to find workarounds for adding or modifying 3D data.
-                            </p>
-                        </div>
-                        <!-- Challenge 4 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Software Bugs</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Along the way we have reported 9 bugs in ArcGIS Pro.
-                            </p>
-                        </div>
-                        <!-- Challenge 5 -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. National Security</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Completing projects during times of conflict is inherently challenging, and this
-                                challenge is significantly amplified when daily work is disrupted by ongoing rocket
-                                attacks, frequent air-raid alarms, and the constant need to seek shelter. Throughout
-                                this period, our systems were required to undergo numerous updates and operational
-                                restrictions to defend against heightened cyber threats, often while infrastructure and
-                                connectivity were unstable. In parallel, many team members were called up for reserve
-                                military duty, creating staffing gaps and loss of continuity, while additional workdays
-                                were lost due to direct security incidents. Despite working under continuous stress,
-                                uncertainty, and physical danger, the team remained committed to meeting project
-                                deadlines, demonstrating resilience and adaptability under extraordinary national
-                                security conditions.
-                            </p>
-                        </div>
-                        <div class="mt-8 flex flex-col items-center space-y-4 text-center w-full">
-                            <a href="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg"
-                                target="_blank" rel="noopener noreferrer">
-                                <img src="https://raw.githubusercontent.com/OfirMazor/National-Cadaster-Project-Site/main/figures/Challanges.jpg"
-                                    alt="Challenges Theme Image" class="w-full h-auto rounded-lg shadow-xl"
-                                    onerror="this.onerror=null; this.src='https://placehold.co/800x400/808080/FFFFFF?text=Challenges+Theme+Image';">
-                            </a>
-                        </div>
-                        <div class="flex justify-end mt-10">
-                            <a href="#" data-page="next"
-                                class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
+                    </div>
+
+                    <div class="flex justify-end mt-10">
+                        <a href="#" data-page="next" class="next-page-link text-secondary-accent font-bold hover:underline flex items-center text-lg transition-transform duration-200 hover:translate-x-2">
                                 Next: What's Next?
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -2452,99 +2369,23 @@
                                 </svg>
                             </a>
                         </div>
-                    </div>
                 </section>
 
                 <!-- What's Next Page -->
                 <section id="page-next" class="page-content hidden">
                     <div class="p-6 sm:p-10 bg-bg-light rounded-xl shadow-lg border-t-8 border-secondary-accent">
                         <h2 class="text-4xl font-extrabold text-primary-accent mb-4">What's Next?</h2>
-                        <p class="text-lg text-text-dark leading-relaxed">
-                            The following next points outline the strategic direction for the continued evolution of the
-                            modernization.
-                        </p>
                     </div>
 
-                    <div class="space-y-6 mt-10">
-                        <!-- 1. Relocate to Cloud -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">1. Relocate to Cloud</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Relocate the database and supporting services to a secure government cloud environment
-                                (Project Nimbus, currently in beta). This move will improve scalability, resilience,
-                                availability, and compliance with government-level security standards, while laying the
-                                foundation for future cloud-native capabilities.
-                            </p>
-                        </div>
-                        <!-- 2. Improving Data Quality -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">2. Improving Data Quality &
-                                Completeness Enhancement</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Continue systematic improvement of the quality, accuracy, and completeness of existing
-                                datasets. This includes refining geometries, validating attributes, closing data gaps,
-                                and strengthening quality assurance processes to ensure reliable and authoritative
-                                cadastral information.
-                            </p>
-                        </div>
-                        <!-- 3. Tasks and Tool Optimization -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">3. Tasks and Tool Optimization</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Further optimize tasks, workflows, and supporting tools to improve performance,
-                                stability, and efficiency. Emphasis will be placed on reducing processing time,
-                                minimizing manual intervention, simplifying complex steps, and enhancing the overall
-                                user experience for editors.
-                            </p>
-                        </div>
-                        <!-- 4. Multilingual Support -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">4. Multilingual Support and
-                                Accessibility</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Develop fully translated versions of tasks and interfaces in additional languages
-                                (Arabic and Russian). This will increase accessibility, reduce misunderstandings, and
-                                support a more diverse group of editors.
-                            </p>
-                        </div>
-                        <!-- 5. Comprehensive Documentation -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">5. Comprehensive Documentation and
-                                Knowledge Sharing</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Produce a more detailed and structured user guide and tutorials covering task workflows,
-                                tools, best practices, common pitfalls, and troubleshooting. The guide will serve both
-                                as onboarding material for new users and as a reference for experienced editors.
-                            </p>
-                        </div>
-                        <!-- 6. Advancing the 3D Cadaster -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">6. Advancing the 3D Cadaster</h3>
-                            <p class="text-text-dark leading-relaxed">
-                                Progress the 3D cadaster framework by converting existing multipatch geometries into
-                                standardized Esri 3D Object formats. This step will improve interoperability,
-                                visualization, and long-term maintainability of 3D cadastral data.
-                            </p>
-                        </div>
-                        <!-- 7. Monitoring & Analytics -->
-                        <div class="p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
-                            <h3 class="text-xl font-bold text-primary-accent mb-2">7. Monitoring & Analytics</h3>
-                            <p class="text-text-dark leading-relaxed mb-4">
-                                Establish systematic monitoring and analysis of task logs to support data-driven
-                                improvements. Key questions to be addressed include:
-                            </p>
-                            <ul class="list-disc list-outside ml-6 space-y-2 text-text-dark">
-                                <li>Which task steps are the most time-consuming or error-prone?</li>
-                                <li>What is the average and variance of task completion times based on historical data?
-                                </li>
-                                <li>Are there recurring bottlenecks associated with specific tools or workflow steps?
-                                </li>
-                                <li>Do certain editors consistently encounter difficulties that indicate a need for
-                                    training, workflow refinement, or tool enhancement?</li>
-                            </ul>
-                        </div>
+                    <div class="mt-10 p-6 sm:p-8 bg-bg-light rounded-xl border border-gray-200 shadow-lg">
+                        <p class="mb-4 space-y-1">Looking ahead, our roadmap focuses on strengthening the system’s foundation while expanding its capabilities and accessibility.<br>
+                                                  The following diagram outline our next strategic steps and ideas.<br>
+                        </p>
+                        <iframe src="WhatsNext.html" style="width:100%; height:1000px; border:none;" loading="lazy"></iframe>
                     </div>
+
                 </section>
+
             </div>
         </main>
     </div>
