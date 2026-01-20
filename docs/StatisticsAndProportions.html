@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastral Data Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Updated CDN to Cloudflare for broader compatibility -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --accent: #3b82f6;
+        }
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            height: 200px; /* Slightly taller for the 2x2 layout */
+            width: 100%;
+        }
+        .summary-card {
+            transition: transform 0.2s ease;
+        }
+        .summary-card:hover {
+            transform: translateY(-2px);
+        }
+        /* Custom radio styling for a cleaner look */
+        .radio-group input[type="radio"]:checked + label {
+            background-color: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Reduced max-width to keep the 2x2 grid compact and elegant -->
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        
+        <!-- Charts Grid: 2x2 layout with increased gap for bordered boxes -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 p-8">
+            
+            <!-- Record Volume (Throughput) -->
+            <div class="summary-card flex flex-col border border-black p-6 rounded-lg">
+                <h3 class="text-base font-semibold text-slate-600 mb-4 text-center">Monthly Records to Update</h3>
+                <div class="chart-container">
+                    <canvas id="recordsChart"></canvas>
+                </div>
+                <div class="mt-4 flex justify-center items-end">
+                    <div class="text-sm text-black">Efficiency: <span id="efficiencyValue" class="font-bold text-emerald-600">--%</span></div>
+                </div>
+            </div>
+
+            <!-- Parcels per Record -->
+            <div class="summary-card flex flex-col border border-black p-6 rounded-lg">
+                <h3 class="text-base font-semibold text-slate-600 mb-4 text-center">Parcel Flux per Record</h3>
+                <div class="chart-container">
+                    <canvas id="fluxChart"></canvas>
+                </div>
+                <div class="mt-4 text-sm text-black text-center">Net Growth: <span class="font-bold text-blue-500">+8</span></div>
+            </div>
+
+            <!-- Staffing Distribution -->
+            <div class="summary-card flex flex-col border border-black p-6 rounded-lg">
+                <h3 class="text-base font-semibold text-slate-600 mb-4 text-center">Staffing Ratio</h3>
+                <div class="chart-container">
+                    <canvas id="staffChart"></canvas>
+                </div>
+                <div class="mt-4 text-sm text-black text-center">Ratio: <span class="font-bold text-slate-700">1:5 Editor to Reviewer</span></div>
+            </div>
+
+            <!-- Total Inventory (Interactive with Radio Buttons) -->
+            <div class="summary-card flex flex-col border border-black p-6 rounded-lg">
+                <h3 class="text-base font-semibold text-slate-600 mb-2 text-center">Inventory Proportion</h3>
+                
+                <!-- Interaction Controls -->
+                <div class="flex justify-center gap-2 mb-4 radio-group">
+                    <div class="flex items-center">
+                        <input type="radio" id="viewParcels" name="invView" value="parcels" class="hidden" checked>
+                        <label for="viewParcels" class="px-3 py-1 border border-black rounded-l-md text-[10px] font-bold cursor-pointer transition-colors">Parcels</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="viewBlocks" name="invView" value="blocks" class="hidden">
+                        <label for="viewBlocks" class="px-3 py-1 border border-black border-l-0 rounded-r-md text-[10px] font-bold cursor-pointer transition-colors">Blocks</label>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="inventoryChart"></canvas>
+                </div>
+                <div class="mt-4 text-sm text-black text-center">
+                    Total: <span id="inventoryTotalText" class="font-bold text-slate-700">1,594,850 Parcels</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Initialize charts only after the window has fully loaded 
+         * and external scripts (Chart.js) are available.
+         */
+        window.addEventListener('load', function() {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js failed to load from CDN. Please check your internet connection or the script URL.');
+                return;
+            }
+
+            // Global defaults for styling
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.font.size = 14; 
+            Chart.defaults.color = 'black'; 
+            Chart.defaults.plugins.legend.display = false;
+            Chart.defaults.responsive = true;
+            Chart.defaults.maintainAspectRatio = false;
+
+            // 1. Monthly Records Chart (Bar)
+            const recordsReceived = 115;
+            const recordsCompleted = 90;
+            
+            const efficiency = Math.round((recordsCompleted / recordsReceived) * 100);
+            document.getElementById('efficiencyValue').innerText = efficiency + '%';
+
+            new Chart(document.getElementById('recordsChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Received', 'Completed'],
+                    datasets: [{
+                        data: [recordsReceived, recordsCompleted],
+                        backgroundColor: ['#fb8c00', '#10b981'],
+                        borderRadius: 4,
+                        barThickness: 30
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    scales: { 
+                        x: { 
+                            display: true, 
+                            max: 130,
+                            ticks: { stepSize: 10 },
+                            grid: { color: '#e2e8f0' }
+                        },
+                        y: { grid: { display: false } }
+                    },
+                    plugins: {
+                        tooltip: { callbacks: { label: (ctx) => ` ${ctx.raw} units/mo` } }
+                    }
+                }
+            });
+
+            // 2. Parcel Flux Chart (Doughnut)
+            new Chart(document.getElementById('fluxChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['New Created', 'Retired'],
+                    datasets: [{
+                        data: [13, 5],
+                        backgroundColor: ['#3b82f6', '#f43f5e'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 12 } } }
+                    }
+                }
+            });
+
+            // 3. Staffing Ratio Chart (Pie)
+            new Chart(document.getElementById('staffChart'), {
+                type: 'pie',
+                data: {
+                    labels: ['Editors', 'Reviewers'],
+                    datasets: [{
+                        data: [5, 25],
+                        backgroundColor: ['#6366f1', '#eab308'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 12 } } }
+                    }
+                }
+            });
+
+            // 4. Inventory Proportion (Interactive Logic)
+            const inventoryData = {
+                parcels: {
+                    label: 'Parcels',
+                    active: 1100000,
+                    retired: 494850
+                },
+                blocks: {
+                    label: 'Blocks',
+                    active: 22450,
+                    retired: 6350
+                }
+            };
+
+            const invChartCtx = document.getElementById('inventoryChart').getContext('2d');
+            let inventoryChartInstance = new Chart(invChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: [inventoryData.parcels.label],
+                    datasets: [
+                        {
+                            label: 'Active',
+                            data: [inventoryData.parcels.active],
+                            backgroundColor: '#10b981', 
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Retired',
+                            data: [inventoryData.parcels.retired],
+                            backgroundColor: '#991b1b', 
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: { 
+                            display: false, // Hidden horizontal axis label
+                            stacked: true, 
+                            grid: { display: false } 
+                        },
+                        y: { stacked: true, beginAtZero: true, grid: { color: '#e2e8f0' } }
+                    },
+                    plugins: {
+                        // Added legend to identify colors
+                        legend: { 
+                            display: true, 
+                            position: 'bottom', 
+                            labels: { boxWidth: 10, font: { size: 12 } } 
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => ` ${ctx.dataset.label}: ${ctx.raw.toLocaleString()}`
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Radio Button Event Listeners
+            document.querySelectorAll('input[name="invView"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const view = e.target.value;
+                    const data = inventoryData[view];
+                    const total = data.active + data.retired;
+                    
+                    // Update Chart Data
+                    inventoryChartInstance.data.labels = [data.label];
+                    inventoryChartInstance.data.datasets[0].data = [data.active];
+                    inventoryChartInstance.data.datasets[1].data = [data.retired];
+                    
+                    // Update Text with formatted sum
+                    document.getElementById('inventoryTotalText').innerText = `${total.toLocaleString()} ${data.label}`;
+                    
+                    // Redraw
+                    inventoryChartInstance.update();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
