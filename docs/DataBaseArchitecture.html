@@ -106,10 +106,8 @@
 
         <!-- Header Section -->
         <div class="text-center mb-16 relative z-10">
-            <h1 class="text-4xl font-bold text-slate-900 mb-2 tracking-tight bg-f3f4f6 bg-opacity-50 inline-block px-4 rounded-lg backdrop-blur-sm">National Cadaster Database Architecture</h1>
-            <p class="text-slate-500 text-lg max-w-2xl mx-auto mb-8">
-                A unified spatial database categorized into three "realms"
-            </p>
+            <h1 class="block text-4xl font-bold text-slate-900 mb-2 tracking-tight bg-f3f4f6 bg-opacity-50 px-4 rounded-lg backdrop-blur-sm"> National Cadaster Database Architecture</h1>
+            <p class="block text-slate-500 text-lg max-w-2xl mx-auto mb-8">A unified spatial database categorized into three "realms"</p>
             <div class="inline-flex items-center justify-center p-6 bg-white rounded-full shadow-md text-blue-600 ring-4 ring-slate-100 relative z-20">
                 <i class="fa-solid fa-database text-6xl"></i>
             </div>
@@ -119,9 +117,9 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
             
             <!-- REALM 1: IN-PROCESS DATA -->
-            <div class="realm-card bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden flex flex-col relative z-10">
+            <div class="realm-card bg-white rounded-2xl shadow-lg border border-slate-200 flex flex-col relative z-10">
                 <!-- Header -->
-                <div class="bg-gradient-to-r from-amber-500 to-orange-600 p-6 text-white relative">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-600 p-6 text-white relative rounded-t-2xl">
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="text-xl font-bold uppercase tracking-wider">In-Process Data</h2>
@@ -130,7 +128,7 @@
                         <i class="fa-solid fa-person-digging text-3xl opacity-80"></i>
                     </div>
                 </div>
-                
+
                 <!-- Description -->
                 <div class="px-6 py-4 bg-amber-50 border-b border-amber-100">
                     <p class="text-xs text-amber-800 font-semibold">
@@ -140,58 +138,107 @@
                 </div>
 
                 <!-- Table List -->
-                <div class="p-6 flex-grow">
-                    <ul class="space-y-2 text-sm table-list max-h-[500px] overflow-y-auto pr-2">
-                        <!-- Item -->
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                <div class="p-6 flex-grow rounded-b-2xl">
+                    <ul class="space-y-2 text-sm table-list pr-2">
+
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                Cadastral plan (process) boundaries are defined by the complete outer boundary of the parcels - either the input parcels or the resulting parcels, depending on the process type.<br/>
+                                This table stores general information about the cadastral plan. Each plan has a unique name.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-draw-polygon"></i>
                             </span>
                             <span class="font-medium text-slate-700">CadasterProcessBorders</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These 2D parcels are derived from the plan drawing and stored as staged features until the corresponding cadastral plan is approved by the cadastral reviewer.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-draw-polygon"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessParcels2D</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These 2D border points are derived from the plan drawing and stored as staged features until the corresponding cadastral plan is approved by the cadastral reviewer.
+                                The points in this table does not contain z-values.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-location-dot"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessBorderPoints</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These fronts are the lines of the in-process 2D parcels that derived from the plan drawing and stored as staged features until the corresponding cadastral plan is approved by the cadastral reviewer.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-bezier-curve"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessFronts</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These 3D parcels are derived from the (3D) plan drawing and stored as staged features until the corresponding cadastral plan is approved by the cadastral reviewer.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-cube"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessParcels3D</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These are the projected 2D representations of the in-process 3D parcels. each projection references its corresponding in-process 3D parcel.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-regular fa-square"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessProjectedParcels3D</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These substractions are 3D features derived from the (3D) plan drawing and stored as staged features until the corresponding cadastral plan is approved by the cadastral reviewer.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-scissors"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessSubstractions</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These are the projected 2D representations of the in-process substractions. each projection references its corresponding in-process substraction.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-regular fa-square"></i>
                             </span>
                             <span class="font-medium text-slate-700">InProcessProjectedSubstractions</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-amber-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                These 3D border points are derived from the (3D) plan drawing and stored as staged features until the corresponding cadastral plan is approved by the cadastral reviewer.
+                                The points in this table contains z-values.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-location-dot"></i>
                             </span>
@@ -199,16 +246,12 @@
                         </li>
                     </ul>
                 </div>
-                <!-- Connector Arrow for Desktop -->
-                <div class="hidden md:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-20 text-slate-400">
-                    <i class="fa-solid fa-circle-chevron-right text-2xl bg-white rounded-full"></i>
-                </div>
             </div>
 
             <!-- REALM 2: PARCEL FABRIC DATASET -->
-            <div class="realm-card bg-white rounded-2xl shadow-lg border-2 border-purple-500 overflow-hidden flex flex-col relative z-10 transform md:scale-105">
+            <div class="realm-card bg-white rounded-2xl shadow-lg border-2 border-purple-500 flex flex-col relative z-10 transform md:scale-105">
                 <!-- Header -->
-                <div class="bg-gradient-to-r from-purple-600 to-indigo-700 p-6 text-white">
+                <div class="bg-gradient-to-r from-purple-600 to-indigo-700 p-6 text-white rounded-t-2xl">
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="text-xl font-bold uppercase tracking-wider">Parcel Fabric</h2>
@@ -229,81 +272,148 @@
                 </div>
 
                 <!-- Table List -->
-                <div class="p-6 flex-grow">
-                    <ul class="space-y-2 text-sm table-list max-h-[500px] overflow-y-auto pr-2">
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                <!-- Changed: Removed overflow and max-height so tooltips can popup -->
+                <div class="p-6 flex-grow rounded-b-2xl">
+                    <ul class="space-y-2 text-sm table-list pr-2">
+                        <!-- All items updated with tooltip -->
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-draw-polygon"></i>
                             </span>
                             <span class="font-bold text-slate-800">CadasterRecordsBorders</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-draw-polygon"></i>
                             </span>
                             <span class="font-bold text-slate-800">Blocks</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-bezier-curve"></i>
                             </span>
                             <span class="font-bold text-slate-800">BlocksFronts</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-draw-polygon"></i>
                             </span>
                             <span class="font-bold text-slate-800">Parcels2D</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-bezier-curve"></i>
                             </span>
                             <span class="font-bold text-slate-800">Parcels2DFronts</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-share-nodes"></i>
                             </span>
                             <span class="font-bold text-slate-800">ConnectionLines</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-cube"></i>
                             </span>
                             <span class="font-bold text-slate-800">Parcels3D</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-regular fa-square"></i>
                             </span>
                             <span class="font-bold text-slate-800">ProjectedParcels3D</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-scissors"></i>
                             </span>
                             <span class="font-bold text-slate-800">Substractions</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-regular fa-square"></i>
                             </span>
                             <span class="font-bold text-slate-800">ProjectedSubstractions</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-location-dot"></i>
                             </span>
                             <span class="font-bold text-slate-800">BorderPoints</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-location-dot"></i>
                             </span>
                             <span class="font-bold text-slate-800">BorderPoints3D</span>
                         </li>
-                         <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                         <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-purple-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                empty text
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-purple-100 text-purple-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-circle-nodes"></i>
                             </span>
@@ -314,9 +424,9 @@
             </div>
 
             <!-- REALM 3: MANAGEMENT TABLES -->
-            <div class="realm-card bg-white rounded-2xl shadow-lg border border-teal-200 overflow-hidden flex flex-col relative z-10">
+            <div class="realm-card bg-white rounded-2xl shadow-lg border border-teal-200 flex flex-col relative z-10">
                 <!-- Header -->
-                <div class="bg-gradient-to-r from-teal-600 to-cyan-700 p-6 text-white">
+                <div class="bg-gradient-to-r from-teal-600 to-cyan-700 p-6 text-white rounded-t-2xl">
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="text-xl font-bold uppercase tracking-wider">Management</h2>
@@ -335,27 +445,49 @@
                 </div>
 
                 <!-- Table List -->
-                <div class="p-6 flex-grow">
+                 <!-- Changed: Added rounded-b-2xl -->
+                <div class="p-6 flex-grow rounded-b-2xl">
                     <ul class="space-y-2 text-sm table-list">
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                         <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-teal-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                 Stores log information for ArcGIS tasks executed in the past. The table includes execution dates, user details, and task success status.
+                                 Its primary use is for KPI tracking and performance analysis.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
                             </span>
                             <span class="font-medium text-slate-700">TasksHistory</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-teal-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                Stores status changes of plans (processes) throughout their lifecycle. Each status update is associated with a specific date and time.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-calendar-check"></i>
                             </span>
                             <span class="font-medium text-slate-700">CPBStatusAndDates</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-teal-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                A set of four standard tables managed and controlled by ArcGIS Attribute Rules: GDB_ValidationLineErrors, GDB_ValidationObjectErrors, GDB_ValidationPointErrors, and GDB_ValidationPolygonErrors.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-list-check"></i>
                             </span>
                             <span class="font-medium text-slate-700">Attribute Rules Validations</span>
                         </li>
-                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group">
+                        <li class="flex items-center p-2 rounded hover:bg-slate-50 transition group relative cursor-help">
+                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-80 p-4 bg-slate-800 border border-slate-700 text-slate-100 text-xs leading-relaxed rounded-xl shadow-2xl opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none">
+                                <span class="block font-bold text-teal-400 mb-1 border-b border-slate-600 pb-1">Table Definition</span>
+                                Stores the cadastral actions (Divide, Merge, Tranffer, Create, Cancel) applied to parcels within each plan.
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-slate-800"></div>
+                            </div>
                             <span class="w-8 h-8 rounded bg-teal-100 text-teal-600 flex items-center justify-center mr-3 group-hover:scale-110 transition">
                                 <i class="fa-solid fa-arrow-down-1-9"></i>
                             </span>
@@ -363,11 +495,9 @@
                         </li>
                     </ul>
                 </div>
-                
-                 <!-- Floating background icon for style -->
-                 <i class="fa-solid fa-wrench absolute -bottom-6 -right-6 text-9xl text-slate-50 pointer-events-none z-0"></i>
+
             </div>
-            
+
         </div>
 
     </div>
