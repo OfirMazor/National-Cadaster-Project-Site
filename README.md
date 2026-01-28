@@ -1,6 +1,6 @@
 # National-Cadaster-Project-Site
 
-This site that i built is my way of documenting the miles we have traveled. I didn’t want to just tell about a polished final product. I wanted to share the behind-the-scenes reality, the breakthroughs and the long road it took to bring this vision to life.
+[This site](https://ofirmazor.github.io/National-Cadaster-Project-Site/) that i built is my way of documenting the miles we have traveled. I didn’t want to just tell about a polished final product. I wanted to share the behind-the-scenes reality, the breakthroughs and the long road it took to bring this vision to life.
 
 I’m opening up this because I believe the best way we grow is by sharing the "raw" parts of our work, not just the highlights.
 
