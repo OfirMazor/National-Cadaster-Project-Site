@@ -90,93 +90,60 @@
         .card-hover:hover {transform: translateY(-5px);
             			   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);}
 
-        .connector-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background-color: #e2e8f0;
-            transform: translateX(-50%);
-            z-index: 0;
-        }
+        .connector-line {position: absolute;
+			             left: 50%;
+			             top: 0;
+			             bottom: 0;
+			             width: 4px;
+			             background-color: #e2e8f0;
+			             transform: translateX(-50%);
+			             z-index: 0;}
 
         /* Pulse animation for active elements */
-        .pulse-ring {
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            animation: pulse-blue 2s infinite;
-        }
+        .pulse-ring {box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            		 animation: pulse-blue 2s infinite;}
 
-        @keyframes pulse-blue {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            }
+        @keyframes pulse-blue {0% {transform: scale(0.95);
+                				   box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);}
 
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-            }
+					           70% {transform: scale(1);
+					                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);}
+					
+					           100% {transform: scale(0.95);
+					                  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);}
+					          }
 
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-            }
-        }
-
-        .db-grid {
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 10px 10px;
-        }
+        .db-grid {background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            	  background-size: 10px 10px;}
 
         /* Scribble Animation for Pen */
-        @keyframes scribble {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
+        @keyframes scribble {0% {transform: rotate(0deg) scale(1);}
+			
+				            25% { transform: rotate(-10deg) scale(1.1);}
+				
+				            50% {transform: rotate(0deg) scale(1);}
+				
+				            75% {transform: rotate(10deg) scale(1.1);}
+				
+				            100% {transform: rotate(0deg) scale(1);}
+							}
 
-            25% {
-                transform: rotate(-10deg) scale(1.1);
-            }
-
-            50% {
-                transform: rotate(0deg) scale(1);
-            }
-
-            75% {
-                transform: rotate(10deg) scale(1.1);
-            }
-
-            100% {
-                transform: rotate(0deg) scale(1);
-            }
-        }
-
-        .animate-scribble {
-            display: inline-block;
-            animation: scribble 0.8s ease-in-out infinite;
-        }
+        .animate-scribble {display: inline-block;
+            			   animation: scribble 0.8s ease-in-out infinite;}
 
         /* Database Glow Animation */
-        @keyframes glowFade {
+        @keyframes glowFade {0%,
+							 
+				             100% {opacity: 1;
+				                   filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.4));
+				                   transform: scale(1);}
+				
+				             50% {opacity: 0.7;
+				                 filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.9));
+				                 transform: scale(1.1);}
+					        }
 
-            0%,
-            100% {
-                opacity: 1;
-                filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.4));
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.7;
-                filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.9));
-                transform: scale(1.1);
-            }
-        }
-
-        .animate-glow-fade {
-            animation: glowFade 2s infinite ease-in-out;
-        }
+        .animate-glow-fade {animation: glowFade 2s infinite ease-in-out;}
 
         /* Gold Border Fade Animation for CMS */
         @keyframes borderFade {
@@ -192,9 +159,7 @@
             }
         }
 
-        .animate-border-fade {
-            animation: borderFade 3s infinite ease-in-out;
-        }
+        .animate-border-fade {animation: borderFade 3s infinite ease-in-out;}
 
         /* Blue Glow Animation */
         @keyframes glowBlue {
@@ -213,9 +178,7 @@
             }
         }
 
-        .animate-glow-blue {
-            animation: glowBlue 2s infinite ease-in-out;
-        }
+        .animate-glow-blue {animation: glowBlue 2s infinite ease-in-out;}
 
         /* Yellow Glow Animation */
         @keyframes glowYellow {
@@ -234,38 +197,25 @@
             }
         }
 
-        .animate-glow-yellow {
-            animation: glowYellow 2s infinite ease-in-out;
-        }
+        .animate-glow-yellow {animation: glowYellow 2s infinite ease-in-out;}
 
         /* --- STYLES FOR DB ARCHITECTURE DIAGRAM --- */
-        .table-list::-webkit-scrollbar {
-            width: 6px;
-        }
+        .table-list::-webkit-scrollbar {width: 6px;}
 
-        .table-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
+        .table-list::-webkit-scrollbar-track {background: #f1f1f1;
+            								  border-radius: 4px;}
 
-        .table-list::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
+        .table-list::-webkit-scrollbar-thumb {background: #c1c1c1;
+											  border-radius: 4px;}
 
-        .table-list::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
+        .table-list::-webkit-scrollbar-thumb:hover {background: #a8a8a8;}
 
-        .realm-card {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        }
+        .realm-card {transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+			                     box-shadow 0.4s ease;}
 
-        .realm-card:hover {
-            transform: scale(1.12);
-            z-index: 50;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
-        }
+        .realm-card:hover {transform: scale(1.12);
+				           z-index: 50;
+				           box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);}
 
         @keyframes pulseGlowPath {
 
@@ -281,12 +231,10 @@
             }
         }
 
-        .connection-path {
-            vector-effect: non-scaling-stroke;
-            stroke-linecap: round;
-            fill: none;
-            animation: pulseGlowPath 2s ease-in-out infinite;
-        }
+        .connection-path {vector-effect: non-scaling-stroke;
+			              stroke-linecap: round;
+			              fill: none;
+			              animation: pulseGlowPath 2s ease-in-out infinite;}
 
         .glow-amber {
             stroke: #f59e0b;
@@ -2391,6 +2339,7 @@
 
 
 </html>
+
 
 
 
