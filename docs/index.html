@@ -14,27 +14,19 @@
 
     <!-- 3. Configure Tailwind Object -->
     <script>
-        window.tailwind = {
-            config: {
-                theme: {
-                    extend: {
-                        colors: {'primary-accent': '#593B9F', // Deep Blue-Purple
-                                 'secondary-accent': '#45A2FF', // Deep Blue
-
-	                            // Data Visualization Colors
-	                            'app-color': '#15803d', // Dark Green
-	                            'platform-color': '#007bff', // Dark Neon-Blue
-	                            'consumer-color': '#ea580c', // Dark Vivid-Orange
-	                            'yellow-border': '#F5E427', // Custom Yellow Border
-	                            'subtitle-color': '#D6C720', // New subtitle color
-
-	                            // Base Colors
-	                            'bg-light': '#FFFFFF',
-	                            'text-dark': '#343A40'}
-                    			}
-                			}
-            			}
-        		}
+        window.tailwind = {config: {theme: {extend: {colors: {'primary-accent': '#593B9F', // Deep Blue-Purple
+						                                 	  'secondary-accent': '#45A2FF', // Deep Blue
+						
+								                              // Data Visualization Colors
+								                              'app-color': '#15803d', // Dark Green
+								                              'platform-color': '#007bff', // Dark Neon-Blue
+								                              'consumer-color': '#ea580c', // Dark Vivid-Orange
+								                              'yellow-border': '#F5E427', // Custom Yellow Border
+								                              'subtitle-color': '#D6C720', // New subtitle color
+							
+								                              // Base Colors
+								                              'bg-light': '#FFFFFF',
+								                              'text-dark': '#343A40'}}}}}
     </script>
 
     <!-- Load Chart.js for dynamic charts -->
@@ -46,32 +38,22 @@
         /* Styles from operational workflow */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #F8F9FA;
-            color: #343A40;
-            transition: all 0.3s ease;
-            height: 100vh;
-            overflow: hidden;
-        }
+        body {font-family: 'Inter', sans-serif;
+           	  background-color: #F8F9FA;
+              color: #343A40;
+              transition: all 0.3s ease;
+              height: 100vh;
+              overflow: hidden;}
 
-        .focus-shadow-blue:focus {
-            box-shadow: 0 0 0 3px rgba(69, 162, 255, 0.4);
-        }
+        .focus-shadow-blue:focus {box-shadow: 0 0 0 3px rgba(69, 162, 255, 0.4);}
 
-        .text-neon {
-            color: #45A2FF;
-        }
+        .text-neon {color: #45A2FF;}
 
-        .custom-checkbox:checked {
-            background-color: #593B9F;
-            border-color: #593B9F;
-        }
+        .custom-checkbox:checked {background-color: #593B9F;
+            					  border-color: #593B9F;}
 
-        .custom-checkbox {
-            color: #FFFFFF;
-            border-color: #593B9F;
-        }
+        .custom-checkbox {color: #FFFFFF;
+            			  border-color: #593B9F;}
 
         /* --- STYLES FOR OPERATIONAL WORKFLOW --- */
 
@@ -2432,6 +2414,7 @@
 
 
 </html>
+
 
 
 
