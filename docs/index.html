@@ -807,7 +807,7 @@
                                                 <h3 class="text-lg font-bold text-slate-800">1. Submission</h3>
                                             </div>
                                             <p class="text-slate-600 mb-3 text-sm">Land surveyors from the private
-                                                sector submitting their cadastral plans (CAD files and other related
+                                                sector submit their cadastral plans (CAD files and other related
                                                 documents) through the Topocad platform. Topocad is like a hub platform
                                                 that provides data access and visualization mainly for land surveyors
                                                 (but it's open for the public also).</p>
@@ -838,7 +838,7 @@
                                             </div>
                                             <p class="text-slate-600 mb-3 text-sm">The submission files are reviewed by
                                                 the Cadaster reviewers, who initiate the Cyclamen app. When errors are
-                                                found, the land surveyors is requested to fix their files.</p>
+                                                found, the land surveyor is requested to fix the files.</p>
                                             <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
                                                 <i class="fa-solid fa-list-check" style="color: #B197FC;"></i>
                                                 <div class="text-sm"><span
@@ -878,7 +878,7 @@
                                                 </div>
                                             </div>
                                             <p class="text-slate-600 mb-3 text-sm">Cyclamen converts the CAD data into
-                                                GIS format and store it as "In-Process" data across several databases
+                                                GIS format and stores it as "In-Process" data across several databases
                                                 (and not in one location). Notice that up to this station, the official
                                                 cadastral data hasn't been modified yet.</p>
                                             <div
@@ -953,7 +953,7 @@
                                             <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3">
                                                 <i class="fa-solid fa-cloud-arrow-up text-blue-400 text-lg"></i>
                                                 <div class="text-sm"><span class="block font-semibold">Topocad (Gen
-                                                        B)</span><span class="text-xs text-slate-500">Updated Submission
+                                                        B)</span><span class="text-xs text-slate-500"> Updated Submission
                                                         Platform</span></div>
                                             </div>
                                         </div>
@@ -1063,7 +1063,7 @@
                                                 </div>
                                                 <p class="text-slate-600 mb-3 text-sm">The cadaster editor uses
                                                     <strong>ArcGIS Pro Tasks, advanced editing tools and Parcel Fabric
-                                                        built-in tools</strong> to update and modify official cadster
+                                                        built-in tools</strong> to update and modify official cadaster
                                                     features. A vital data evaluation step is integrated within the
                                                     tasks workflow. Upon task completion, feedback is sent back to the
                                                     CMS to close the loop.
@@ -1135,7 +1135,7 @@
                                         The 3D Parcels, Substractions and 3D Points classes are "disguised" as a Parcel Fabric Features, having the logic of the "record creating/retiring" fields.
                                     </li>
                                     <li class="pl-2 font-bold">
-                                        Set fields properties <span
+                                        Set field properties <span
                                             class="font-normal">(Nullables\length\Domains…).</span>
                                     </li>
                                     <li class="pl-2 font-bold">
@@ -1159,7 +1159,7 @@
                                     a dataset with Parcel Fabric)
                                 </p>
                                 <p>
-                                    The In-Process data are all of the converted CAD files that been processes and load
+                                    The In-Process data are all of the converted CAD files that been processed and loaded
                                     by the cadastral reviewer (using Cyclamen\Palm).
                                     This data are not modified by any editor and it’s not under versioning.
                                 </p>
@@ -1169,7 +1169,7 @@
                                 </p>
                                 <p>
                                     The official cadaster features can only be modified by the cadaster editor when editing in a branch version.
-                                    It contains 2 parcels type: Parcels2D and Blocks.<br/>
+                                    It contains 2 parcels types: Parcels2D and Blocks.<br/>
                                     The 3D Cadaster tables are part of the parcel fabric dataset (with a similar fields structure) but it’s not being control by the Parcel Fabric.
                                 </p>
                                 <p>Hover over the table names to view short descriptions of their meanings.</p>
@@ -1185,10 +1185,10 @@
                                 <div>
                                     <p>
 										<a href="https://pro.arcgis.com/en/pro-app/latest/help/data/geodatabases/overview/an-overview-of-attribute-rules.htm"
-                                        target="_blank" class="text-secondary-accent hover:underline">Attribute Rules</a> help keep geodatabase data accurate and consistent while bieng edited.<br/>
+                                        target="_blank" class="text-secondary-accent hover:underline">Attribute Rules</a> help keep geodatabase data accurate and consistent while being edited.<br/>
 										They are custom rules that can automatically fill in values, prevent wrong edits, and check data quality.<br/>
 										Attribute rules can run immediately while editing (triggered) or later as a quality check.<br/>
-										Any rule must be writen (expressed) in <a href="https://developers.arcgis.com/arcade/"
+										Any rule must be written (expressed) in <a href="https://developers.arcgis.com/arcade/"
                                         target="_blank" class="text-secondary-accent hover:underline">Arcade</a> - a portable, lightweight, and secure expression language used to create custom content in ArcGIS applications.<br/>
                                         Because Arcade expressions was new territory for us, we learned by doing a bit of everything:<br/>
                                         sometimes we'd write expressions from scratch, and other times we'd search for useful examples online.
@@ -1718,15 +1718,15 @@
                                     <p class="leading-snug space-y-1"> <br> Here is a detailed overview of a typical task and the steps actions: <br> </p>
                                     <p class="font-bold text-lg text-primary-accent mb-2"> <br> Step 1: Start Record Editing </p>
                                     <p class="mb-2">
-                                        The first step is fully automated, it requeries the name of the record as a parameter and then it prepares the data and the map for editing:
+                                        The first step is fully automated, it requires the name of the record as a parameter and then it prepares the data and the map for editing:
                                     </p>
                                     <ul class="list-disc list-outside ml-6 space-y-1">
                                         <li>It begins with an early and quick validations to ensure the editor doesn’t start working with incorrect data.<br>
                                             For example, verify that the editor is signed-in to the organization portal and that the cadastral plan status is approved by the reviewer.</li>
                                         <li>It then creates a new branch version and transfers the Parcel Fabric layers to it.</li>
-                                        <li>Later, the layers of the map are filtered to the area  of interest (the are of the plan and it's surrounded features) by assigning definition queries.</li>
+                                        <li>Later, the layers of the map are filtered to the area  of interest (the area of the plan and it's surrounded features) by assigning definition queries.</li>
                                         <li>The plan’s boundary is added to the Records layer and that new record is activated.</li>
-                                        <li><p class="mt-2 text-sm italic text-orange-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">In "Retire And Create" task type this step will also automatic retire the input parcels and lines and add the new parcels and lines from the plan data.</p></li>
+                                        <li><p class="mt-2 text-sm italic text-orange-600 bg-gray-50 p-2 border-l-4 border-gray-300 rounded-r">In "Retire And Create" task type this step will also automatically retire the input parcels and lines and add the new parcels and lines from the plan data.</p></li>
                                         <li>Finally, this step compute a report of any conflicts between the plan points (source points) and the active fabric points.<br>
                                             The conflict report is intended to assist the editor in the next step by suggesting an optimal distance to use in the second step, helping to avoid conflicts.<br>
                                             This action is optional.</li>
@@ -1736,7 +1736,7 @@
                                 <div>
                                     <p class="font-bold text-lg text-primary-accent mb-2"> <br> Step 2: Import or Modify Points</p>
                                     <p class="mb-2 space-y-1">
-                                        In the second step, we use a costume version of the
+                                        In the second step, we use a custom version of the
                                         <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/parcel/import-parcel-points.htm"
                                            target="_blank" rel="noopener noreferrer"
                                            style="color: blue; text-decoration: underline;">
@@ -1744,8 +1744,8 @@
                                         </a>
                                         GP tool.<br>
                                         The IPFP tool is a built in Parcel Fabric tool that aligns the active points according to the points from the plan (aka source points) by moving them to the correct locations (like a magnet does).<br>
-                                        If it necessary, new points can be created (imported) to match the points from the plan.<br>
-                                        As the points move, the related parcel, blocks and lines move accordingly.In other words, the points are the "glue" that keeps the cadastral features connected.<br>
+                                        If it is necessary, new points can be created (imported) to match the points from the plan.<br>
+                                        As the points move, the related parcel, blocks and lines move accordingly. In other words, the points are the "glue" that keeps the cadastral features connected.<br>
                                     </p>
 
                                     <p class="mb-2 font-bold text-gray-800">We customized this tool to improve efficiency by implementing the following enhancements:</p>
@@ -1793,7 +1793,7 @@
                                     <p class="mb-2 space-y-1">
                                         Next, once all of the active features are aligned with all the plan features:<br>
                                         The tool here will automatically update the active layers attributes based on the plan data.<br>
-                                        This action is very similiar to the <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/parcel/import-parcel-points.htm"target="_blank" rel="noopener noreferrer"style="color: blue; text-decoration: underline;">Transfer Attributes editing tool</a> but as automatic method.<br>
+                                        This action is very similar to the <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/parcel/import-parcel-points.htm"target="_blank" rel="noopener noreferrer"style="color: blue; text-decoration: underline;">Transfer Attributes editing tool</a> but as automatic method.<br>
                                         For instance, the old land designation of a parcel is replaced with the newer land designation.</br>
                                         This step will also run the Build Active command if the editor set this parameter on.
                                     </p>
@@ -1807,7 +1807,7 @@
                                         Additionally, the editor can choose whether the selected evaluations run on the entire area of interest, the record extent, or the current visible camera extent.<br>
                                         This flexible option is especially useful for handling large, complex records or areas with a high density of errors.<br>
                                         The goal here is to ensure there are no errors within the edited area.<br>
-                                        Theeditor can rerun these evaluations as many times as needed before proceeding to the final step.
+                                        The editor can rerun these evaluations as many times as needed before proceeding to the final step.
                                     <p class="mt-4 font-semibold text-gray-800">
                                         The evaluation step can be considered as a collection of (mostly built-in) tools that evaluate or track:
                                     </p>
@@ -1915,7 +1915,7 @@
                             </p>
 
                             <p class="mb-6">
-                                I’m opening up this because I believe the best way we grow is by sharing the "raw" parts of our work, not just the highlights.
+                                I’m opening up about this because I believe the best way we grow is by sharing the "raw" parts of our work, not just the highlights.
                             </p>
 
                             <div class="mb-8">
@@ -1938,7 +1938,7 @@
                                     <li class="flex gap-3">
                                         <span class="text-secondary-accent font-bold">•</span>
                                         <div>
-                                            <span class="font-bold">Modernization is a Shared Challenge:</span> If your organization is staring down a massive GIS modernization project (not necessary in parcels and land management domain), I know how daunting that feels. Whether you want to dive deep into the topics I’ve raised here or just need a sounding board for your own strategy, feel free to connect.
+                                            <span class="font-bold">Modernization is a Shared Challenge:</span> If your organization is staring down a massive GIS modernization project (not necessarily in parcels and land management domain), I know how daunting that feels. Whether you want to dive deep into the topics I’ve raised here or just need a sounding board for your own strategy, feel free to connect.
                                         </div>
                                     </li>
 									<li class="flex gap-3">
@@ -2324,6 +2324,7 @@
 
 
 </html>
+
 
 
 
