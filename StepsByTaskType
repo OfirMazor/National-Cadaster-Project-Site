@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include Tailwind CSS for the container styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-flow {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 0; }
+        }
+        .pulse-group path {
+            stroke: rgba(255, 255, 255, 0.9);
+            stroke-width: 5;
+            /* One pulse visible at a time: 4 length, 96 gap (total 100 matches pathLength) */
+            stroke-dasharray: 4 96; 
+            stroke-dashoffset: 100;
+            animation: pulse-flow 8s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    
+    <div class="min-h-screen w-full bg-white flex flex-col items-center justify-center p-4 md:p-8 font-sans">
+      
+        <!-- Container for the Infographic -->
+        <div class="w-full max-w-7xl bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+          
+            <svg
+                viewBox="0 0 1200 700"
+                class="w-full h-auto"
+                style="background-color: #ffffff; font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;"
+            >
+                <defs>
+                    <filter id="node-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.15" />
+                    </filter>
+                </defs>
+
+                <!-- ========================================== -->
+                <!-- SUBWAY LINES                               -->
+                <!-- ========================================== -->
+                <g stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <!-- Red Line: Retire and Create 3D Cadaster (Outer Top, bypasses Import & Update) -->
+                    <path
+                        d="M 50 270 L 200 270 C 275 270, 275 90, 350 90 L 700 90 C 775 90, 775 270, 850 270 L 1150 270"
+                        stroke="#DC2626"
+                    />
+
+                    <!-- Green Line: Improve New Cadaster (Inner Top, bypasses Update) -->
+                    <path
+                        d="M 50 282 L 450 282 C 500 282, 500 170, 550 170 L 750 170 C 800 170, 800 282, 850 282 L 1150 282"
+                        stroke="#16A34A"
+                    />
+
+                    <!-- Blue Line: Improve Current Cadaster (Straight through all) -->
+                    <path
+                        d="M 50 294 L 1150 294"
+                        stroke="#2563EB"
+                    />
+
+                    <!-- Purple Line: Retire and Create Cadaster (Straight through all) -->
+                    <path
+                        d="M 50 306 L 1150 306"
+                        stroke="#9333EA"
+                    />
+
+                    <!-- Orange Line: Create New Cadaster (Inner Bottom, bypasses Update) -->
+                    <path
+                        d="M 50 318 L 450 318 C 500 318, 500 430, 550 430 L 750 430 C 800 430, 800 318, 850 318 L 1150 318"
+                        stroke="#F97316"
+                    />
+
+                    <!-- Gray Line: Free Editing (Outer Bottom, bypasses Import & Update) -->
+                    <path
+                        d="M 50 330 L 200 330 C 275 330, 275 510, 350 510 L 700 510 C 775 510, 775 330, 850 330 L 1150 330"
+                        stroke="#6B7280"
+                    />
+                </g>
+
+                <!-- ========================================== -->
+                <!-- PULSE ANIMATIONS                           -->
+                <!-- ========================================== -->
+                <g class="pulse-group" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path pathLength="100" d="M 50 270 L 200 270 C 275 270, 275 90, 350 90 L 700 90 C 775 90, 775 270, 850 270 L 1150 270" />
+                    <path pathLength="100" d="M 50 282 L 450 282 C 500 282, 500 170, 550 170 L 750 170 C 800 170, 800 282, 850 282 L 1150 282" />
+                    <path pathLength="100" d="M 50 294 L 1150 294" />
+                    <path pathLength="100" d="M 50 306 L 1150 306" />
+                    <path pathLength="100" d="M 50 318 L 450 318 C 500 318, 500 430, 550 430 L 750 430 C 800 430, 800 318, 850 318 L 1150 318" />
+                    <path pathLength="100" d="M 50 330 L 200 330 C 275 330, 275 510, 350 510 L 700 510 C 775 510, 775 330, 850 330 L 1150 330" />
+                </g>
+
+                <!-- ========================================== -->
+                <!-- STATION NODES                              -->
+                <!-- ========================================== -->
+                <g fill="#ffffff" stroke="#1f2937" stroke-width="3" filter="url(#node-shadow)">
+                    <!-- Node 1: Start Record Editing (All 6 Lines) -->
+                    <circle cx="150" cy="300" r="38" />
+
+                    <!-- Node 2: Import or Modify Points (4 Lines: Green, Blue, Purple, Orange) -->
+                    <circle cx="400" cy="300" r="26" />
+
+                    <!-- Node 3: Update Attributes (2 Lines: Blue, Purple) -->
+                    <circle cx="650" cy="300" r="14" />
+
+                    <!-- Node 4: Evaluations (All 6 Lines) -->
+                    <circle cx="900" cy="300" r="38" />
+
+                    <!-- Node 5: Completion (All 6 Lines) -->
+                    <circle cx="1100" cy="300" r="38" />
+                </g>
+
+                <!-- ========================================== -->
+                <!-- STATION LABELS                             -->
+                <!-- ========================================== -->
+                <g text-anchor="middle" font-size="16" font-weight="700" fill="#000000">
+                    <text x="150" y="380">Start Record</text>
+                    <text x="150" y="400">Editing</text>
+
+                    <text x="400" y="380">Import or</text>
+                    <text x="400" y="400">Modify Points</text>
+
+                    <text x="650" y="380">Update</text>
+                    <text x="650" y="400">Attributes</text>
+
+                    <text x="900" y="380">Evaluations</text>
+
+                    <text x="1100" y="380">Completion</text>
+                </g>
+
+                <!-- ========================================== -->
+                <!-- LEGEND                                     -->
+                <!-- ========================================== -->
+                <g transform="translate(140, 590)">
+                    <!-- Legend Background -->
+                    <rect x="-30" y="-30" width="980" height="110" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2" />
+                    
+                    <text x="460" y="-10" text-anchor="middle" font-size="14" font-weight="800" fill="#9CA3AF" letter-spacing="1">
+                        Task Type Legend
+                    </text>
+
+                    <g font-size="14" font-weight="600" fill="#4B5563">
+                        <!-- Row 1 -->
+                        <line x1="20" y1="20" x2="60" y2="20" stroke="#2563EB" stroke-width="8" stroke-linecap="round" />
+                        <text x="75" y="25">Improve Current Cadaster</text>
+
+                        <line x1="330" y1="20" x2="370" y2="20" stroke="#16A34A" stroke-width="8" stroke-linecap="round" />
+                        <text x="385" y="25">Improve New Cadaster</text>
+
+                        <line x1="640" y1="20" x2="680" y2="20" stroke="#F97316" stroke-width="8" stroke-linecap="round" />
+                        <text x="695" y="25">Create New Cadaster</text>
+
+                        <!-- Row 2 -->
+                        <line x1="20" y1="55" x2="60" y2="55" stroke="#9333EA" stroke-width="8" stroke-linecap="round" />
+                        <text x="75" y="60">Retire and Create Cadaster</text>
+
+                        <line x1="330" y1="55" x2="370" y2="55" stroke="#DC2626" stroke-width="8" stroke-linecap="round" />
+                        <text x="385" y="60">Retire and Create 3D Cadaster</text>
+
+                        <line x1="640" y1="55" x2="680" y2="55" stroke="#6B7280" stroke-width="8" stroke-linecap="round" />
+                        <text x="695" y="60">Free Editing</text>
+                    </g>
+                </g>
+                
+            </svg>
+        </div>
+    </div>
+
+</body>
+</html>
